@@ -4,85 +4,91 @@ import { Responsive, Segment, Grid, Image,Input, Container, Button, Divider,Head
 import env from '../services/config';
 import styles from '../css/myStyles.scss';
 import $ from 'jquery';
-import BgSwitcher from '../vendor/jquery.bgswitcher';
+
 
 class Login extends React.Component {
-  state = {}
+  constructor(props){
+    super(props);
+    this.state = {
+      imageStatus: 'notloaded',
+      width: 0
+    }
 
-  componentDidMount() {
-    //change the loginwall dinamically
-    let randomPicNumber = Math.floor((Math.random() * 6) + 1);
-    //********Cambiar randomPicSrc para test/prod*******
-    let randomPicSrc = env.CSSDIRECTORY+ "/images/login_images/loginwall"+ randomPicNumber+ ".jpg";//desarrollo
-    let pics = [env.CSSDIRECTORY+"/images/login_images/loginwall1.jpg", env.CSSDIRECTORY+"/images/login_images/loginwall2.jpg"]
-    $("#app").BgSwitcher({
-      images: pics
-
-    });
-
-    //$('#app').css("background-image", "url("+randomPicSrc+")").css('background-size','100% 100%').css('object-fit',"cover").css('transition',"transition: background-image 1s ease-in-out");
 
 
   }
 
 
-
   handleOnUpdate = (e, { width }) => this.setState({ width })
 
+
+
+  componentDidMount(){
+
+    TweenMax.to("body",5,{
+      opacity: "1",
+      transition: "opacity .5s ease",
+      visibility: "visible"
+    });
+
+
+  }
   render(){
     const { width } = this.state
+    const login =
+      <div><Responsive as={Container} minWidth={320} maxWidth={767} onUpdate={this.handleOnUpdate}>
+        <Container className="container_login">
+          <Container className="container_login_image">
+            <Header as='h2' icon textAlign='center'>
+            <img src={env.CSSDIRECTORY+'/images/logo_ap.png'} />
+            <Header.Content className="header_login_text">
+              AP Chilquinta
+              </Header.Content>
+            </Header>
+          </Container>
+
+          <Container className="input_login_container">
+             <Input className="input_login" icon='user circle' iconPosition='left' placeholder='Usuario' />
+             <br />
+             <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
+          </Container>
+
+          <Container className="input_login_container">
+            <Divider />
+            <Button className="btn_login">Login</Button>
+          </Container>
+        </Container>
+     </Responsive>
+
+     <Responsive as={Container} minWidth={768} maxWidth={960} onUpdate={this.handleOnUpdate}>
+       <Container className="container_login">
+         <Container className="container_login_image">
+           <Header as='h2' icon textAlign='center'>
+           <img src={env.CSSDIRECTORY+'/images/logo_ap.png'} />
+           <Header.Content className="header_login_text">
+             AP Chilquinta
+             </Header.Content>
+           </Header>
+         </Container>
+
+         <Container className="input_login_container">
+            <Input className="input_login" icon='user circle' iconPosition='left' placeholder='Usuario' />
+            <br />
+            <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
+         </Container>
+
+         <Container className="input_login_container">
+           <Divider />
+           <Button className="btn_login">Login</Button>
+         </Container>
+       </Container>
+     </Responsive>
+     </div>
 
       return (
-      <div className="wrapper">
-        <Responsive as={Container} minWidth={320} maxWidth={425} onUpdate={this.handleOnUpdate}>
-          <Container className="container_login">
-            <Container className="container_login_image">
-              <Header as='h2' icon textAlign='center'>
-              <Image circular src={env.CSSDIRECTORY+'/images/logo_ap.png'} />
-              <Header.Content className="header_login_text">
-                AP Chilquinta
-                </Header.Content>
-              </Header>
-            </Container>
-
-            <Container className="input_login_container">
-               <Input className="input_login" icon='user circle' iconPosition='left' placeholder='Usuario' />
-               <br />
-               <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
-            </Container>
-
-            <Container className="input_login_container">
-              <Divider />
-              <Button className="btn_login">Login</Button>
-            </Container>
-          </Container>
-       </Responsive>
-
-       <Responsive as={Container} minWidth={426} maxWidth={768} onUpdate={this.handleOnUpdate}>
-         <Container className="container_login">
-           <Container className="container_login_image">
-             <Header as='h2' icon textAlign='center'>
-             <Image circular src={env.CSSDIRECTORY+'/images/logo_ap.png'} />
-             <Header.Content className="header_login_text">
-               AP Chilquinta
-               </Header.Content>
-             </Header>
-           </Container>
-
-           <Container className="input_login_container">
-              <Input className="input_login" icon='user circle' iconPosition='left' placeholder='Usuario' />
-              <br />
-              <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
-           </Container>
-
-           <Container className="input_login_container">
-             <Divider />
-             <Button className="btn_login">Login</Button>
-           </Container>
-         </Container>
-       </Responsive>
-
-     </div>
+        <div className="wrapper">
+            {login}
+         </div>
       );
     }
   }

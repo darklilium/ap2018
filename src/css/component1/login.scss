@@ -7,10 +7,19 @@ $secondary_color: #FFFFFF;
 
 //$('#app').css("background-image", "url("+randomPicSrc+")").css('background-size','100% 100%').css('object-fit',"cover").css("transition","opacity 1s ease-in-out;");
 
+//allPages
+
+body{
+  opacity: 0;
+  visibility: hidden;
+}
+
 
 //320px
 
 @media (max-width: 320px){
+
+
   #app {
     background: $primary_color;
     color: $secondary_color;
@@ -21,7 +30,7 @@ $secondary_color: #FFFFFF;
   }
 
   .wrapper{
-  padding-top: 20%;
+    padding-top: 20%;
   }
 
   .container_login{
