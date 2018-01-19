@@ -21,22 +21,18 @@ class Login extends React.Component {
 
   handleOnUpdate = (e, { width }) => this.setState({ width })
 
-
-
   componentDidMount(){
-
     TweenMax.to("body",5,{
       opacity: "1",
       transition: "opacity .5s ease",
       visibility: "visible"
     });
-
-
   }
+
   render(){
     const { width } = this.state
     const login =
-      <div><Responsive as={Container} minWidth={320} maxWidth={767} onUpdate={this.handleOnUpdate}>
+      <div className="inner_wrapper"><Responsive as={Container} minWidth={320} maxWidth={767} onUpdate={this.handleOnUpdate}>
         <Container className="container_login">
           <Container className="container_login_image">
             <Header as='h2' icon textAlign='center'>
@@ -60,7 +56,8 @@ class Login extends React.Component {
         </Container>
      </Responsive>
 
-     <Responsive as={Container} minWidth={768} maxWidth={960} onUpdate={this.handleOnUpdate}>
+     {/* sobre 768 ancho hasta 960*/}
+     <Responsive as={Container} minWidth={768} maxWidth={2560} onUpdate={this.handleOnUpdate}>
        <Container className="container_login">
          <Container className="container_login_image">
            <Header as='h2' icon textAlign='center'>
@@ -75,12 +72,11 @@ class Login extends React.Component {
             <Input className="input_login" icon='user circle' iconPosition='left' placeholder='Usuario' />
             <br />
             <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
+            <Divider />
+            <Button className="btn_login">Login</Button>
          </Container>
 
-         <Container className="input_login_container">
-           <Divider />
-           <Button className="btn_login">Login</Button>
-         </Container>
+
        </Container>
      </Responsive>
      </div>
