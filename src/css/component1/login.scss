@@ -82,6 +82,12 @@ body{
     color: white;
   }
 
+  .ui.icon.header .content{
+    margin-top: 0.5em;
+    font-family: lato;
+    font-variant-caps: all-petite-caps;
+  }
+
 }
 
 @media (min-width: 321px) and (max-width: 375px){
@@ -94,8 +100,8 @@ body{
   }
 
   .wrapper{
-  padding-top: 20%;
-  }
+    padding-top: 20%;
+   }
 
   .container_login{
     width: 100%;
@@ -144,6 +150,12 @@ body{
 
   .ui.input{
     color: white;
+  }
+
+  .ui.icon.header .content{
+    margin-top: 0.5em;
+    font-family: lato;
+    font-variant-caps: all-petite-caps;
   }
 }
 
@@ -207,6 +219,12 @@ body{
 
   .ui.input{
     color: white;
+  }
+
+  .ui.icon.header .content{
+    margin-top: 0.5em;
+    font-family: lato;
+    font-variant-caps: all-petite-caps;
   }
 }
 
@@ -297,6 +315,13 @@ body{
   .ui.input{
     color: white;
   }
+
+  .ui.icon.header .content{
+    font-size: 1.3em;
+    margin-top: 0.5em;
+    font-family: lato;
+    font-variant-caps: all-petite-caps;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 2560px){
@@ -358,7 +383,7 @@ body{
   }
 
   .ui.header>img{
-    width: 4.5em;
+    width: 5.5em;
   }
 
   .input_login{
@@ -388,4 +413,10 @@ body{
     color: white;
   }
 
+  .ui.icon.header .content{
+    font-size: 2.5em;
+    margin-top: 0.5em;
+    font-family: lato;
+    font-variant-caps: all-petite-caps;
+  }
 }
