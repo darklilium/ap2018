@@ -5,6 +5,7 @@ $secondary_color: #FFFFFF;
 
 
 
+
 //$('#app').css("background-image", "url("+randomPicSrc+")").css('background-size','100% 100%').css('object-fit',"cover").css("transition","opacity 1s ease-in-out;");
 
 //allPages
@@ -12,6 +13,7 @@ $secondary_color: #FFFFFF;
 body{
   opacity: 0;
   visibility: hidden;
+
 }
 
 
@@ -24,9 +26,8 @@ body{
     background: $primary_color;
     color: $secondary_color;
     height: inherit;
-    //background-image: url("images/login_images/#{$nth}.jpg");
-    background-size: '100% 100%';
-    object-fit: cover;
+    background-image: url("./images/login_images/loginwall1.jpg");
+    background-size: cover;
   }
 
   .wrapper{
@@ -88,7 +89,9 @@ body{
   #app {
     background: $primary_color;
     color: $secondary_color;
-  height: inherit;
+    height: inherit;
+    background-image: url("./images/login_images/loginwall1.jpg");
+    background-size: cover;
   }
 
   .wrapper{
@@ -149,7 +152,9 @@ body{
   #app {
     background: $primary_color;
     color: $secondary_color;
-  height: inherit;
+    height: inherit;
+    background-image: url("./images/login_images/loginwall1.jpg");
+    background-size: cover;
   }
 
   .wrapper{

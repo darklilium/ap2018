@@ -63,7 +63,17 @@ module.exports = {
           fallback: 'style-loader',
           use: ['css-loader', 'sass-loader']
         })
+      }/*,
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: '../cortocircuito/css/images/',
+
+        }
       }
+      */
 
    ]
  },
