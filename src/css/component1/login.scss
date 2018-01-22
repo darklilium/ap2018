@@ -29,6 +29,7 @@ body{
     background-size: cover;
   }
 
+
   .wrapper{
     padding-top: 20%;
   }
@@ -87,6 +88,8 @@ body{
     font-family: lato;
     font-variant-caps: all-petite-caps;
   }
+
+
 
 }
 
@@ -322,6 +325,11 @@ body{
     font-family: lato;
     font-variant-caps: all-petite-caps;
   }
+
+  .ui.divider {
+    font-size: 1rem;
+    width: 30%;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 2560px){
@@ -418,5 +426,10 @@ body{
     margin-top: 0.5em;
     font-family: lato;
     font-variant-caps: all-petite-caps;
+  }
+
+  .ui.divider {
+    font-size: 1rem;
+    width: 30%;
   }
 }

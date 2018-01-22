@@ -13,9 +13,6 @@ class Login extends React.Component {
       imageStatus: 'notloaded',
       width: 0
     }
-
-
-
   }
 
 
@@ -27,6 +24,14 @@ class Login extends React.Component {
       transition: "opacity .5s ease",
       visibility: "visible"
     });
+
+    let randomPicNumber = Math.floor((Math.random() * 6) + 1);
+    //********Cambiar randomPicSrc para test/prod*******
+    let randomPicSrc = env.CSSDIRECTORY+ "/images/login_images/loginwall"+ randomPicNumber+ ".jpg";//desarrollo
+
+    /*
+
+    */
   }
 
   render(){
@@ -50,7 +55,7 @@ class Login extends React.Component {
           </Container>
 
           <Container className="input_login_container">
-            <Divider />
+           <Divider ></Divider>
             <Button className="btn_login">Login</Button>
           </Container>
         </Container>
@@ -72,7 +77,7 @@ class Login extends React.Component {
             <Input className="input_login" icon='user circle' iconPosition='left' placeholder='Usuario' />
             <br />
             <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
-            <Divider />
+             <Divider ></Divider>
             <Button className="btn_login">Login</Button>
          </Container>
 

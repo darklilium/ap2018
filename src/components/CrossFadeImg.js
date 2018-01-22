@@ -13,14 +13,14 @@ export default class CrossFadeImg extends React.Component {
     }
   }
 
-  componentWillMount(){
-    setInterval(()=>{
+  componentDidMount(){
+  /*  setInterval(()=>{
       let randomPicNumber = Math.floor((Math.random() * 6) + 1);
       //********Cambiar randomPicSrc para test/prod*******
       let randomPicSrc = env.CSSDIRECTORY+ "/images/login_images/loginwall"+ randomPicNumber+ ".jpg";//desarrollo
       this.setState({randomPicSrc: randomPicSrc})
     },5000);
-
+*/
 
   }
   render() {
@@ -35,7 +35,7 @@ export default class CrossFadeImg extends React.Component {
         <img src={randomPicSrc} key={1} />
 
         </ReactCSSTransitionGroup>
-    
+
     );
   }
 
