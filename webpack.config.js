@@ -26,7 +26,8 @@ module.exports = {
     inline: true,
     port: 443,
     host: "127.0.0.1",
-    hot: true
+    hot: true,
+    historyApiFallback: true
   },
   module: {
     rules: [

@@ -4,7 +4,7 @@ import { Responsive, Segment, Grid, Image,Input, Container, Button, Divider,Head
 import env from '../services/config';
 import styles from '../css/myStyles.scss';
 import $ from 'jquery';
-
+import {withRouter} from "react-router-dom";
 
 class Login extends React.Component {
   constructor(props){
@@ -18,20 +18,26 @@ class Login extends React.Component {
 
   handleOnUpdate = (e, { width }) => this.setState({ width })
 
+
   componentDidMount(){
-    TweenMax.to("body",5,{
+    $('#app_wrapper').removeClass("wrapper_dashboard").addClass("wrapper");
+
+    TweenMax.to(".wrapper",5,{
       opacity: "1",
       transition: "opacity .5s ease",
       visibility: "visible"
     });
 
-    let randomPicNumber = Math.floor((Math.random() * 6) + 1);
+    /*  let randomPicNumber = Math.floor((Math.random() * 6) + 1);
     //********Cambiar randomPicSrc para test/prod*******
     let randomPicSrc = env.CSSDIRECTORY+ "/images/login_images/loginwall"+ randomPicNumber+ ".jpg";//desarrollo
-
-    /*
-
     */
+  }
+
+  onClickLogin(){
+      this.props.history.push("/dashboard");
+
+
   }
 
   render(){
@@ -78,7 +84,7 @@ class Login extends React.Component {
             <br />
             <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
              <Divider ></Divider>
-            <Button className="btn_login">Login</Button>
+            <Button className="btn_login" onClick = {this.onClickLogin.bind(this)}>Login</Button>
          </Container>
 
 
@@ -87,7 +93,7 @@ class Login extends React.Component {
      </div>
 
       return (
-        <div className="wrapper">
+        <div className="login-wrapper">
             {login}
          </div>
       );

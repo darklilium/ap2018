@@ -1,14 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './components/Login';
-import env from './services/config';
-import $ from 'jquery';
+import Routering from './Routes';
+import { BrowserRouter as Router } from 'react-router-dom';
 
+import {Provider} from 'react-redux';
+import configureStore from './components/redux/store';
 
+const store = configureStore();
 
+const rootEl = document.getElementById('app');
 
-
-  const rootEl = document.getElementById('app');
-
-
-  ReactDOM.render(<Login />, rootEl);
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <Routering />
+    </Router>
+  </Provider>, rootEl
+);

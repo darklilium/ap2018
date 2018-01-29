@@ -3,35 +3,25 @@
 $primary_color: #DA291C;
 $secondary_color: #FFFFFF;
 
-
-
-
-//$('#app').css("background-image", "url("+randomPicSrc+")").css('background-size','100% 100%').css('object-fit',"cover").css("transition","opacity 1s ease-in-out;");
-
-//allPages
-
-body{
-  opacity: 0;
-  visibility: hidden;
-
-}
-
 //320px
 
 @media (max-width: 320px){
 
-
-  #app {
-    background: $primary_color;
-    color: $secondary_color;
-    height: inherit;
-    background-image: url("./images/login_images/loginwall1.jpg");
-    background-size: cover;
+  .login-wrapper{
+    z-index: 20;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
   }
 
-
-  .wrapper{
-    padding-top: 20%;
+  .inner_wrapper{
+    background-color: rgba(5, 5, 6, 0.64);
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 100%;
   }
 
   .container_login{
@@ -40,7 +30,7 @@ body{
     flex-direction: column;
     padding-bottom: 3em;
     padding-top: 2em;
-    background-color: rgba(5, 5, 6, 0.64);
+  //  background-color: rgba(5, 5, 6, 0.64);
   }
 
   .container_login_image{
@@ -89,52 +79,28 @@ body{
     font-variant-caps: all-petite-caps;
   }
 
-
-
 }
 
-@media (min-width: 321px) and (max-width: 375px){
-  #app {
-    background: $primary_color;
-    color: $secondary_color;
-    height: inherit;
-    background-image: url("./images/login_images/loginwall1.jpg");
-    background-size: cover;
-  }
+@media (min-width: 321px) and (max-width: 425px){
 
-  .wrapper{
-    padding-top: 20%;
-   }
-
-  .container_login{
+  .login-wrapper{
+    display: flex;
     width: 100%;
-    display: flex !important;
-    flex-direction: column;
-    padding-bottom: 3em;
-    padding-top: 2em;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
     background-color: rgba(5, 5, 6, 0.64);
   }
 
-  .container_login_image{
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-
+  .ui.input{
+    color: white;
   }
 
-  .image_login{
-    display: flex;
-    width: 25%;
-  }
-
-  .header_login_text{
-    color: $secondary_color;
-  }
-
-
-  .input_login{
-    width: 100%;
+  .ui.icon.header .content{
     margin-top: 0.5em;
+    font-family: lato;
+    font-variant-caps: all-petite-caps;
   }
 
   .ui.button{
@@ -151,6 +117,29 @@ body{
     font-weight: 600;
   }
 
+  .header_login_text{
+    color: $secondary_color;
+  }
+
+  .input_login{
+    width: 100%;
+    margin-top: 0.5em;
+  }
+
+}
+
+@media (min-width: 426px) and (max-width: 768px){
+
+  .login-wrapper{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-color: rgba(5, 5, 6, 0.64);
+  }
+
   .ui.input{
     color: white;
   }
@@ -160,19 +149,168 @@ body{
     font-family: lato;
     font-variant-caps: all-petite-caps;
   }
+
+  .ui.button{
+    width: 100%;
+    background-color: #e0000c !important;
+    color: #ffffff !important;
+    -webkit-tap-highlight-color: #cccccca3;
+  }
+
+  .input_login input {
+    background: rgba(255, 255, 255, 0) !important;
+    border: 1.5px solid rgba(232, 232, 232, 0.64) !important;
+    color: white !important;
+    font-weight: 600;
+  }
+
+  .header_login_text{
+    color: $secondary_color;
+  }
+
+  .input_login{
+    width: 100%;
+    margin-top: 0.5em;
+  }
+
+  .inner_wrapper{
+    //background-color: rgba(5, 5, 6, 0.64);
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+  }
+
+  .container_login{
+    width: 30% !important;
+  }
+
 }
 
+@media (min-width: 769px) and (max-width: 960px){
+
+  .login-wrapper{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-color: rgba(5, 5, 6, 0.64);
+  }
+
+  .ui.input{
+    color: white;
+  }
+
+  .ui.icon.header .content{
+    margin-top: 0.5em;
+    font-family: lato;
+    font-variant-caps: all-petite-caps;
+  }
+
+  .ui.button{
+    width: 100%;
+    background-color: #e0000c !important;
+    color: #ffffff !important;
+    -webkit-tap-highlight-color: #cccccca3;
+  }
+
+  .input_login input {
+    background: rgba(255, 255, 255, 0) !important;
+    border: 1.5px solid rgba(232, 232, 232, 0.64) !important;
+    color: white !important;
+    font-weight: 600;
+  }
+
+  .header_login_text{
+    color: $secondary_color;
+  }
+
+  .input_login{
+    width: 100%;
+    margin-top: 0.5em;
+  }
+
+  .inner_wrapper{
+    //background-color: rgba(5, 5, 6, 0.64);
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+  }
+
+  .container_login{
+    width: 30% !important;
+  }
+
+}
+
+@media (min-width: 961px) {
+
+  .login-wrapper{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-color: rgba(5, 5, 6, 0.64);
+  }
+
+  .ui.input{
+    color: white;
+  }
+
+  .ui.icon.header .content{
+    margin-top: 0.5em;
+    font-family: lato;
+    font-variant-caps: all-petite-caps;
+  }
+
+  .ui.button{
+    width: 100%;
+    background-color: #e0000c !important;
+    color: #ffffff !important;
+    -webkit-tap-highlight-color: #cccccca3;
+  }
+
+  .input_login input {
+    background: rgba(255, 255, 255, 0) !important;
+    border: 1.5px solid rgba(232, 232, 232, 0.64) !important;
+    color: white !important;
+    font-weight: 600;
+  }
+
+  .header_login_text{
+    color: $secondary_color;
+  }
+
+  .input_login{
+    width: 100%;
+    margin-top: 0.5em;
+  }
+
+  .inner_wrapper{
+    //background-color: rgba(5, 5, 6, 0.64);
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+  }
+
+  .container_login{
+    width: 30% !important;
+  }
+
+}
+
+
+/*
 @media (min-width: 376px) and (max-width: 425px){
-  #app {
-    background: $primary_color;
-    color: $secondary_color;
-    height: inherit;
-    background-image: url("./images/login_images/loginwall1.jpg");
-    background-size: cover;
-  }
 
-  .wrapper{
-  padding-top: 20%;
+  .ui.container {
+    width: 100% !important;
   }
 
   .container_login{
@@ -331,7 +469,7 @@ body{
     width: 30%;
   }
 }
-
+/*
 @media (min-width: 769px) and (max-width: 2560px){
 
   #app {
@@ -433,3 +571,4 @@ body{
     width: 30%;
   }
 }
+*/

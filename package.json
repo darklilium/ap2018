@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "start npm run dev:server",
-    "dev:server": "webpack-dev-server --history-api-fallback",
+    "dev:server": "webpack-dev-server",
     "build": "webpack --progress --colors",
     "gulp": "gulp",
     "prod:build": "cross-env NODE_ENV=production webpack -p --config webpackprod.config.js --optimize-minimize --progress --colors"
@@ -43,14 +43,18 @@
     "postcss-mixins": "^6.2.0",
     "react-hot-loader": "^3.0.0",
     "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-select": "^1.1.0",
     "react-toolbox": "^2.0.0-beta.12",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
     "semantic-ui-react": "^0.77.1",
     "style-loader": "^0.19.1",
     "uglifyjs-webpack-plugin": "^1.1.4",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^2.9.7",
+    "whatwg-fetch": "^2.0.3"
   }
 }
