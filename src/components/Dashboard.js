@@ -8,7 +8,7 @@ import {MuniImages} from '../services/apmuni_images';
 import {friendOptions} from '../services/apmuni_images';
 
 import { connect } from 'react-redux';
-import {itemsFetchData} from './redux/actions';
+import {itemsFetchData, getComunas} from './redux/actions';
 
 class Dashboard extends React.Component {
 
@@ -22,8 +22,8 @@ class Dashboard extends React.Component {
         visibility: "visible"
       });
 
-      this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
-
+      //this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
+      this.props.fetchComunas(friendOptions);
 
     }
 
@@ -38,12 +38,13 @@ class Dashboard extends React.Component {
     render() {
 
           const { width, comunas } = this.props
+
           const login =
             <div><Responsive as={Container} minWidth={320} maxWidth={767} onUpdate={this.handleOnUpdate}>
             <ul>
-               {this.props.items.map((item) => (
-                   <li key={item.id}>
-                       {item.label}
+               {this.props.comunas.map((item) => (
+                   <li key={item.key}>
+                       {item.value}
                    </li>
                ))}
            </ul>
@@ -52,11 +53,11 @@ class Dashboard extends React.Component {
            {/* sobre 768 ancho hasta 960*/}
            <Responsive as={Container} minWidth={768} maxWidth={2560} onUpdate={this.handleOnUpdate}>
            <ul>
-              {this.props.items.map((item) => (
-                  <li key={item.id}>
-                      {item.label}
-                  </li>
-              ))}
+               {this.props.comunas.map((item) => (
+                   <li key={item.key}>
+                       {item.value}
+                   </li>
+               ))}
           </ul>
            </Responsive>
            </div>
@@ -75,14 +76,16 @@ const mapStateToProps = (state) =>{
   return {
     items: state.items,
     hasErrored: state.itemsHasErrored,
-    isLoading: state.itemsIsLoading
+    isLoading: state.itemsIsLoading,
+    comunas: state.comunas
   };
 }
 
 //fetchdata recibe url como parametro y despacha una accion
 const mapDispatchToProps = (dispatch) =>{
   return {
-    fetchData: (url) => dispatch(itemsFetchData(url))
+    fetchData: (url) => dispatch(itemsFetchData(url)),
+    fetchComunas: (comunas) => dispatch(getComunas(comunas))
   }
 }
 

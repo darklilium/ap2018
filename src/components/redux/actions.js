@@ -44,11 +44,19 @@ export function itemsFetchData(url){
       }
 
       dispatch(itemsIsLoading(false));
-    
+
       return response;
     })
     .then((response)=>response.json())
     .then((items)=>dispatch(itemsFetchDataSuccess(items)))
     .catch(()=>dispatch(itemsHasErrored(true)))
+  }
+}
+
+export function getComunas(comunas){
+  console.log(comunas);
+  return {
+    type: 'GET_COMUNAS',
+    comunas
   }
 }
