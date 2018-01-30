@@ -39,7 +39,6 @@ export function items (state = [], action){
 }
 
 export function comunas(state = [] , action){
-  console.log(state,action, "hola");
   switch (action.type) {
     case 'GET_COMUNAS':
       return action.comunas
