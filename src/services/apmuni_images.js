@@ -5,7 +5,8 @@ import env from './config.js';
 */
 const MuniImages = [
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/algarrobo.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/algarrobo.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/algarrobo.png',
     value: 'algarrobo',
     text: 'Algarrobo',
     extent: [-71.67062, -33.3648],
@@ -13,7 +14,8 @@ const MuniImages = [
     key: 1
   },
   {
-    original: env.CSSDIRECTORY + 'images/logos/logos_menu/cabildo.png',
+    dashboard_logo: env.CSSDIRECTORY + '/images/dashboard_images/logos/cabildo.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/cabildo.png',
     value: 'cabildo',
     text: 'Cabildo',
     extent: [-71.0662 , -32.4258],
@@ -21,7 +23,8 @@ const MuniImages = [
     key: 2
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/callelarga.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/callelarga.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/callelarga.png',
     value: 'callelarga',
     text: 'Calle Larga',
     extent: [-70.6258, -32.8575],
@@ -29,7 +32,8 @@ const MuniImages = [
     key: 3
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/cartagena.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/cartagena.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/cartagena.png',
     value: 'cartagena',
     text: 'Cartagena',
     extent: [-71.6046, -33.5482],
@@ -37,7 +41,8 @@ const MuniImages = [
     key: 4
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/casablanca.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/casablanca.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/casablanca.png',
     value: 'casablanca',
     text: 'Casablanca',
     extent: [-71.4076, -33.319],
@@ -45,7 +50,8 @@ const MuniImages = [
     key: 5
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/catemu.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/catemu.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/catemu.png',
     value: 'catemu',
     text: 'Catemu',
     extent: [-71.4076, -33.319],
@@ -53,7 +59,8 @@ const MuniImages = [
     key: 6
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/cauquenes.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/cauquenes.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/cauquenes.png',
     value: 'cauquenes',
     text: 'Cauquénes',
     extent: [-72.3314, -35.9597],
@@ -61,7 +68,8 @@ const MuniImages = [
     key: 7
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/colbun.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/colbun.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/colbun.png',
     value: 'colbun',
     text: 'Colbún',
     extent: [-71.4069, -35.6985],
@@ -69,7 +77,8 @@ const MuniImages = [
     key: 8
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/concon.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/concon.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/concon.png',
     value: 'concon',
     text: 'Concón',
     extent: [-71.5235, -32.9239],
@@ -77,7 +86,8 @@ const MuniImages = [
     key: 9
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/constitucion.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/constitucion.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/constitucion.png',
     value: 'constitucion',
     text: 'Constitución',
     extent: [-72.4094, -35.3335],
@@ -85,7 +95,8 @@ const MuniImages = [
     key: 10
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/curacavi.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/curacavi.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/curacavi.png',
     value: 'curacavi',
     text: 'Curacaví',
     extent: [-71.1575, -33.4004],
@@ -93,7 +104,8 @@ const MuniImages = [
     key: 11
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/elquisco.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/elquisco.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/elquisco.png',
     value: 'elquisco',
     text: 'El Quisco',
     extent: [-71.6982, -33.3986],
@@ -101,7 +113,8 @@ const MuniImages = [
     key: 12
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/eltabo.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/eltabo.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/eltabo.png',
     value: 'eltabo',
     text: 'El Tabo',
     extent: [-71.6669, -33.4557],
@@ -109,7 +122,8 @@ const MuniImages = [
     key: 13
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/empedrado.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/empedrado.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/empedrado.png',
     value: 'empedrado',
     text: 'Empedrado',
     extent: [-72.2861, -35.5924],
@@ -117,7 +131,8 @@ const MuniImages = [
     key: 14
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/hijuelas.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/hijuelas.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/hijuelas.png',
     value: 'hijuelas',
     text: 'Hijuelas',
     extent: [-71.1437, -32.798],
@@ -125,7 +140,8 @@ const MuniImages = [
     key: 15
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/lacalera.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/lacalera.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/lacalera.png',
     value: 'lacalera',
     text: 'La Calera',
     extent: [-71.204, -32.7878],
@@ -133,7 +149,8 @@ const MuniImages = [
     key: 16
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/lacruz.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/lacruz.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/lacruz.png',
     value: 'lacruz',
     text: 'La Cruz',
     extent: [-71.2273, -32.8258],
@@ -142,7 +159,8 @@ const MuniImages = [
 
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/laligua.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/laligua.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/laligua.png',
     value: 'laligua',
     text: 'La Ligua',
     extent: [-71.2326, -32.4499],
@@ -151,7 +169,8 @@ const MuniImages = [
 
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/limache.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/limache.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/limache.png',
     value: 'limache',
     text: 'Limache',
     extent: [-71.2596, -33.0095],
@@ -160,7 +179,8 @@ const MuniImages = [
 
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/linares.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/linares.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/linares.png',
     value: 'linares',
     text: 'Linares',
     extent: [-71.6049, -35.8465],
@@ -169,7 +189,8 @@ const MuniImages = [
 
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/llayllay.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/llayllay.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/llayllay.png',
     value: 'llayllay',
     text: 'Llay Llay',
     extent: [-70.9428, -32.8444],
@@ -178,7 +199,8 @@ const MuniImages = [
 
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/longavi.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/longavi.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/longavi.png',
     value: 'longavi',
     text: 'Longaví',
     extent: [-71.6899, -35.9623],
@@ -187,7 +209,8 @@ const MuniImages = [
 
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/losandes.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/losandes.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/losandes.png',
     value: 'losandes',
     text: 'Los Andes',
     extent: [-70.5972, -32.8338],
@@ -195,7 +218,8 @@ const MuniImages = [
     key: 23
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/ninhue.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/ninhue.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/ninhue.png',
     value: 'ninhue',
     text: 'Ninhue',
     extent: [-72.4061, -36.3947],
@@ -203,7 +227,8 @@ const MuniImages = [
     key: 24
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/nogales.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/nogales.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/nogales.png',
     value: 'nogales',
     text: 'Nogales',
     extent: [-71.2078, -32.7382],
@@ -211,7 +236,8 @@ const MuniImages = [
     key: 25
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/ñiquen.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/ñiquen.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/ñiquen.png',
     value: 'ñiquen',
     text: 'Ñiquén',
     extent: [-71.9102, -36.2941],
@@ -219,7 +245,8 @@ const MuniImages = [
     key: 26
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/olmue.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/olmue.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/olmue.png',
     value: 'olmue',
     text: 'Olmué',
     extent: [-71.1893,-32.9962],
@@ -227,7 +254,8 @@ const MuniImages = [
     key: 27
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/panquehue.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/panquehue.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/panquehue.png',
     value: 'panquehue',
     text: 'Panquehue',
     extent: [-70.8333, -32.767],
@@ -235,7 +263,8 @@ const MuniImages = [
     key: 28
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/parral.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/parral.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/parral.png',
     value: 'parral',
     text: 'Parral',
     extent: [-71.8373, -36.1462],
@@ -243,7 +272,8 @@ const MuniImages = [
     key: 29
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/puchuncavi.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/puchuncavi.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/puchuncavi.png',
     value: 'puchuncavi',
     text: 'Puchuncaví',
     extent: [-71.4122, -32.7275],
@@ -251,7 +281,8 @@ const MuniImages = [
     key: 30
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/putaendo.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/putaendo.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/putaendo.png',
     value: 'putaendo',
     text: 'Putaendo',
     extent: [-70.7177, -32.6285],
@@ -259,7 +290,8 @@ const MuniImages = [
     key: 31
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/quillota.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/quillota.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/quillota.png',
     value: 'quillota',
     text: 'Quillota',
     extent: [-71.2497, -32.8803],
@@ -267,7 +299,8 @@ const MuniImages = [
     key: 32
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/quilpue.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/quilpue.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/quilpue.png',
     value: 'quilpue',
     text: 'Quilpué',
     extent: [-71.4311, -33.0497],
@@ -275,7 +308,8 @@ const MuniImages = [
     key: 33
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/quintero.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/quintero.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/quintero.png',
     value: 'quintero',
     text: 'Quintero',
     extent: [-71.5313, -32.7660],
@@ -283,7 +317,8 @@ const MuniImages = [
     key: 34
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/retiro.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/retiro.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/retiro.png',
     value: 'retiro',
     text: 'Retiro',
     extent: [-71.7667,  -36.0500],
@@ -291,7 +326,8 @@ const MuniImages = [
     key: 35
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/rinconada.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/rinconada.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/rinconada.png',
     value: 'rinconada',
     text: 'Rinconada',
     extent: [-70.7068,  -32.8774],
@@ -299,7 +335,8 @@ const MuniImages = [
     key: 36
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sanantonio.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/sanantonio.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/sanantonio.png',
     value: 'sanantonio',
     text: 'San Antonio',
     extent: [-71.6131,  -33.5836],
@@ -307,7 +344,8 @@ const MuniImages = [
     key: 37
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sancarlos.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/sancarlos.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/sancarlos.png',
     value: 'sancarlos',
     text: 'San Carlos',
     extent: [-71.9862,  -36.4199],
@@ -315,7 +353,8 @@ const MuniImages = [
     key: 38
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sanesteban.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/sanesteban.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/sanesteban.png',
     value: 'sanesteban',
     text: 'San Esteban',
     extent: [-70.5937,  -32.8081],
@@ -323,7 +362,8 @@ const MuniImages = [
     key: 39
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sanfelipe.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/sanfelipe.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/sanfelipe.png',
     value: 'sanfelipe',
     text: 'San Felipe',
     extent: [-70.7208,  -32.75],
@@ -331,7 +371,8 @@ const MuniImages = [
     key: 40
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sanjavier.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/sanjavier.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/sanjavier.png',
     value: 'sanjavier',
     text: 'San Javier',
     extent: [-71.7369,  -35.5908],
@@ -339,7 +380,8 @@ const MuniImages = [
     key: 41
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/santamaria.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/santamaria.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/santamaria.png',
     value: 'santamaria',
     text: 'Santa María',
     extent: [-70.6587,  -32.747],
@@ -347,7 +389,8 @@ const MuniImages = [
     key: 42
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/santodomingo.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/santodomingo.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/santodomingo.png',
     value: 'santodomingo',
     text: 'Santo Domingo',
     extent: [-71.6309,  -33.6366],
@@ -355,7 +398,8 @@ const MuniImages = [
     key: 43
   },
   {
-    original: env.CSSDIRECTORY + 'images/logos/logos_menu/valparaiso.png',
+    dashboard_logo: env.CSSDIRECTORY + '/images/dashboard_images/logos/valparaiso.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/valparaiso.png',
     value: 'valparaiso',
     text: 'Valparaíso',
     extent: [-71.6272 ,-33.0394],
@@ -364,7 +408,8 @@ const MuniImages = [
 
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/villaalegre.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/villaalegre.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/villaalegre.png',
     value: 'villaalegre',
     text: 'Villa Alegre',
     extent: [-71.6829,  -35.6869],
@@ -372,7 +417,8 @@ const MuniImages = [
     key: 45
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/villaalemana.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/villaalemana.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/villaalemana.png',
     value: 'villaalemana',
     text: 'Villa Alemana',
     extent: [-71.3734,  -33.0476],
@@ -380,7 +426,8 @@ const MuniImages = [
     key: 46
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/vinadelmar.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/vinadelmar.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/vinadelmar.png',
     value: 'vinadelmar',
     text: 'Viña del Mar',
     extent: [-71.5523,  -33.0245],
@@ -388,7 +435,8 @@ const MuniImages = [
     key: 47
   },
   {
-    original:  env.CSSDIRECTORY + 'images/logos/logos_menu/yerbasbuenas.png',
+    dashboard_logo:  env.CSSDIRECTORY + '/images/dashboard_images/logos/yerbasbuenas.png',
+    dashboard_bg: env.CSSDIRECTORY + '/images/dashboard_images/bg/yerbasbuenas.png',
     value: 'yerbasbuenas',
     text: 'Yerbas Buenas',
     extent: [-71.5833,  -35.7500],

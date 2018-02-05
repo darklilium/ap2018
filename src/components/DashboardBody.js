@@ -28,7 +28,8 @@ class DashboardBody extends React.Component {
         return (
             <div className="dashboard_body_wrapper">
               <div className="dashboard_component_wrapper">
-                <img src={env.CSSDIRECTORY+"/images/logos/dashboard_logo/"+selected_comuna[0].value+".png"}></img>
+              {/*  <img src={env.CSSDIRECTORY+"/images/dashboard_images/logos/"+selected_comuna[0].value+".png"}></img>*/}
+                <img src={selected_comuna[0].dashboard_logo}></img>
                 <Divider horizontal inverted>Seleccione comuna</Divider>
                 <Dropdown upward placeholder='Select Comuna' fluid selection options={comunas} value={selected_comuna[0].value} onChange={this.onChange}/>
                 <Button className="btn_dashboard" onClick={this.onClick}>Ingresar</Button>

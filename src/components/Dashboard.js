@@ -37,7 +37,7 @@ class Dashboard extends React.Component {
                 <DashboardBody properties={this.props}/>
              </Responsive>
 
-           {/* sobre 768 ancho hasta 960*/}
+           {/* sobre 768 ancho hasta 2560*/}
              <Responsive as={Container} minWidth={768} maxWidth={2560} onUpdate={this.handleOnUpdate}>
                <DashboardHeader title='AP CHILQUINTA' />
                <DashboardBody properties={this.props}/>
