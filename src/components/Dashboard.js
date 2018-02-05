@@ -4,89 +4,54 @@ import { Responsive, Segment, Grid, Image,Input, Container, Button, Divider,Head
 import styles from '../css/myStyles.scss';
 import $ from 'jquery';
 import env from '../services/config';
-import {MuniImages} from '../services/apmuni_images';
-import {friendOptions} from '../services/apmuni_images';
-
 import { connect } from 'react-redux';
-import {itemsFetchData, getComunas} from './redux/actions';
+import DashboardHeader from './DashboardHeader';
+import DashboardBody from './DashboardBody';
+import dashStyle from '../css/component1/dashboard.scss';
 
 class Dashboard extends React.Component {
 
     handleOnUpdate = (e, { width }) => this.setState({ width })
 
     componentDidMount(){
+
       $('#app_wrapper').removeClass("wrapper").addClass("wrapper_dashboard");
       TweenMax.to(".wrapper_dashboard",5,{
         opacity: "1",
         transition: "opacity .5s ease",
         visibility: "visible"
       });
-
-      //this.props.fetchData('http://5826ed963900d612000138bd.mockapi.io/items');
-      this.props.fetchComunas(friendOptions);
-
     }
 
-    onClickLogin(){
-        this.props.history.push("/municipalidad");
-    }
 
-    onChange(){
-
-    }
+    handleOnUpdate = (e, { width }) => this.setState({ width })
 
     render() {
 
           const { width, comunas } = this.props
 
-          const login =
-            <div><Responsive as={Container} minWidth={320} maxWidth={767} onUpdate={this.handleOnUpdate}>
-            <ul>
-               {this.props.comunas.map((item) => (
-                   <li key={item.key}>
-                       {item.value}
-                   </li>
-               ))}
-           </ul>
-           </Responsive>
+          const dash =
+            <div className="inner_wrapper_dashboard">
+              <Responsive as={Container} minWidth={320} maxWidth={767} onUpdate={this.handleOnUpdate}>
+                <DashboardHeader title='' />
+                <DashboardBody properties={this.props}/>
+             </Responsive>
 
            {/* sobre 768 ancho hasta 960*/}
-           <Responsive as={Container} minWidth={768} maxWidth={2560} onUpdate={this.handleOnUpdate}>
-           <ul>
-               {this.props.comunas.map((item) => (
-                   <li key={item.key}>
-                       {item.value}
-                   </li>
-               ))}
-          </ul>
-           </Responsive>
+             <Responsive as={Container} minWidth={768} maxWidth={2560} onUpdate={this.handleOnUpdate}>
+               <DashboardHeader title='AP CHILQUINTA' />
+               <DashboardBody properties={this.props}/>
+
+             </Responsive>
            </div>
 
             return (
-              <div className="">
-                  {login}
+              <div className="wrapper_dashboard">
+                  {dash}
                </div>
             );
 
     }
 
 }
-
-const mapStateToProps = (state) =>{
-  return {
-    items: state.items,
-    hasErrored: state.itemsHasErrored,
-    isLoading: state.itemsIsLoading,
-    comunas: state.comunas
-  };
-}
-
-//fetchdata recibe url como parametro y despacha una accion
-const mapDispatchToProps = (dispatch) =>{
-  return {
-    fetchData: (url) => dispatch(itemsFetchData(url)),
-    fetchComunas: (comunas) => dispatch(getComunas(comunas))
-  }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(Dashboard);
+export default connect()(Dashboard);

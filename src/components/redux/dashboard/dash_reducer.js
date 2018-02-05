@@ -1,49 +1,30 @@
-
-
+import {MuniImages} from '../../../services/apmuni_images';
 //combineReducers
 
-export function itemsHasErrored(state = false, action){
+const comunaDefault = MuniImages.filter(comuna=>{return comuna.value==='valparaiso'});
+
+export function comunas(state=MuniImages, action){
+ switch (action.type) {
+   case 'GET_ALL_COMUNAS':
+     return state
+   break;
+
+   default:
+     return state;
+ }
+}
+
+
+export function selected_comuna(state=comunaDefault, action){
+
   switch (action.type) {
-    case 'ITEMS_HAS_ERRORED':
-      return action.hasErrored
-      break;
+    case 'SELECTED_COMUNA':
+      return MuniImages.filter(c=>{return c.value===action.comuna});
+    break;
 
     default:
       return state;
+    break;
   }
-}
 
-
-export function itemsIsLoading(state = false, action){
-  switch (action.type) {
-    case 'ITEMS_IS_LOADING':
-      return action.isLoading
-      break;
-
-    default:
-      return state;
-
-  }
-}
-
-
-export function items (state = [], action){
-  switch (action.type) {
-    case 'ITEMS_FETCH_DATA_SUCCESS':
-      return action.items
-      break;
-
-    default:
-      return state
-  }
-}
-
-export function comunas(state = [] , action){
-  switch (action.type) {
-    case 'GET_COMUNAS':
-      return action.comunas
-      break;
-    default:
-      return state
-  }
 }

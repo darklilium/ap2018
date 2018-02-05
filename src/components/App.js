@@ -8,10 +8,6 @@ class App extends Component {
     children: PropTypes.object.isRequired
   };
 
-  componentWillMount(e){
-
-  }
-
   render() {
     const { children } = this.props;
 

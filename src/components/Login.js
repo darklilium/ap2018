@@ -27,45 +27,39 @@ class Login extends React.Component {
       transition: "opacity .5s ease",
       visibility: "visible"
     });
-
-    /*  let randomPicNumber = Math.floor((Math.random() * 6) + 1);
-    //********Cambiar randomPicSrc para test/prod*******
-    let randomPicSrc = env.CSSDIRECTORY+ "/images/login_images/loginwall"+ randomPicNumber+ ".jpg";//desarrollo
-    */
   }
 
   onClickLogin(){
-      this.props.history.push("/dashboard");
-
-
+    this.props.history.push("/dashboard");
   }
 
   render(){
     const { width } = this.state
     const login =
-      <div className="inner_wrapper"><Responsive as={Container} minWidth={320} maxWidth={767} onUpdate={this.handleOnUpdate}>
-        <Container className="container_login">
-          <Container className="container_login_image">
-            <Header as='h2' icon textAlign='center'>
-            <img src={env.CSSDIRECTORY+'/images/logo_ap.png'} />
-            <Header.Content className="header_login_text">
-              AP Chilquinta
-              </Header.Content>
-            </Header>
-          </Container>
+      <div className="inner_wrapper">
+        <Responsive as={Container}  minWidth={320} maxWidth={767} onUpdate={this.handleOnUpdate}>
+          <Container className="container_login">
+            <Container className="container_login_image">
+              <Header as='h2' icon textAlign='center'>
+              <img src={env.CSSDIRECTORY+'/images/logo_ap.png'} />
+              <Header.Content className="header_login_text">
+                AP Chilquinta
+                </Header.Content>
+              </Header>
+            </Container>
 
-          <Container className="input_login_container">
-             <Input className="input_login" icon='user circle' iconPosition='left' placeholder='Usuario' />
-             <br />
-             <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
-          </Container>
+            <Container className="input_login_container">
+               <Input className="input_login" icon='user circle' iconPosition='left' placeholder='Usuario' />
+               <br />
+               <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
+            </Container>
 
-          <Container className="input_login_container">
-           <Divider ></Divider>
-            <Button className="btn_login">Login</Button>
+            <Container className="input_login_container">
+             <Divider ></Divider>
+              <Button className="btn_login"  onClick={this.onClickLogin.bind(this)}>Login</Button>
+            </Container>
           </Container>
-        </Container>
-     </Responsive>
+       </Responsive>
 
      {/* sobre 768 ancho hasta 960*/}
      <Responsive as={Container} minWidth={768} maxWidth={2560} onUpdate={this.handleOnUpdate}>
@@ -84,7 +78,7 @@ class Login extends React.Component {
             <br />
             <Input  className="input_login" icon='lock' iconPosition='left' placeholder='Contraseña' />
              <Divider ></Divider>
-            <Button className="btn_login" onClick = {this.onClickLogin.bind(this)}>Login</Button>
+            <Button className="btn_login" onClick={this.onClickLogin.bind(this)}>Login</Button>
          </Container>
 
 

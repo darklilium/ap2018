@@ -1,351 +1,399 @@
 import env from './config.js';
-/*name: para pagina,
-* originalName: para titulo
-* queryName: para servicio
+/*value: para pagina,
+* text: para titulo
+* queryvalue: para servicio
 */
 const MuniImages = [
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/algarrobo.png',
-    name: 'algarrobo',
-    originalName: 'Algarrobo',
+    value: 'algarrobo',
+    text: 'Algarrobo',
     extent: [-71.67062, -33.3648],
-    queryName: 'ALGARROBO'
+    queryvalue: 'ALGARROBO',
+    key: 1
   },
   {
     original: env.CSSDIRECTORY + 'images/logos/logos_menu/cabildo.png',
-    name: 'cabildo',
-    originalName: 'Cabildo',
+    value: 'cabildo',
+    text: 'Cabildo',
     extent: [-71.0662 , -32.4258],
-    queryName: 'CABILDO'
+    queryvalue: 'CABILDO',
+    key: 2
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/callelarga.png',
-    name: 'callelarga',
-    originalName: 'Calle Larga',
+    value: 'callelarga',
+    text: 'Calle Larga',
     extent: [-70.6258, -32.8575],
-    queryName: 'CALLE LARGA'
+    queryvalue: 'CALLE LARGA',
+    key: 3
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/cartagena.png',
-    name: 'cartagena',
-    originalName: 'Cartagena',
+    value: 'cartagena',
+    text: 'Cartagena',
     extent: [-71.6046, -33.5482],
-    queryName: 'CARTAGENA'
+    queryvalue: 'CARTAGENA',
+    key: 4
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/casablanca.png',
-    name: 'casablanca',
-    originalName: 'Casablanca',
+    value: 'casablanca',
+    text: 'Casablanca',
     extent: [-71.4076, -33.319],
-    queryName: 'CASABLANCA'
+    queryvalue: 'CASABLANCA',
+    key: 5
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/catemu.png',
-    name: 'catemu',
-    originalName: 'Catemu',
+    value: 'catemu',
+    text: 'Catemu',
     extent: [-71.4076, -33.319],
-    queryName: 'CATEMU'
+    queryvalue: 'CATEMU',
+    key: 6
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/cauquenes.png',
-    name: 'cauquenes',
-    originalName: 'Cauquénes',
+    value: 'cauquenes',
+    text: 'Cauquénes',
     extent: [-72.3314, -35.9597],
-    queryName: 'CAUQUÉNES'
+    queryvalue: 'CAUQUÉNES',
+    key: 7
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/colbun.png',
-    name: 'colbun',
-    originalName: 'Colbún',
+    value: 'colbun',
+    text: 'Colbún',
     extent: [-71.4069, -35.6985],
-    queryName: 'COLBÚN'
+    queryvalue: 'COLBÚN',
+    key: 8
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/concon.png',
-    name: 'concon',
-    originalName: 'Concón',
+    value: 'concon',
+    text: 'Concón',
     extent: [-71.5235, -32.9239],
-    queryName: 'CONCON'
+    queryvalue: 'CONCON',
+    key: 9
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/constitucion.png',
-    name: 'constitucion',
-    originalName: 'Constitución',
+    value: 'constitucion',
+    text: 'Constitución',
     extent: [-72.4094, -35.3335],
-    queryName: 'CONSTITUCIÓN'
+    queryvalue: 'CONSTITUCIÓN',
+    key: 10
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/curacavi.png',
-    name: 'curacavi',
-    originalName: 'Curacaví',
+    value: 'curacavi',
+    text: 'Curacaví',
     extent: [-71.1575, -33.4004],
-    queryName: 'CURACAVI'
+    queryvalue: 'CURACAVI',
+    key: 11
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/elquisco.png',
-    name: 'elquisco',
-    originalName: 'El Quisco',
+    value: 'elquisco',
+    text: 'El Quisco',
     extent: [-71.6982, -33.3986],
-    queryName: 'EL QUISCO'
+    queryvalue: 'EL QUISCO',
+    key: 12
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/eltabo.png',
-    name: 'eltabo',
-    originalName: 'El Tabo',
+    value: 'eltabo',
+    text: 'El Tabo',
     extent: [-71.6669, -33.4557],
-    queryName: 'EL TABO'
+    queryvalue: 'EL TABO',
+    key: 13
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/empedrado.png',
-    name: 'empedrado',
-    originalName: 'Empedrado',
+    value: 'empedrado',
+    text: 'Empedrado',
     extent: [-72.2861, -35.5924],
-    queryName: 'Empedrado'
+    queryvalue: 'Empedrado',
+    key: 14
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/hijuelas.png',
-    name: 'hijuelas',
-    originalName: 'Hijuelas',
+    value: 'hijuelas',
+    text: 'Hijuelas',
     extent: [-71.1437, -32.798],
-    queryName: 'HIJUELAS'
+    queryvalue: 'HIJUELAS',
+    key: 15
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/lacalera.png',
-    name: 'lacalera',
-    originalName: 'La Calera',
+    value: 'lacalera',
+    text: 'La Calera',
     extent: [-71.204, -32.7878],
-    queryName: 'LA CALERA'
+    queryvalue: 'LA CALERA',
+    key: 16
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/lacruz.png',
-    name: 'lacruz',
-    originalName: 'La Cruz',
+    value: 'lacruz',
+    text: 'La Cruz',
     extent: [-71.2273, -32.8258],
-    queryName: 'LA CRUZ'
+    queryvalue: 'LA CRUZ',
+    key: 17
 
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/laligua.png',
-    name: 'laligua',
-    originalName: 'La Ligua',
+    value: 'laligua',
+    text: 'La Ligua',
     extent: [-71.2326, -32.4499],
-    queryName: 'LA LIGUA'
+    queryvalue: 'LA LIGUA',
+    key: 18
 
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/limache.png',
-    name: 'limache',
-    originalName: 'Limache',
+    value: 'limache',
+    text: 'Limache',
     extent: [-71.2596, -33.0095],
-    queryName: 'LIMACHE'
+    queryvalue: 'LIMACHE',
+    key: 19
 
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/linares.png',
-    name: 'linares',
-    originalName: 'Linares',
+    value: 'linares',
+    text: 'Linares',
     extent: [-71.6049, -35.8465],
-    queryName: 'LINARES'
+    queryvalue: 'LINARES',
+    key: 20
 
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/llayllay.png',
-    name: 'llayllay',
-    originalName: 'Llay Llay',
+    value: 'llayllay',
+    text: 'Llay Llay',
     extent: [-70.9428, -32.8444],
-    queryName: 'LLAY LLAY'
+    queryvalue: 'LLAY LLAY',
+    key: 21
 
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/longavi.png',
-    name: 'longavi',
-    originalName: 'Longaví',
+    value: 'longavi',
+    text: 'Longaví',
     extent: [-71.6899, -35.9623],
-    queryName: 'LONGAVÍ'
+    queryvalue: 'LONGAVÍ',
+    key: 22
 
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/losandes.png',
-    name: 'losandes',
-    originalName: 'Los Andes',
+    value: 'losandes',
+    text: 'Los Andes',
     extent: [-70.5972, -32.8338],
-    queryName: 'LOS ANDES'
+    queryvalue: 'LOS ANDES',
+    key: 23
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/ninhue.png',
-    name: 'ninhue',
-    originalName: 'Ninhue',
+    value: 'ninhue',
+    text: 'Ninhue',
     extent: [-72.4061, -36.3947],
-    queryName: 'NINHUE'
+    queryvalue: 'NINHUE',
+    key: 24
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/nogales.png',
-    name: 'nogales',
-    originalName: 'Nogales',
+    value: 'nogales',
+    text: 'Nogales',
     extent: [-71.2078, -32.7382],
-    queryName: 'NOGALES'
+    queryvalue: 'NOGALES',
+    key: 25
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/ñiquen.png',
-    name: 'ñiquen',
-    originalName: 'Ñiquén',
+    value: 'ñiquen',
+    text: 'Ñiquén',
     extent: [-71.9102, -36.2941],
-    queryName: 'ÑIQUEN'
+    queryvalue: 'ÑIQUEN',
+    key: 26
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/olmue.png',
-    name: 'olmue',
-    originalName: 'Olmué',
+    value: 'olmue',
+    text: 'Olmué',
     extent: [-71.1893,-32.9962],
-    queryName: 'OLMUE'
+    queryvalue: 'OLMUE',
+    key: 27
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/panquehue.png',
-    name: 'panquehue',
-    originalName: 'Panquehue',
+    value: 'panquehue',
+    text: 'Panquehue',
     extent: [-70.8333, -32.767],
-    queryName: 'PANQUEHUE'
+    queryvalue: 'PANQUEHUE',
+    key: 28
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/parral.png',
-    name: 'parral',
-    originalName: 'Parral',
+    value: 'parral',
+    text: 'Parral',
     extent: [-71.8373, -36.1462],
-    queryName: 'PARRAL'
+    queryvalue: 'PARRAL',
+    key: 29
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/puchuncavi.png',
-    name: 'puchuncavi',
-    originalName: 'Puchuncaví',
+    value: 'puchuncavi',
+    text: 'Puchuncaví',
     extent: [-71.4122, -32.7275],
-    queryName: 'PUCHUNCAVI'
+    queryvalue: 'PUCHUNCAVI',
+    key: 30
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/putaendo.png',
-    name: 'putaendo',
-    originalName: 'Putaendo',
+    value: 'putaendo',
+    text: 'Putaendo',
     extent: [-70.7177, -32.6285],
-    queryName: 'PUTAENDO'
+    queryvalue: 'PUTAENDO',
+    key: 31
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/quillota.png',
-    name: 'quillota',
-    originalName: 'Quillota',
+    value: 'quillota',
+    text: 'Quillota',
     extent: [-71.2497, -32.8803],
-    queryName: 'QUILLOTA'
+    queryvalue: 'QUILLOTA',
+    key: 32
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/quilpue.png',
-    name: 'quilpue',
-    originalName: 'Quilpué',
+    value: 'quilpue',
+    text: 'Quilpué',
     extent: [-71.4311, -33.0497],
-    queryName: 'QUILPUE'
+    queryvalue: 'QUILPUE',
+    key: 33
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/quintero.png',
-    name: 'quintero',
-    originalName: 'Quintero',
+    value: 'quintero',
+    text: 'Quintero',
     extent: [-71.5313, -32.7660],
-    queryName: 'QUINTERO'
+    queryvalue: 'QUINTERO',
+    key: 34
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/retiro.png',
-    name: 'retiro',
-    originalName: 'Retiro',
+    value: 'retiro',
+    text: 'Retiro',
     extent: [-71.7667,  -36.0500],
-    queryName: 'RETIRO'
+    queryvalue: 'RETIRO',
+    key: 35
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/rinconada.png',
-    name: 'rinconada',
-    originalName: 'Rinconada',
+    value: 'rinconada',
+    text: 'Rinconada',
     extent: [-70.7068,  -32.8774],
-    queryName: 'RINCONADA'
+    queryvalue: 'RINCONADA',
+    key: 36
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sanantonio.png',
-    name: 'sanantonio',
-    originalName: 'San Antonio',
+    value: 'sanantonio',
+    text: 'San Antonio',
     extent: [-71.6131,  -33.5836],
-    queryName: 'SAN ANTONIO'
+    queryvalue: 'SAN ANTONIO',
+    key: 37
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sancarlos.png',
-    name: 'sancarlos',
-    originalName: 'San Carlos',
+    value: 'sancarlos',
+    text: 'San Carlos',
     extent: [-71.9862,  -36.4199],
-    queryName: 'SAN CARLOS'
+    queryvalue: 'SAN CARLOS',
+    key: 38
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sanesteban.png',
-    name: 'sanesteban',
-    originalName: 'San Esteban',
+    value: 'sanesteban',
+    text: 'San Esteban',
     extent: [-70.5937,  -32.8081],
-    queryName: 'SAN ESTEBAN'
+    queryvalue: 'SAN ESTEBAN',
+    key: 39
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sanfelipe.png',
-    name: 'sanfelipe',
-    originalName: 'San Felipe',
+    value: 'sanfelipe',
+    text: 'San Felipe',
     extent: [-70.7208,  -32.75],
-    queryName: 'SAN FELIPE'
+    queryvalue: 'SAN FELIPE',
+    key: 40
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/sanjavier.png',
-    name: 'sanjavier',
-    originalName: 'San Javier',
+    value: 'sanjavier',
+    text: 'San Javier',
     extent: [-71.7369,  -35.5908],
-    queryName: 'SAN JAVIER'
+    queryvalue: 'SAN JAVIER',
+    key: 41
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/santamaria.png',
-    name: 'santamaria',
-    originalName: 'Santa María',
+    value: 'santamaria',
+    text: 'Santa María',
     extent: [-70.6587,  -32.747],
-    queryName: 'SANTA MARIA'
+    queryvalue: 'SANTA MARIA',
+    key: 42
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/santodomingo.png',
-    name: 'santodomingo',
-    originalName: 'Santo Domingo',
+    value: 'santodomingo',
+    text: 'Santo Domingo',
     extent: [-71.6309,  -33.6366],
-    queryName: 'SANTO DOMINGO'
+    queryvalue: 'SANTO DOMINGO',
+    key: 43
   },
   {
     original: env.CSSDIRECTORY + 'images/logos/logos_menu/valparaiso.png',
-    name: 'valparaiso',
-    originalName: 'Valparaíso',
+    value: 'valparaiso',
+    text: 'Valparaíso',
     extent: [-71.6272 ,-33.0394],
-    queryName: 'VALPARAISO'
+    queryvalue: 'VALPARAISO',
+    key: 44
 
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/villaalegre.png',
-    name: 'villaalegre',
-    originalName: 'Villa Alegre',
+    value: 'villaalegre',
+    text: 'Villa Alegre',
     extent: [-71.6829,  -35.6869],
-    queryName: 'VILLA ALEGRE'
+    queryvalue: 'VILLA ALEGRE',
+    key: 45
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/villaalemana.png',
-    name: 'villaalemana',
-    originalName: 'Villa Alemana',
+    value: 'villaalemana',
+    text: 'Villa Alemana',
     extent: [-71.3734,  -33.0476],
-    queryName: 'VILLA ALEMANA'
+    queryvalue: 'VILLA ALEMANA',
+    key: 46
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/vinadelmar.png',
-    name: 'vinadelmar',
-    originalName: 'Viña del Mar',
+    value: 'vinadelmar',
+    text: 'Viña del Mar',
     extent: [-71.5523,  -33.0245],
-    queryName: 'VIÑA DEL MAR'
+    queryvalue: 'VIÑA DEL MAR',
+    key: 47
   },
   {
     original:  env.CSSDIRECTORY + 'images/logos/logos_menu/yerbasbuenas.png',
-    name: 'yerbasbuenas',
-    originalName: 'Yerbas Buenas',
+    value: 'yerbasbuenas',
+    text: 'Yerbas Buenas',
     extent: [-71.5833,  -35.7500],
-    queryName: 'YERBAS BUENAS'
+    queryvalue: 'YERBAS BUENAS',
+    key: 48
   }
 
 ]
@@ -389,6 +437,4 @@ const friendOptions = [
   },
 ]
 
-export {friendOptions}
-
-export default MuniImages;
+export {friendOptions, MuniImages}
