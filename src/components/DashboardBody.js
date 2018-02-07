@@ -15,7 +15,7 @@ class DashboardBody extends React.Component {
       //this.props.properties.history.push("/municipalidad");
     }
     onChange = (e,{value}) =>{
-      $(".dashboard_body_wrapper").css("background-image", "url("+env.CSSDIRECTORY+"/images/logos/dashboard_bg/"+value+".png)");
+      $(".dashboard_body_wrapper").css("background-image", "url("+env.CSSDIRECTORY+"/images/dashboard_images/bg/"+value+".png)");
       this.props.selectedComuna(value);
 
     }
