@@ -1,6 +1,7 @@
 
 
 const env = {
-  CSSDIRECTORY: 'src/css'
+  CSSDIRECTORY: 'src/css',
+  BUILDFOR: 'INTERNA'
 }
 export default env

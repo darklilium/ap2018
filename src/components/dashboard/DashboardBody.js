@@ -1,11 +1,11 @@
 import React from 'react';
-import env from '../services/config';
+import env from '../../services/config';
 import { Dropdown, Menu, Button, Divider } from 'semantic-ui-react';
 import {withRouter} from "react-router-dom";
 import { connect } from 'react-redux';
 import $ from 'jquery';
-import {store} from './redux/store';
-import {getAllComunas, selectedComuna} from './redux/actions';
+import {store} from '../redux/store';
+import {getAllComunas, selectedComuna} from '../redux/actions';
 
 
 class DashboardBody extends React.Component {

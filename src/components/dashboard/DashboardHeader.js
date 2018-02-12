@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Menu, Button, Icon, Label  } from 'semantic-ui-react'
 const style = {background: 'red', color: 'white', margin: '0px'}
-import env from '../services/config';
+import env from '../../services/config';
 
 export default class DashboardHeader extends Component {
   constructor(props){

@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Login from './components/Login';
-import env from './services/config';
 import $ from 'jquery';
+//services
+import env from './services/config';
+
 //components
-import Dashboard from './components/Dashboard';
-import Municipalidad from './components/Municipalidad';
+import Login from './components/login/Login';
+import Dashboard from './components/dashboard/Dashboard';
+import Municipalidad from './components/municipal/Municipalidad';
 import App from './components/App';
 
 import { Route, Switch } from 'react-router-dom';

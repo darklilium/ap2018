@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Responsive, Segment, Grid, Image,Input, Container, Button, Divider,Header, Dropdown } from 'semantic-ui-react';
-import styles from '../css/myStyles.scss';
+import styles from '../../css/myStyles.scss';
 import $ from 'jquery';
-import env from '../services/config';
+import env from '../../services/config';
 import { connect } from 'react-redux';
 import DashboardHeader from './DashboardHeader';
 import DashboardBody from './DashboardBody';
-import dashStyle from '../css/component1/dashboard.scss';
+import dashStyle from '../../css/component1/dashboard.scss';
 
 class Dashboard extends React.Component {
 
