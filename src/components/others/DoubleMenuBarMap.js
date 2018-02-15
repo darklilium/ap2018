@@ -6,6 +6,7 @@ var styled = {
 }
 
 var myItem = null;
+
 class SidebarTopPush extends Component {
   state = { visible: false, nameClicked: '', showSegment: false, nameClicked: '' }
 
@@ -33,21 +34,21 @@ class SidebarTopPush extends Component {
         case 'home':
         myItem =  <Segment basic>
                 <Header as='h3'>home</Header>
-                <Image src='/assets/images/wireframe/paragraph.png' />
+                <div>hola</div>
               </Segment>
         break;
 
         case 'gamepad':
         myItem =  <Segment basic>
                 <Header as='h3'>gamepad</Header>
-                <Image src='/assets/images/wireframe/paragraph.png' />
+                  <div>hola</div>
               </Segment>
         break;
 
         case 'camera':
         myItem =  <Segment basic>
                 <Header as='h3'>camera</Header>
-                <Image src='/assets/images/wireframe/paragraph.png' />
+                <div>hola</div>
               </Segment>
         break;
         default:
@@ -61,7 +62,9 @@ class SidebarTopPush extends Component {
 
     return (
       <div>
-        <Button onClick={this.toggleVisibility}>Toggle Visibility</Button>
+        
+        {/* Burger Button Menu*/}
+        <Button onClick={this.toggleVisibility}><Icon name='content' /></Button>
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation='push' direction='top' visible={visible} inverted>
             <Menu.Item name='home' onClick={this.onClick}>
@@ -83,7 +86,7 @@ class SidebarTopPush extends Component {
             <Sidebar.Pusher>
              <Segment basic>
               <Header as='h3'>Application Content</Header>
-              <Image src='/assets/images/wireframe/paragraph.png' />
+
             </Segment>
           </Sidebar.Pusher>
 

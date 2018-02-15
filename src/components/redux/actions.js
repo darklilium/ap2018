@@ -49,3 +49,35 @@ export function selectedComuna(comuna){
     comuna
   }
 }
+
+
+//------------------------------------------------------------------------------
+//OTHERS COMPONENTS actions
+
+//BOTTOM MESSAGE:
+
+export const showNotification = (visible) =>{
+  console.log(visible,"showNotification");
+  return {
+    type: "SHOW_NOTIFICATION",
+    visible
+
+  }
+}
+
+export const hideNotification = (visible) =>{
+  console.log(visible, "hideNotification");
+  return {
+    type: "HIDE_NOTIFICATION",
+    visible
+
+  }
+}
+
+export const setMessage = (message) => {
+  console.log(message,"setMessage");
+  return {
+    type: "SET_MESSAGE",
+    message
+  }
+}

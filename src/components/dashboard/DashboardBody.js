@@ -11,8 +11,8 @@ import {getAllComunas, selectedComuna} from '../redux/actions';
 class DashboardBody extends React.Component {
     onClick =  () => {
       const {selected_comuna} = this.props;
-      console.log(selected_comuna,"seleccionada");
-      //this.props.properties.history.push("/municipalidad");
+    
+      this.props.properties.history.push("/municipalidad");
     }
     onChange = (e,{value}) =>{
       $(".dashboard_body_wrapper").css("background-image", "url("+env.CSSDIRECTORY+"/images/dashboard_images/bg/"+value+".png)");

@@ -1,19 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Responsive, Segment, Grid, Image,Input, Container, Button, Divider,Header, Form, Checkbox } from 'semantic-ui-react';
-import env from '../../services/config';
-import styles from '../../css/myStyles.scss';
 import $ from 'jquery';
+import { connect } from 'react-redux';
 import {withRouter} from "react-router-dom";
 
-import { connect } from 'react-redux';
-import {changeWidth, getCredentials, getUser, getPassword} from '../redux/actions';
+
+import {changeWidth, getCredentials, getUser, getPassword, showNotification, setMessage} from '../redux/actions';
+
+import env from '../../services/config';
+
+import styles from '../../css/myStyles.scss';
+
+import BottomMessage from '../others/BottomMessage';
 
 class Login extends React.Component {
 
 
 
-  handleOnUpdate = (e, { width }) => this.props.changeWidth(width);
+  handleOnUpdate = (e, { width }) => {};
 
 
   componentDidMount(){
@@ -37,12 +42,17 @@ class Login extends React.Component {
 
     this.props
        .getCredentials(credentials)
-       .then(() => this.props.history.push("/dashboard"))
-       .catch(()=> console.log("error"));
+       .then(() => {
+         (credentials.municipal) ? this.props.history.push("/municipalidad") : this.props.history.push("/dashboard")
+       })
+       .catch(()=> {
+        console.log("error");
+        this.props.handleDismiss("Error al iniciar sesión", true);
+       });
   }
 
   render(){
-    const {width} = this.props;
+    const {width, message, visibleMsg} = this.props;
 
     const login =
       <div className="inner_wrapper">
@@ -74,7 +84,7 @@ class Login extends React.Component {
                <br />
 
             </Container>
-
+            <BottomMessage />
 
           </Container>
        </Responsive>
@@ -104,7 +114,7 @@ class Login extends React.Component {
             <Button className="btn_login" onClick={this.onClickLogin.bind(this)}>Login</Button>
           </Form>
          </Container>
-
+          <BottomMessage />
 
        </Container>
      </Responsive>
@@ -126,7 +136,11 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getCredentials: (credentials) => dispatch(getCredentials(credentials))
+    getCredentials: (credentials) => dispatch(getCredentials(credentials)),
+    handleDismiss(notification,visibility) {
+      dispatch(showNotification(visibility)),
+      dispatch(setMessage(notification))
+    }
   }
 }
 

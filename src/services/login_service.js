@@ -6,16 +6,6 @@ export default function getTokenForDefaultUser(credentials){
 
   var promise = new Promise((resolve,reject)=>{
 
-/*
-    const data = {
-      username: 'vialactea\\ehernanr',
-      password: 'Chilquinta12',
-      client: 'requestip',
-      expiration: 10080,
-      format: 'jsonp',
-    };
-*/
-
     let data = {
       username: '',
       password: credentials.password,
@@ -27,7 +17,6 @@ export default function getTokenForDefaultUser(credentials){
     //Si es vialactea incluida
     if(credentials.vialactea){
       data.username = credentials.user;
-    //  console.log("vialactea", credentials.vialactea);
     }
 
     //verificar si es municipal o pertenece al dominio, ya que vialactea no está incluida en el usuario ingresado

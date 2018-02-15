@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
 import { Message } from 'semantic-ui-react'
 import {connect} from 'react-redux';
-import {dismissNotification,showNotification} from  '../redux/actions';
+import {hideNotification, setMessage} from  '../redux/actions';
 
 
 class BottomMessage extends Component {
 
-  render() {
 
-    if (this.props.visible) {
+  render() {
+    var {visible, message} = this.props;
+    console.log(message, visible, "tengo en msg");
+    if (visible) {
       return (
         <Message
           onDismiss={this.props.handleDismiss}
-          header='¡Bienvenido!'
-          content= {this.props.message}
+
+          content= {message}
           color= 'black'
         />
       )
@@ -25,16 +27,16 @@ class BottomMessage extends Component {
 
   const mapStateToProps = state => {
     return {
-      message: state.message,
-      visible: state.visible
+      message: state.message.message,
+      visible: state.visibleMessage.visible
     };
   }
 
   const mapDispatchToProps = dispatch =>{
     return {
       handleDismiss(visible) {
-          dispatch(dismissNotification(false));
-          dispatch(showNotification(''))
+        dispatch(hideNotification(true)),
+        dispatch(setMessage(''))
       }
     }
   }

@@ -3,7 +3,6 @@
 export function credentials(state=[], action){
   switch (action.type) {
 
-
     case 'GOT_TOKEN':
       return Object.assign({},action.credentials, {login: true});
     break;
@@ -52,4 +51,32 @@ export function width(state=[], action){
       return state;
     break;
   }
+}
+
+export function message(state={message: ''}, action){
+  console.log(state,action,"hola from message");
+  switch (action.type) {
+    case "SET_MESSAGE":
+      return Object.assign({}, state, {message: action.message});
+      break;
+    default:
+      return state;
+  }
+
+
+}
+
+export function visibleMessage(state={visible: false}, action){
+
+  switch (action.type) {
+    case "SHOW_NOTIFICATION":
+      return Object.assign({}, state, {visible: true});
+    break;
+
+    case "HIDE_NOTIFICATION":
+      return  Object.assign({}, state, {visible: false});
+    default:
+      return state;
+  }
+
 }
