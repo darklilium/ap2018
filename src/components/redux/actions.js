@@ -66,7 +66,7 @@ export const showNotification = (visible) =>{
 }
 
 export const hideNotification = (visible) =>{
-  console.log(visible, "hideNotification");
+
   return {
     type: "HIDE_NOTIFICATION",
     visible
@@ -75,7 +75,7 @@ export const hideNotification = (visible) =>{
 }
 
 export const setMessage = (message) => {
-  console.log(message,"setMessage");
+
   return {
     type: "SET_MESSAGE",
     message

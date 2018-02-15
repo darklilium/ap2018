@@ -17,3 +17,6 @@ ReactDOM.render(
     </Router>
   </Provider>, rootEl
 );
+
+
+export default store;

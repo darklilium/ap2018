@@ -16,9 +16,75 @@ $dash_background_color: #000; //40opacity 46% fill;
   background-color: red;
 }
 
+.muni_header_titles{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-left: 0.5em;
+  flex-grow: 2;
+  justify-content: center;
+}
+
+.main_title{
+  font-family: Lato !important;
+  font-weight: 300 !important;
+  color: white !important;
+}
+.secondary_title{
+  font-family: Roboto !important;
+  font-weight: 900 !important;
+  color: white !important;
+}
+
+.header_title{
+  margin: 0 !important;
+  background: #ff0000cf;
+}
 
 .logo_img{
-  margin-top: 0.5em;
+  margin-top: 0.5em ;
   margin-left: 0.5em;
   margin-bottom: 0.5em;
+}
+
+.muni_header_button{
+  display: flex;
+}
+
+
+
+
+@media (min-width: 320px) and (max-width: 425px) {
+
+  .muni_header_wrapper{
+    display: flex;
+    width: 100%;
+  }
+}
+
+
+@media (min-width: 426px)  {
+
+  .muni_header_wrapper{
+    display: flex;
+    width: 100%;
+  }
+
+  .logoxl_wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .logoxl_wrapper img {
+    display: flex !important;
+    height: 100% !important;
+  }
+
+  .logoxl_wrapper h3 {
+    margin: 0;
+    margin-left: 0.5em;
+    margin-top: 0.5em;
+  }
+
 }

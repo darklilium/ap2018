@@ -7,12 +7,14 @@ import muniStyle from '../../css/component1/municipal.scss';
 import $ from 'jquery';
 import SidebarTopPush from '../others/DoubleMenuBarMap';
 import HeaderMenu from './HeaderMenu';
+import store from '../../index';
 
 class Municipalidad extends React.Component {
  render(){
+   const {comuna} = this.props;
    return (
        <div className="muni-wrapper">
-        <HeaderMenu />
+        <HeaderMenu comuna={comuna}/>
 
 
        </div>
@@ -31,8 +33,9 @@ class Municipalidad extends React.Component {
 }
 
 const mapStateToProps = state =>{
+  console.log(state, "municipalidad state");
   return {
-
+    comuna: state.selected_comuna
   }
 }
 
