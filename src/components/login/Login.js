@@ -7,6 +7,7 @@ import {withRouter} from "react-router-dom";
 
 
 import {changeWidth, getCredentials, getUser, getPassword, showNotification, setMessage} from '../redux/actions';
+import {getAllComunas, selectedComuna, getMuniOptions} from '../redux/actions';
 
 import env from '../../services/config';
 
@@ -15,8 +16,6 @@ import styles from '../../css/myStyles.scss';
 import BottomMessage from '../others/BottomMessage';
 
 class Login extends React.Component {
-
-
 
   handleOnUpdate = (e, { width }) => {};
 
@@ -43,8 +42,24 @@ class Login extends React.Component {
     this.props
        .getCredentials(credentials)
        .then(() => {
-         (credentials.municipal) ? this.props.history.push("/municipalidad") : this.props.history.push("/dashboard")
+         //si las credenciales son para usuario municipal, obtener info del usuario municipal en rest.
+         if (credentials.municipal) {
+           this.props.getMuniOptions(credentials.user,this.props.credentials.token)
+           .then(()=>{
+             //guardar la comuna del usuario municipal e ir a la vista municipalidad:
+             if(this.props.muniValue.length){
+                this.props.selectedComuna(this.props.muniValue[0].value);
+                this.props.history.push("/municipalidad")
+             }else{
+               this.props.handleDismiss("Error al iniciar sesión en la comuna", true);
+             }
+           })
+          ///si las credenciales para el usuario son vialactea, pasar al dashboard
+         }else{
+           this.props.history.push("/dashboard")
+         }
        })
+       //en el caso que el token para el usuario vialactea falle (o el default para muni), muestra mensaje de error
        .catch(()=> {
         console.log("error");
         this.props.handleDismiss("Error al iniciar sesión", true);
@@ -130,7 +145,8 @@ class Login extends React.Component {
 
 const mapStateToProps = (state) =>{
   return {
-    credentials: state.credentials
+    credentials: state.credentials,
+    muniValue: state.muniOptions.comunaValue
   }
 };
 
@@ -140,7 +156,12 @@ const mapDispatchToProps = (dispatch) => {
     handleDismiss(notification,visibility) {
       dispatch(showNotification(visibility)),
       dispatch(setMessage(notification))
-    }
+    },
+
+    selectedComuna: (selected) => dispatch(selectedComuna(selected)),
+    getMuniOptions: (user,token) => dispatch(getMuniOptions(user,token))
+
+
   }
 }
 

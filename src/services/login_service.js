@@ -1,6 +1,7 @@
 import layers from './layers_service';
 import $ from 'jquery';
-
+import QueryTask from 'esri/tasks/QueryTask';
+import Query from 'esri/tasks/query';
 
 export default function getTokenForDefaultUser(credentials){
 
@@ -30,9 +31,10 @@ export default function getTokenForDefaultUser(credentials){
       }else{
         console.log("Verificando usuario que sea del dominio...", credentials.user);
         data.username = `vialactea\\${credentials.user}`;
-        console.log(credentials.user,"nuevo nombre de usuario a calcular...");
+        /*console.log(credentials.user,"nuevo nombre de usuario a calcular...");
         console.log("vialactea", credentials.vialactea);
         console.log("data", data);
+        */
       }
     }
 
@@ -45,19 +47,58 @@ export default function getTokenForDefaultUser(credentials){
       .done(token=>{
         if ( (token.indexOf('Exception')>=0) || (token.indexOf('Error')>=0) ) {
           console.log("Error exception", token);
-          reject("");
-          return;
+          reject('');
         }
-        console.log(token,"tengo esto");
         resolve(token);
-
       })
       .catch(error=>{
-        console.log(error,"failure");
         reject(error);
-
       });
 
   });
   return promise;
 }
+
+//obtiene el usuario y password almacenados en la bd.
+function loginMuniOptions(user, token){
+
+  var promise = new Promise((resolve, reject)=>{
+    var qTaskOfficeChilquinta = new QueryTask(layers.read_logAccess(token));
+    var qOfficeChilquinta = new Query();
+    qOfficeChilquinta.where = "usuario = '"+ user+ "'";
+    qOfficeChilquinta.returnGeometry = false;
+    qOfficeChilquinta.outFields=["*"];
+    qTaskOfficeChilquinta.execute(qOfficeChilquinta, (featureSet)=>{
+      if(!featureSet.features.length){
+        return reject([])
+      }else{
+        let u = featureSet.features.map( (f,index)=>{
+          return f.attributes;
+        })
+
+
+        const comunaOptions = {
+          user: u[0].usuario,
+          pass: u[0].pass,
+          comuna: u[0].widget
+        };
+        console.log("opciones comuna", comunaOptions);
+        return resolve(comunaOptions);
+
+/*
+        if(JSON.stringify(savedMuniUser) === JSON.stringify(usrObj)){
+          return callback(true);
+        }else{
+          return callback(false);
+        }
+        */
+      }
+
+    });
+  });
+
+  return promise;
+
+}
+
+export {loginMuniOptions}

@@ -51,8 +51,31 @@ $dash_background_color: #000; //40opacity 46% fill;
   display: flex;
 }
 
+.map_wrapper{
+  color: black;
+  height: -webkit-fill-available;
+}
 
+.pushable_menu_wrapper{
+  margin: 0 !important;
 
+}
+
+.pushable {
+  overflow-y: hidden !important;
+}
+
+.ui.segment{
+  border: 0 !important;
+}
+
+.pushable_menu_{
+  background: #e25050 !important;
+  align-content: center;
+  align-items: center;
+  display: flex !important;
+  justify-content: center;
+}
 
 @media (min-width: 320px) and (max-width: 425px) {
 

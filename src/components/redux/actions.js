@@ -1,6 +1,6 @@
 
 import getTokenForDefaultUser from '../../services/login_service';
-
+import {loginMuniOptions} from '../../services/login_service';
 //LOGIN ACTIONS-----------------------------------------------------------------
 
 export function changeWidth(width){
@@ -34,6 +34,26 @@ export function getCredentials(credentials) {
   };
 }
 
+export function getMuniOptions(user, token){
+  return dispatch => {
+    return loginMuniOptions(user, token)
+      .then(options =>{
+        dispatch({
+          type: 'GET_OPTIONS_USER_MUNICIPAL',
+          options
+        });
+        return options;
+      })
+      .catch(error => {
+        dispatch({
+            type: 'ERROR_USER_MUNICIPAL',
+            error
+        });
+        return error;
+      })
+  };
+}
+
 //------------------------------------------------------------------------------
 //DASHBOARD ACTIONS
 export function getAllComunas(comunas){
@@ -50,6 +70,56 @@ export function selectedComuna(comuna){
   }
 }
 
+//------------------------------------------------------------------------------
+//MUNICIPALIDAD ACTIONS
+
+export function selectedMenu(menu){
+  return {
+    type: 'SELECTED_MENU',
+    menu
+  }
+}
+
+export function toggleSegment(visible){
+  if(visible){
+    return {
+      type: 'SHOW_SEGMENT',
+      show
+    }
+  }else{
+    return {
+      type: 'HIDE_SEGMENT',
+      show
+    }
+  }
+}
+
+export function toggleVisibility(visible){
+  console.log("estoy en toggleVisibility", visible);
+  if(visible){
+
+    return {
+      type: 'TOGGLE_VISIBILITY_SHOW',
+      visible
+    }
+  }else{
+
+    return {
+      type: 'TOGGLE_VISIBILITY_HIDE',
+      visible
+    }
+  }
+
+}
+
+export function toggleMenuVisibility(menu){
+  return {
+    type: 'TOGGLE_MENU_VISIBILITY',
+    menu
+  }
+}
+
+
 
 //------------------------------------------------------------------------------
 //OTHERS COMPONENTS actions
@@ -57,7 +127,7 @@ export function selectedComuna(comuna){
 //BOTTOM MESSAGE:
 
 export const showNotification = (visible) =>{
-  console.log(visible,"showNotification");
+  
   return {
     type: "SHOW_NOTIFICATION",
     visible

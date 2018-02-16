@@ -5,6 +5,7 @@ import { Image, Header, Button, Icon, Responsive, Container} from 'semantic-ui-r
 import {connect} from 'react-redux';
 import store from '../../index';
 import $ from 'jquery';
+import {selectedMenu, showSegment, toggleVisibility} from '../redux/actions';
 
 const Logo = () =>{
   return (
@@ -24,7 +25,7 @@ const LogoXL = () =>{
 export class HeaderTitles extends React.Component {
   componentDidMount(){
     $(".muni_header_titles_wrapper").css("background-image", "url("+env.CSSDIRECTORY+"/images/dashboard_images/bg/"+this.props.background+".png)");
-  
+
   }
 
   render(){
@@ -45,17 +46,30 @@ export class HeaderTitles extends React.Component {
   }
 }
 
-
-
 class HeaderMenu extends React.Component {
     constructor(props){
       super(props);
-      this.toggleVisibility = this.toggleVisibility.bind(this);
+      this.toggleVisible = this.toggleVisible.bind(this);
 
     }
 
-    toggleVisibility(e, name) {
-      console.log(e,name,"clicked");
+    toggleVisible() {
+      //this.setState({ visible: !this.state.visible, showSegment: !this.state.visible});
+      var {visible, nameClicked} = this.props;
+      console.log(visible);
+      this.props.toggleVisibility(!visible);
+
+      if(!visible){
+        console.log("enabled");
+
+
+      }else{
+        console.log("disabled");
+        this.props.selectedMenu('');
+        //this.setState({nameClicked: ''});
+
+
+      }
     }
 
     render() {
@@ -66,13 +80,13 @@ class HeaderMenu extends React.Component {
               <Responsive className="muni_header_wrapper" minWidth={320} maxWidth={767}>
                 <Logo />
                 <HeaderTitles muniName={this.props.comuna[0].text} background={this.props.comuna[0].value}/>
-                <div className="muni_header_button"><Button onClick={this.toggleVisibility}><Icon name='content' /></Button></div>
+                <div className="muni_header_button"><Button onClick={this.toggleVisible}><Icon name='content' /></Button></div>
               </Responsive>
 
               <Responsive className="muni_header_wrapper" minWidth={768} maxWidth={2560}>
                 <LogoXL />
                 <HeaderTitles muniName={this.props.comuna[0].text} background={this.props.comuna[0].value}/>
-                <div className="muni_header_button"><Button onClick={this.toggleVisibility}><Icon name='content' /></Button></div>
+                <div className="muni_header_button"><Button onClick={this.toggleVisible}><Icon name='content' /></Button></div>
               </Responsive>
 
             </div>
@@ -83,13 +97,14 @@ class HeaderMenu extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-
+    visible: state.toggle_visibility.visibleMenu
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    toggleVisibility: (visible) => dispatch(toggleVisibility(visible)),
+      selectedMenu: (selected) => dispatch(selectedMenu(selected))
   }
 }
 

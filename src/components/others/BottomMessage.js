@@ -8,14 +8,14 @@ class BottomMessage extends Component {
 
 
   render() {
-    var {visible, message} = this.props;
-    console.log(message, visible, "tengo en msg");
-    if (visible) {
+    var {message} = this.props;
+
+    if (message.visible) {
       return (
         <Message
           onDismiss={this.props.handleDismiss}
 
-          content= {message}
+          content= {message.text}
           color= 'black'
         />
       )
@@ -26,9 +26,9 @@ class BottomMessage extends Component {
 
 
   const mapStateToProps = state => {
+
     return {
-      message: state.message.message,
-      visible: state.visibleMessage.visible
+      message: state.bottomMessageHandler
     };
   }
 

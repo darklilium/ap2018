@@ -1,4 +1,4 @@
-
+import {MuniImages} from '../../../services/apmuni_images';
 
 export function credentials(state=[], action){
   switch (action.type) {
@@ -9,6 +9,29 @@ export function credentials(state=[], action){
 
     case 'ERROR_TOKEN':
       return Object.assign({}, action.credentials,{login: false});;
+    break;
+
+    default:
+      return state;
+    break;
+  }
+}
+
+export function muniOptions(state=[], action){
+  switch (action.type) {
+
+
+    case 'GET_OPTIONS_USER_MUNICIPAL':
+
+      var filtered = MuniImages.filter(comuna=>{
+         return comuna.text.toUpperCase()===action.options.comuna;
+      });
+
+      return Object.assign({}, state, {comunaValue: filtered});
+    break;
+
+    case 'ERROR_USER_MUNICIPAL':
+      return Object.assign({}, state,{comunaValue: []});;
     break;
 
     default:
@@ -53,30 +76,24 @@ export function width(state=[], action){
   }
 }
 
-export function message(state={message: ''}, action){
-  console.log(state,action,"hola from message");
-  switch (action.type) {
-    case "SET_MESSAGE":
-      return Object.assign({}, state, {message: action.message});
-      break;
-    default:
-      return state;
-  }
-
-
-}
-
-export function visibleMessage(state={visible: false}, action){
+export function bottomMessageHandler(state = {
+  text:'',
+  visible: false
+}, action){
 
   switch (action.type) {
     case "SHOW_NOTIFICATION":
-      return Object.assign({}, state, {visible: true});
+      return Object.assign({}, state, {visible: true });
     break;
 
     case "HIDE_NOTIFICATION":
       return  Object.assign({}, state, {visible: false});
+
+    case "SET_MESSAGE":
+      return Object.assign({}, state, {text: action.message});
+    break;
+
     default:
       return state;
   }
-
 }
