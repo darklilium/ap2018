@@ -112,6 +112,21 @@ export function toggleVisibility(visible){
 
 }
 
+export function toggleSidebarVisibility(visible){
+  if (visible) {
+    return {
+      type: 'TOGGLE_SIDEBAR_VISIBILITY_SHOW',
+      visible
+    }
+  }else{
+    return {
+      type: 'TOGGLE_SIDEBAR_VISIBILITY_HIDE',
+      visible
+    }
+  }
+
+}
+
 export function toggleMenuVisibility(menu){
   return {
     type: 'TOGGLE_MENU_VISIBILITY',
@@ -127,7 +142,7 @@ export function toggleMenuVisibility(menu){
 //BOTTOM MESSAGE:
 
 export const showNotification = (visible) =>{
-  
+
   return {
     type: "SHOW_NOTIFICATION",
     visible

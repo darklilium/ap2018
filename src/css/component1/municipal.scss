@@ -3,6 +3,13 @@ $secondary_color: #FFFFFF;
 $banner_color: #ac0009;
 $dash_background_color: #000; //40opacity 46% fill;
 
+.esriSimpleSliderTL {
+    top: 20px !important;
+    right: 20px  !important;
+    left: auto !important;
+    visibility: visible;
+}
+
 .wrapper_municipal{
   background: $primary_color;
   width: 100%;
@@ -77,12 +84,19 @@ $dash_background_color: #000; //40opacity 46% fill;
   justify-content: center;
 }
 
+
 @media (min-width: 320px) and (max-width: 425px) {
 
   .muni_header_wrapper{
     display: flex;
     width: 100%;
   }
+
+
+  .esriSimpleSliderTL {
+    visibility: hidden;
+  }
+
 }
 
 

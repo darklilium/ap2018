@@ -31,6 +31,25 @@ export function toggle_visibility(state={visibleMenu:false}, action){
   }
 }
 
+export function toggle_sidebar_visibility(state={visible:false}, action){
+
+
+  switch (action.type) {
+    case 'TOGGLE_SIDEBAR_VISIBILITY_HIDE':
+        return Object.assign({}, state,{visible: false});
+    break;
+
+    case 'TOGGLE_SIDEBAR_VISIBILITY_SHOW':
+        return Object.assign({}, state,{visible: true});
+    break;
+
+    default:
+      return state;
+
+  }
+}
+
+
 export function toggle_segment(state={showSegment:false}, action){
   switch (action.type) {
     case 'SHOW_SEGMENT':

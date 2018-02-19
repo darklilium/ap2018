@@ -21,6 +21,12 @@ function layers(){
 
     read_logAccess(token){  /*using*/
       return serviceURL + "Admin/LogAccesos/FeatureServer/2?f=json&token=" + token;
+    },
+    read_dynamic_ap(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/MapServer?f=json&token=" + token;
+    },
+    read_limiteComunal(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/MapServer/4?f=json&token=" + token;
     }
 
 
