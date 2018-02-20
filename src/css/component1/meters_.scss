@@ -1,0 +1,94 @@
+.rail_meters_wrapper{
+  width: 50%;
+  height: 100%;
+}
+
+.wrapper_meters{
+  background: #e21616;
+  z-index: 15;
+  position: absolute;
+  width: 100%;
+  padding: 1em;
+}
+
+.wrapper_meters_768{
+  background: #e21616;
+  z-index: 15;
+  position: absolute;
+  width: 50%;
+  padding: 1em;
+}
+
+.ReactTable .-pagination .-btn{
+  color: white !important;
+}
+
+.meters_horizontal_divider{
+  width: 100% !important;
+}
+
+.wrapper_meters_titles{
+  display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+}
+
+.meter_export_btn{
+  width: 100%;
+  background: #ab1111 !important;
+  margin-bottom: 1em !important;
+}
+
+.wrapper_meters_right{
+  padding-top: 1.5em;
+}
+
+.wrapper_divider_export_padding{
+    padding-top: 1.5em;
+}
+@media (min-width: 320px) and (max-width: 425px) {
+
+  .rail_meters_wrapper{
+    WIDTH: 100% !important;
+    //height: 55% !important;
+  }
+
+}
+
+@media (min-width: 426px) and (max-width: 1024px) {
+
+  .rail_meters_wrapper{
+    width: 100% !important;
+    //height: 45% !important;
+  }
+
+}
+
+@media (min-width: 1025px) and (max-width: 1899px)  {
+
+  .rail_meters_wrapper{
+    WIDTH: 100% !important;
+    //height: 40% !important;
+  }
+
+}
+
+
+@media (min-width: 1900px)  {
+
+  .rail_meters_wrapper{
+    WIDTH: 100% !important;
+    //height: 25% !important;
+  }
+
+}
+
+@media (min-width: 961px){
+.meters_horizontal_divider {
+  width: 100% !important;
+  font-family: Roboto;
+  font-size: large !important;
+  }
+}

@@ -18,7 +18,7 @@ class LayerMapWidget extends React.Component {
             <div className="wrapper_layermap">
               <h3>Seleccione un mapa:</h3>
               <Divider inverted />
-              <Form>
+              <Form className="layermap_form">
                <Form.Field>
                  <Radio
                    label='Topográfico'

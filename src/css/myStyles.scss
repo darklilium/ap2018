@@ -15,7 +15,7 @@ $secondary_color: #FFFFFF;
       background: $primary_color;
       color: $secondary_color;
       width: 100%;
-      height: 100%;
+      height: inherit;
     }
 
     .wrapper{
@@ -36,7 +36,8 @@ $secondary_color: #FFFFFF;
       background: $primary_color;
       color: $secondary_color;
       width: 100%;
-      height: 100%;
+      //height: 100%;
+    height: inherit;
     }
 
     .wrapper{
@@ -57,7 +58,8 @@ $secondary_color: #FFFFFF;
       background: $primary_color;
       color: $secondary_color;
       width: 100%;
-      height: 100%;
+    //  height: 100%;
+    height: inherit;
     }
 
     .wrapper{

@@ -24,6 +24,12 @@ $dash_background_color: #000; //40opacity 46% fill;
   margin: 0;
 }
 
+.btn_dashboard, .btn_dashboard_logoff{
+  background-color: #e0000c !important;
+  color: #ffffff !important;
+  -webkit-tap-highlight-color: #cccccca3;
+}
+
 @media (max-width: 320px){
   .ui.container{
     margin-left: 0px !important;

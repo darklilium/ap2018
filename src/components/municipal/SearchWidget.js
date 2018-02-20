@@ -19,7 +19,8 @@ class SearchWidget extends React.Component {
               <h3>Seleccione elemento técnico - comercial:</h3>
               <Divider inverted />
               <Dropdown className="dropdown_busqueda" placeholder='Seleccione Elemento' fluid selection options={options} value={options[1].value} onChange={this.onChange}/>
-              <Button className="btn_busqueda" onClick={this.onClick}>Ingresar</Button>
+              <Divider inverted />
+              <Button className="btn_busqueda" onClick={this.onClick}>Buscar</Button>
             </div>
           </Rail>
         );

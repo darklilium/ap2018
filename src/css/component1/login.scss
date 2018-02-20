@@ -26,13 +26,17 @@ $secondary_color: #FFFFFF;
     font-variant-caps: all-petite-caps;
   }
 
-  .ui.button{
+  .btn_login{
     width: 100%;
     background-color: #e0000c !important;
     color: #ffffff !important;
     -webkit-tap-highlight-color: #cccccca3;
   }
 
+  /*.ui.button{
+
+  }
+  */
   .input_login input {
     background: rgba(255, 255, 255, 0) !important;
     border: 1.5px solid rgba(232, 232, 232, 0.64) !important;
@@ -73,13 +77,19 @@ $secondary_color: #FFFFFF;
     font-variant-caps: all-petite-caps;
   }
 
-  .ui.button{
+/*  .ui.button{
     width: 100%;
     background-color: #e0000c !important;
     color: #ffffff !important;
     -webkit-tap-highlight-color: #cccccca3;
   }
-
+*/
+.btn_login{
+  width: 100%;
+  background-color: #e0000c !important;
+  color: #ffffff !important;
+  -webkit-tap-highlight-color: #cccccca3;
+}
   .input_login input {
     background: rgba(255, 255, 255, 0) !important;
     border: 1.5px solid rgba(232, 232, 232, 0.64) !important;
@@ -120,13 +130,19 @@ $secondary_color: #FFFFFF;
     font-variant-caps: all-petite-caps;
   }
 
-  .ui.button{
+/*  .ui.button{
     width: 100%;
     background-color: #e0000c !important;
     color: #ffffff !important;
     -webkit-tap-highlight-color: #cccccca3;
   }
-
+*/
+.btn_login{
+  width: 100%;
+  background-color: #e0000c !important;
+  color: #ffffff !important;
+  -webkit-tap-highlight-color: #cccccca3;
+}
   .input_login input {
     background: rgba(255, 255, 255, 0) !important;
     border: 1.5px solid rgba(232, 232, 232, 0.64) !important;
@@ -165,8 +181,15 @@ $secondary_color: #FFFFFF;
     font-family: lato;
     font-variant-caps: all-petite-caps;
   }
-
+/*
   .ui.button{
+    width: 100%;
+    background-color: #e0000c !important;
+    color: #ffffff !important;
+    -webkit-tap-highlight-color: #cccccca3;
+  }
+  */
+  .btn_login{
     width: 100%;
     background-color: #e0000c !important;
     color: #ffffff !important;
@@ -213,12 +236,19 @@ $secondary_color: #FFFFFF;
     font-variant-caps: all-petite-caps;
   }
 
-  .ui.button{
+/*  .ui.button{
     width: 100%;
     background-color: #e0000c !important;
     color: #ffffff !important;
     -webkit-tap-highlight-color: #cccccca3;
   }
+*/
+.btn_login{
+  width: 100%;
+  background-color: #e0000c !important;
+  color: #ffffff !important;
+  -webkit-tap-highlight-color: #cccccca3;
+}
 
   .input_login input {
     background: rgba(255, 255, 255, 0) !important;

@@ -27,7 +27,7 @@ export default class DashboardHeader extends Component {
             <h2>Bienvenido/a</h2>
             <h4>{user}</h4>
           </div>
-          <Button icon>
+          <Button className="btn_dashboard_logoff" icon>
             <Icon name='power' />
           </Button>
         </Menu.Menu>

@@ -10,6 +10,7 @@ import HeaderMenu from './HeaderMenu';
 import SearchWidget from './SearchWidget';
 import LayerMapWidget from './LayerMapWidget';
 import MetersWidget from './MetersWidget';
+import LightsWidget from './LightsWidget';
 import {selectedMenu, toggleSidebarVisibility} from '../redux/actions';
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container , Modal, Rail } from 'semantic-ui-react';
 import Map from 'esri/map';
@@ -61,10 +62,7 @@ class Municipalidad extends React.Component {
          myItem =  <MetersWidget />
          break;
          case 'light':
-         myItem =  <div>
-                 <Header as='h3'>light</Header>
-                 <div>light</div>
-               </div>
+         myItem =  <LightsWidget />
          break;
          default:
           myItem = null

@@ -4,16 +4,17 @@ $banner_color: #ac0009;
 $dash_background_color: #000; //40opacity 46% fill;
 
 .esriSimpleSliderTL {
-    top: 20px !important;
-    right: 20px  !important;
-    left: auto !important;
-    visibility: visible;
+  top: 20px !important;
+  right: 20px  !important;
+  left: auto !important;
+  visibility: visible;
+  z-index: 14;
 }
 
 .wrapper_municipal{
   background: $primary_color;
   width: 100%;
-  height: 100%;
+  height: max-content;
 }
 
 .muni_header{
@@ -84,6 +85,13 @@ $dash_background_color: #000; //40opacity 46% fill;
   justify-content: center;
 }
 
+.btn_header_menu{
+  width: 100%;
+  background-color: #e0000c !important;
+  color: #ffffff !important;
+  -webkit-tap-highlight-color: #cccccca3;
+}
+
 
 @media (min-width: 320px) and (max-width: 425px) {
 
@@ -91,7 +99,6 @@ $dash_background_color: #000; //40opacity 46% fill;
     display: flex;
     width: 100%;
   }
-
 
   .esriSimpleSliderTL {
     visibility: hidden;
@@ -124,4 +131,19 @@ $dash_background_color: #000; //40opacity 46% fill;
     margin-top: 0.5em;
   }
 
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+  .wrapper_municipal{
+    height: max-content;
+    min-height: 180%;
+  }
+
+}
+
+@media (min-width: 769px) and (max-width: 1366px) {
+  .wrapper_municipal{
+    height: max-content;
+    min-height: 180%;
+  }
 }

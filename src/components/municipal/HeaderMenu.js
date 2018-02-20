@@ -82,13 +82,13 @@ class HeaderMenu extends React.Component {
               <Responsive className="muni_header_wrapper" minWidth={320} maxWidth={767}>
                 <Logo />
                 <HeaderTitles muniName={this.props.comuna[0].text} background={this.props.comuna[0].value}/>
-                <div className="muni_header_button"><Button onClick={this.toggleVisible}><Icon name='content' /></Button></div>
+                <div className="muni_header_button"><Button className="btn_header_menu" onClick={this.toggleVisible}><Icon name='content' /></Button></div>
               </Responsive>
 
               <Responsive className="muni_header_wrapper" minWidth={768} maxWidth={2560}>
                 <LogoXL />
                 <HeaderTitles muniName={this.props.comuna[0].text} background={this.props.comuna[0].value}/>
-                <div className="muni_header_button"><Button onClick={this.toggleVisible}><Icon name='content' /></Button></div>
+                <div className="muni_header_button"><Button className="btn_header_menu" onClick={this.toggleVisible}><Icon name='content' /></Button></div>
               </Responsive>
 
             </div>
