@@ -3,8 +3,12 @@ import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container, Dropdow
 import muniStyle from '../../css/component1/meters_.scss';
 import ReactTable from "react-table";
 import matchSorter from 'match-sorter';
+import $ from 'jquery';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+
 
 var data = [{
+    oid: '123123123',
     idequipo: "5441126718",
     nro_medidor: "239445_LIN_DDS71NE",
     nis:"723644",
@@ -13,6 +17,7 @@ var data = [{
     tipo: "Equipo Medida AP + Equipo Control AP",
     rotulo: "999999"
   },{
+      oid: '123123123',
     idequipo: "341126718222",
     nro_medidor: "56165156_LIN_DDS71NE",
     nis:"9999",
@@ -21,6 +26,7 @@ var data = [{
     tipo: "Equipo Control AP",
     rotulo: "999999"
   },{
+      oid: '123123123',
     idequipo: "341126718222",
     nro_medidor: "56165156_LIN_DDS71NE",
     nis:"9999",
@@ -29,6 +35,7 @@ var data = [{
     tipo: "Equipo Control AP",
     rotulo: "999999"
   },{
+      oid: '123123123',
     idequipo: "341126718222",
     nro_medidor: "56165156_LIN_DDS71NE",
     nis:"9999",
@@ -37,6 +44,7 @@ var data = [{
     tipo: "Equipo Control AP",
     rotulo: "999999"
   },{
+      oid: '123123123',
     idequipo: "341126718222",
     nro_medidor: "56165156_LIN_DDS71NE",
     nis:"9999",
@@ -46,9 +54,14 @@ var data = [{
     rotulo: "999999"
 }];
 
-const columns = [{
-  Header: 'Name',
 
+const columns = [{
+    Header: 'OBJECTID',
+    accessor: 'oid',
+    filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["oid"] }),
+    filterAll: true,
+    show: false
+  }, {
     Header: 'ID Equipo',
     accessor: 'idequipo',
     filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["idequipo"] }),
@@ -86,18 +99,47 @@ const columns = [{
     filterAll: true
   }]
 
+
 class MetersWidget extends React.Component {
-    state = {
-      idequipo: '5615616',
-      nromedidor: '9845891',
-      width: 0
+    constructor(props){
+      super(props);
+      this.state = {
+        idequipo: '5615616',
+        nromedidor: '9845891',
+        width: 0,
+        selectedMedidor: null,
+        selectedLuminaria: null
+      }
+
+      this.onClickRow = this.onClickRow.bind(this);
+      this.onClickMedidor = this.onClickMedidor.bind(this);
+      this.onClickLuminaria = this.onClickLuminaria.bind(this);
+
     }
 
     handleOnUpdate = (e, { width }) => {};
 
     handleChange = (e, { value }) => this.setState({ value })
+
+    onClickRow(row){
+      console.log(row,"clicked");
+    }
+
+    onClickMedidor(index){
+        this.setState({selectedMedidor: index});
+    }
+
+    onClickLuminaria(index){
+      this.setState({selectedLuminaria: index});
+    }
+
     render() {
         const {width} = this.state;
+        const qualityType = {
+          0: 'good',
+          1: 'bad',
+          2: 'unknown'
+        };
         return (
 
          <Rail className="rail_meters_wrapper" attached internal position='left'>
@@ -107,13 +149,35 @@ class MetersWidget extends React.Component {
                 <Divider className="meters_horizontal_divider" horizontal inverted>Medidores:</Divider>
                   <Button color="red" circular className="meter_export_btn" onClick={this.onClick} >Exportar</Button>
               </div>
-              <ReactTable
+
+             <ReactTable
                 data={data}
                 filterable
                 columns={columns}
                 defaultPageSize={3}
                 className="-striped -highlight"
+                showPageSizeOptions={false}
+                getTdProps={(state,rowInfo,column,instance)=>{
+                  if(typeof rowInfo !== 'undefined'){
+                    return {
+                        onClick: (e) => {
+                            this.onClickMedidor(rowInfo.index)
+                        },
+                        style: {
+                            background: rowInfo.index === this.state.selectedMedidor ? '#980000' : '',
+                            color: rowInfo.index === this.state.selectedMedidor ? 'white' : ''
+                        }
+                    }
+                  }else{
+                    return {
+                        onClick: (e) => {
+                            this.onClickMedidor(rowInfo.index)
+                        }
+                  }}
+                }}
+
               />
+
               <div className="wrapper_divider_export wrapper_divider_export_padding">
                   <Divider className="meters_horizontal_divider" horizontal inverted>Luminarias Asociadas: </Divider>
                   <Button color="red" circular className="meter_export_btn" onClick={this.onClick} >Exportar</Button>
@@ -128,7 +192,26 @@ class MetersWidget extends React.Component {
               filterable
               columns={columns}
               defaultPageSize={3}
+              showPageSizeOptions={false}
               className="-striped -highlight"
+              getTdProps={(state,rowInfo,column,instance)=>{
+                if(typeof rowInfo !== 'undefined'){
+                  return {
+                      onClick: (e) => {
+                          this.onClickLuminaria(rowInfo.index)
+                      },
+                      style: {
+                          background: rowInfo.index === this.state.selectedLuminaria ? '#980000' : '',
+                          color: rowInfo.index === this.state.selectedLuminaria ? 'white' : ''
+                      }
+                  }
+                }else{
+                  return {
+                      onClick: (e) => {
+                          this.onClickLuminaria(rowInfo.index)
+                      }
+                }}
+              }}
             />
             </div>
           </Responsive>
@@ -145,8 +228,28 @@ class MetersWidget extends React.Component {
                  filterable
                  columns={columns}
                  defaultPageSize={3}
+                   showPageSizeOptions={false}
                  className="-striped -highlight"
+                 getTdProps={(state,rowInfo,column,instance)=>{
+                   if(typeof rowInfo !== 'undefined'){
+                     return {
+                         onClick: (e) => {
+                             this.onClickMedidor(rowInfo.index)
+                         },
+                         style: {
+                             background: rowInfo.index === this.state.selectedMedidor ? '#980000' : '',
+                             color: rowInfo.index === this.state.selectedMedidor ? 'white' : ''
+                         }
+                     }
+                   }else{
+                     return {
+                         onClick: (e) => {
+                             this.onClickMedidor(rowInfo.index)
+                         }
+                   }}
+                 }}
               />
+
             </div>
             <div className="wrapper_meters_right">
               <div className="wrapper_divider_export">
@@ -162,7 +265,26 @@ class MetersWidget extends React.Component {
                 filterable
                 columns={columns}
                 defaultPageSize={3}
+                  showPageSizeOptions={false}
                 className="-striped -highlight"
+                getTdProps={(state,rowInfo,column,instance)=>{
+                  if(typeof rowInfo !== 'undefined'){
+                    return {
+                        onClick: (e) => {
+                            this.onClickLuminaria(rowInfo.index)
+                        },
+                        style: {
+                            background: rowInfo.index === this.state.selectedLuminaria ? '#980000' : '',
+                            color: rowInfo.index === this.state.selectedLuminaria ? 'white' : ''
+                        }
+                    }
+                  }else{
+                    return {
+                        onClick: (e) => {
+                            this.onClickLuminaria(rowInfo.index)
+                        }
+                  }}
+                }}
               />
             </div>
 
