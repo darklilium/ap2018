@@ -27,6 +27,10 @@ function layers(){
     },
     read_limiteComunal(token){
       return serviceURL + "AP_Municipal/AP_MUNICIPAL/MapServer/4?f=json&token=" + token;
+    },
+    read_luminarias(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/1?f=json&token=" + token;
+
     }
 
 

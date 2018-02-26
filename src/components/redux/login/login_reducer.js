@@ -1,6 +1,15 @@
 import {MuniImages} from '../../../services/apmuni_images';
 
-export function credentials(state=[], action){
+export function credentials(state={
+  login: true,
+  token: "Wjp0Xbf6kSk-7iScEQ_mXK5JJhuRzYlzIEvXiLeEo8nPsPemFIzZtvVspQcb-3enpWjXmlfU51BkmaD0xja-Sw..",
+  user: {
+    municipal: false,
+    password: "Chilquinta12",
+    user: "vialactea\ehernanr",
+    vialactea: true,
+  }
+}, action){
   switch (action.type) {
 
     case 'GOT_TOKEN':

@@ -14,7 +14,6 @@ class BottomMessage extends Component {
       return (
         <Message
           onDismiss={this.props.handleDismiss}
-
           content= {message.text}
           color= 'black'
         />

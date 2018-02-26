@@ -1,6 +1,8 @@
 
 import getTokenForDefaultUser from '../../services/login_service';
 import {loginMuniOptions} from '../../services/login_service';
+import {searchElement} from '../../services/busqueda_service';
+
 //LOGIN ACTIONS-----------------------------------------------------------------
 
 export function changeWidth(width){
@@ -134,7 +136,46 @@ export function toggleMenuVisibility(menu){
   }
 }
 
+export function onChangeBusqueda(searchType){
+  return {
+    type: "CHANGE_BUSQUEDA_TYPE",
+    searchType
+  }
 
+}
+
+export function onClickBusquedaWidget(searchType, value, token, mapa, comuna){
+  console.log(comuna);
+  return dispatch =>{
+      return searchElement(searchType, value, token, mapa, comuna)
+      .then(found =>{
+        console.log(found.length,"length");
+        if(found.length){
+          dispatch({
+            type: "SEARCH_IS_DONE",
+            found,
+            value
+          })
+
+        }else{
+          dispatch({
+            type: "SEARCH_IS_ZERO",
+            found,
+            value
+          })
+        }
+        return found;
+      })
+      .catch(error =>{
+        dispatch({
+          type: "SEARCH_WITH_ERRORS",
+          error
+        })
+        return error;
+      })
+  }
+
+}
 
 //------------------------------------------------------------------------------
 //OTHERS COMPONENTS actions
@@ -164,5 +205,13 @@ export const setMessage = (message) => {
   return {
     type: "SET_MESSAGE",
     message
+  }
+}
+
+export const saveMap = (mapa) =>{
+
+  return {
+    type: "SAVE_MAP",
+    mapa
   }
 }

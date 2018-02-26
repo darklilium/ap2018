@@ -11,12 +11,19 @@ import SearchWidget from './SearchWidget';
 import LayerMapWidget from './LayerMapWidget';
 import MetersWidget from './MetersWidget';
 import LightsWidget from './LightsWidget';
-import {selectedMenu, toggleSidebarVisibility} from '../redux/actions';
+import {selectedMenu, toggleSidebarVisibility, saveMap} from '../redux/actions';
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container , Modal, Rail } from 'semantic-ui-react';
-import Map from 'esri/map';
+import mapa from '../../services/map_service';
+
 import ArcGISDynamicMapServiceLayer from 'esri/layers/ArcGISDynamicMapServiceLayer';
+import SimpleFillSymbol from "esri/symbols/SimpleFillSymbol";
+import SimpleLineSymbol from "esri/symbols/SimpleLineSymbol";
+import domConstruct from "dojo/dom-construct";
+import Popup from "esri/dijit/Popup";
+import Color from "esri/Color";
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import layers from '../../services/layers_service';
+
 
 
 var myItem = null;
@@ -27,9 +34,6 @@ class Municipalidad extends React.Component {
     super(props);
     this.onClick = this.onClick.bind(this);
 
-    this.state = {
-      menuDirection: 'bottom'
-    }
   }
 
   onClick = (e,{name}) => {
@@ -56,10 +60,12 @@ class Municipalidad extends React.Component {
 
          case 'map':
          myItem =  <LayerMapWidget />
+
          break;
 
          case 'meter':
          myItem =  <MetersWidget />
+
          break;
          case 'light':
          myItem =  <LightsWidget />
@@ -115,12 +121,21 @@ class Municipalidad extends React.Component {
     });
 
 
-    var map = new Map("map", {
+    /*var mapa = new Map("map", {
       center: this.props.comuna[0].extent,
       zoom: 13,
       basemap: "topo"
     });
+    */
+    var popup = new Popup({
+         fillSymbol: new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
+           new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+             new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.25]))
+       }, domConstruct.create("div"));
+    dojo.addClass(popup.domNode, "modernGrey");
+    var mapp = mapa.createMap("map","topo",this.props.comuna[0].extent,13, popup);
 
+    //this.props.saveMap(mapa);
 
     var layerDefinitions = [];
     layerDefinitions[0] = "COMUNA = '"+ this.props.comuna[0].queryvalue+"'";
@@ -146,10 +161,10 @@ class Municipalidad extends React.Component {
     var limiteComunalLayer = new FeatureLayer(layers.read_limiteComunal(this.props.token),{id:"ap_limiteComunal", mode: esri.layers.FeatureLayer.MODE_ONDEMAND});
     limiteComunalLayer.setDefinitionExpression("nombre   = '"+ this.props.comuna[0].queryvalue+"'" );
 
-    map.addLayers([limiteComunalLayer, tramosLayer,luminariasLayer, modificacionesLayer]);
+    mapp.addLayers([limiteComunalLayer, tramosLayer,luminariasLayer, modificacionesLayer]);
 
 
-    map.on('dbl-click', (event)=>{
+    mapp.on('dbl-click', (event)=>{
       console.log("doble click");
     });
   }
@@ -164,15 +179,14 @@ const mapStateToProps = state =>{
     menuClicked: state.selected_menu.selectedMenu,
     token: state.credentials.token,
     sidebar: state.toggle_sidebar_visibility.visible
-
-
   }
 }
 
 const mapDispatchToProps = dispatch =>{
   return {
     selectedMenu: (selected) => dispatch(selectedMenu(selected)),
-    toggleSidebarVisibility: (visible) => dispatch(toggleSidebarVisibility(visible))
+    toggleSidebarVisibility: (visible) => dispatch(toggleSidebarVisibility(visible)),
+    saveMap: (mapa) => dispatch(saveMap(mapa))
   }
 }
 
