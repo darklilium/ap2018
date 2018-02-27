@@ -11,6 +11,7 @@ import SearchWidget from './SearchWidget';
 import LayerMapWidget from './LayerMapWidget';
 import MetersWidget from './MetersWidget';
 import LightsWidget from './LightsWidget';
+import EditWidget from './EditWidget';
 import {selectedMenu, toggleSidebarVisibility, saveMap} from '../redux/actions';
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container , Modal, Rail } from 'semantic-ui-react';
 import mapa from '../../services/map_service';
@@ -70,6 +71,11 @@ class Municipalidad extends React.Component {
          case 'light':
          myItem =  <LightsWidget />
          break;
+
+         case 'edit':
+         myItem = <EditWidget />
+         break;
+
          default:
           myItem = null
          break;

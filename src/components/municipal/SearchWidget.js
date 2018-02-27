@@ -1,7 +1,7 @@
 import React from 'react'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container, Dropdown,  Divider, Rail,Input  } from 'semantic-ui-react';
 import muniStyle from '../../css/component1/busqueda_.scss';
-import {onChangeBusqueda, onClickBusquedaWidget, showNotification, setMessage} from '../redux/actions';
+import {onChangeBusqueda, onClickBusquedaWidget, showNotification, setMessage, selectedMenu} from '../redux/actions';
 import { connect } from 'react-redux';
 import mapa from '../../services/map_service';
 import BottomMessage from '../others/BottomMessage';
@@ -30,7 +30,7 @@ class SearchWidget extends React.Component {
           console.log(done,"hecho");
           if(done.length){
             this.props.handleDismiss("Resultado encontrado", true)
-            console.log(done[0].attributes.ID_LUMINARIA);
+
             ap_infoWindow(
               done[0].attributes.ID_LUMINARIA,
               done[0].attributes.ROTULO,
@@ -42,6 +42,7 @@ class SearchWidget extends React.Component {
 
               document.getElementById("editar_btn").addEventListener('click', (e)=>{
                 console.log("holi desde boton click editar"); //funciona
+                this.props.selectedMenu('edit');
               })
           }else{
             this.props.handleDismiss("Resultado no encontrado", true);
@@ -95,7 +96,8 @@ const mapDispatchToProps = (dispatch) => {
     handleDismiss(notification,visibility) {
       dispatch(showNotification(visibility)),
       dispatch(setMessage(notification))
-    }
+    },
+    selectedMenu: (selected) => dispatch(selectedMenu(selected))
   }
 }
 
