@@ -30,7 +30,9 @@ function layers(){
     },
     read_luminarias(token){
       return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/1?f=json&token=" + token;
-
+    },
+    read_equipos(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/3?f=json&token=" + token;
     }
 
 

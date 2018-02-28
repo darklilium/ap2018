@@ -1,7 +1,7 @@
 import mymap from './map_service';
-import {Button} from 'semantic-ui-react';
 
-function ap_infoWindow(lightID, poleNumber, connectionType, type, property,meansured, geometry){
+
+function ap_infoWindow_luminaria(lightID, poleNumber, connectionType, type, property,meansured, geometry){
   var map =  mymap.getMap();
   map.infoWindow.setTitle("ID Luminaria : " + lightID);
   var content = `<div style=padding-top: 10px;>ROTULO: ${poleNumber}<br /></div>
@@ -13,8 +13,7 @@ function ap_infoWindow(lightID, poleNumber, connectionType, type, property,means
   map.infoWindow.setContent(esri.substitute(esri.geometry.webMercatorToGeographic(geometry), content));
   map.infoWindow.show(geometry, map.getInfoWindowAnchor(geometry));
 
-
 }
 
 
-export {ap_infoWindow};
+export {ap_infoWindow_luminaria, ap_infoWindow_medidor};

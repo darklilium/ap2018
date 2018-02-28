@@ -75,6 +75,7 @@ export function selectedComuna(comuna){
 //------------------------------------------------------------------------------
 //MUNICIPALIDAD ACTIONS
 
+//Menu actions
 export function selectedMenu(menu){
   return {
     type: 'SELECTED_MENU',
@@ -136,6 +137,7 @@ export function toggleMenuVisibility(menu){
   }
 }
 
+//SearchWidget actions
 export function onChangeBusqueda(searchType){
   return {
     type: "CHANGE_BUSQUEDA_TYPE",
@@ -176,6 +178,18 @@ export function onClickBusquedaWidget(searchType, value, token, mapa, comuna){
   }
 
 }
+
+//LayerMapWidget actions
+export function map_selected(value){
+
+  return {
+    type: 'CHANGE_MAP',
+    value
+  }
+}
+
+
+
 
 //------------------------------------------------------------------------------
 //OTHERS COMPONENTS actions

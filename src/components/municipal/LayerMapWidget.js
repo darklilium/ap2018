@@ -1,18 +1,13 @@
 import React from 'react'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container, Dropdown,  Divider , Rail, Form, Radio,Checkbox } from 'semantic-ui-react';
 import muniStyle from '../../css/component1/layermap_.scss';
-
-var options = [
-    { value: 'ROTULO', text: 'Rótulo Poste', key: 1 },
-    { value: 'IDNODO', text: 'ID Nodo', key: 2 },
-    { value: 'NMEDIDOR', text: 'N° Medidor', key: 3},
-    { value: 'NCLIENTE', text: 'N° Cliente', key: 4}
-];
+import {connect} from 'react-redux';
+import {map_selected} from '../redux/actions';
 
 class LayerMapWidget extends React.Component {
-    state = {}
-    handleChange = (e, { value }) => this.setState({ value })
+
     render() {
+        const {handleChange, value} = this.props;
         return (
           <Rail className="rail_layermap_wrapper" attached internal position='left'>
             <div className="wrapper_layermap">
@@ -24,8 +19,8 @@ class LayerMapWidget extends React.Component {
                    label='Topográfico'
                    name='radioGroup'
                    value='topo'
-                   checked={this.state.value==='topo'}
-                   onChange={this.handleChange}
+                   onChange={handleChange}
+                   checked={value=='topo'}
                  />
                </Form.Field>
                <Form.Field>
@@ -33,8 +28,8 @@ class LayerMapWidget extends React.Component {
                    label='Híbrido'
                    name='radioGroup'
                    value='hybrid'
-                   checked={this.state.value==='hybrid'}
-                   onChange={this.handleChange}
+                   onChange={handleChange}
+                    checked={value=='hybrid'}
                  />
                </Form.Field>
                <Form.Field>
@@ -42,8 +37,8 @@ class LayerMapWidget extends React.Component {
                    label='Aéreo'
                    name='radioGroup'
                    value='aerial'
-                   checked={this.state.value==='aerial'}
-                   onChange={this.handleChange}
+                   onChange={handleChange}
+                    checked={value=='aerial'}
                  />
                </Form.Field>
                <Form.Field>
@@ -51,8 +46,8 @@ class LayerMapWidget extends React.Component {
                    label='Aéreo con Etiquetas'
                    name='radioGroup'
                    value='aerialWithLabels'
-                   checked={this.state.value==='aerialWithLabels'}
-                   onChange={this.handleChange}
+                   checked={value=='aerialWithLabels'}
+                   onChange={handleChange}
                  />
                </Form.Field>
                <Form.Field>
@@ -60,8 +55,8 @@ class LayerMapWidget extends React.Component {
                    label='Caminos'
                    name='radioGroup'
                    value='roads'
-                   checked={this.state.value==='roads'}
-                   onChange={this.handleChange}
+                   checked={value=='roads'}
+                   onChange={handleChange}
                  />
                </Form.Field>
                <h3>Seleccione uno o más capas para visualizar:</h3>
@@ -87,4 +82,16 @@ class LayerMapWidget extends React.Component {
 
 }
 
-export default LayerMapWidget
+const mapStateToProps = (state) => {
+  return {
+    value: state.map_selector.value
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    handleChange: (e,{value}) => dispatch(map_selected(value))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LayerMapWidget)

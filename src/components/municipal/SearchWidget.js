@@ -5,7 +5,7 @@ import {onChangeBusqueda, onClickBusquedaWidget, showNotification, setMessage, s
 import { connect } from 'react-redux';
 import mapa from '../../services/map_service';
 import BottomMessage from '../others/BottomMessage';
-import {ap_infoWindow} from '../../services/makeInfowindow';
+
 
 var options = [
     { value: 'ROTULO', text: 'Rótulo Poste', key: 1 },
@@ -31,19 +31,13 @@ class SearchWidget extends React.Component {
           if(done.length){
             this.props.handleDismiss("Resultado encontrado", true)
 
-            ap_infoWindow(
-              done[0].attributes.ID_LUMINARIA,
-              done[0].attributes.ROTULO,
-              done[0].attributes.TIPO_CONEXION,
-              done[0].attributes.TIPO,
-              done[0].attributes.PROPIEDAD,
-              done[0].attributes.MEDIDO_TERRENO,
-              done[0].geometry)
-
+            if((this.props.busquedaType=='IDNODO') || (this.props.busquedaType=='ROTULO')){
               document.getElementById("editar_btn").addEventListener('click', (e)=>{
                 console.log("holi desde boton click editar"); //funciona
                 this.props.selectedMenu('edit');
               })
+            }
+
           }else{
             this.props.handleDismiss("Resultado no encontrado", true);
           }

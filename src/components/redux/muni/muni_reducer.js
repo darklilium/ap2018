@@ -1,3 +1,5 @@
+import {changeBasemap} from '../../../services/map_service';
+
 
 export function selected_menu(state={selectedMenu: ''}, action){
 
@@ -92,6 +94,18 @@ export function mapa(state={mapa: {}}, action){
   switch (action.type) {
     case 'SAVE_MAP':
       return Object.assign({},state,{mapa: action.mapa});
+    break;
+    default:
+      return state;
+  }
+}
+
+
+export function map_selector(state={value:'topo'}, action){
+  switch (action.type) {
+    case 'CHANGE_MAP':
+        changeBasemap(action.value)
+        return Object.assign({},state,{value: action.value});
     break;
     default:
       return state;
