@@ -188,7 +188,13 @@ export function map_selected(value){
   }
 }
 
+export function layer_selected(layer){
 
+  return {
+    type: 'LAYER_VISIBILITY_CHANGED',
+    layer
+  }
+}
 
 
 //------------------------------------------------------------------------------

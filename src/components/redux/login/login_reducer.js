@@ -6,7 +6,7 @@ export function credentials(state={
   user: {
     municipal: false,
     password: "Chilquinta12",
-    user: "vialactea\ehernanr",
+    user: "vialactea\\ehernanr",
     vialactea: true,
   }
 }, action){

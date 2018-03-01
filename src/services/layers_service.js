@@ -1,4 +1,5 @@
 import env from '../services/config';
+import mapa from '../services/map_service';
 
 function layers(){
 
@@ -38,5 +39,57 @@ function layers(){
 
   };
 }
+
+export function changeLayerVisibility(layer, visible){
+    var mapp = mapa.getMap();
+  switch (layer) {
+    case 'luminarias':
+          if(visible){
+            var luminariasLayer = mapp.getLayer("ap_luminarias");
+            luminariasLayer.show();
+          }else{
+            var luminariasLayer = mapp.getLayer("ap_luminarias");
+            luminariasLayer.hide();
+          }
+
+    break;
+
+    case 'tramosap':
+          if(visible){
+            var luminariasLayer = mapp.getLayer("ap_tramos");
+            luminariasLayer.show();
+          }else{
+            var luminariasLayer = mapp.getLayer("ap_tramos");
+            luminariasLayer.hide();
+          }
+
+    break;
+
+    case 'modificaciones':
+          if(visible){
+            var luminariasLayer = mapp.getLayer("ap_modificaciones");
+            luminariasLayer.show();
+          }else{
+            var luminariasLayer = mapp.getLayer("ap_modificaciones");
+            luminariasLayer.hide();
+          }
+
+    break;
+
+    case 'limitecomunal':
+          if(visible){
+            var luminariasLayer = mapp.getLayer("ap_limiteComunal");
+            luminariasLayer.show();
+          }else{
+            var luminariasLayer = mapp.getLayer("ap_limiteComunal");
+            luminariasLayer.hide();
+          }
+
+    break;
+    default:
+
+  }
+}
+
 
 export default layers()

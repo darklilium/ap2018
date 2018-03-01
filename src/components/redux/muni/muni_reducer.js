@@ -1,5 +1,5 @@
 import {changeBasemap} from '../../../services/map_service';
-
+import {changeLayerVisibility} from '../../../services/layers_service';
 
 export function selected_menu(state={selectedMenu: ''}, action){
 
@@ -110,4 +110,39 @@ export function map_selector(state={value:'topo'}, action){
     default:
       return state;
   }
+}
+
+export function layer_selector(state={
+  luminarias: true,
+  tramosap: true,
+  modificaciones: true,
+  limitecomunal: true
+}, action){
+  switch (action.type) {
+    case 'LAYER_VISIBILITY_CHANGED':
+          switch (action.layer) {
+            case 'luminarias':
+                changeLayerVisibility(action.layer, !state.luminarias);
+                return Object.assign({},state,{luminarias: !state.luminarias})
+            break;
+            case 'tramosap':
+                changeLayerVisibility(action.layer, !state.tramosap);
+                return Object.assign({},state,{tramosap: !state.tramosap})
+            break;
+            case 'modificaciones':
+                changeLayerVisibility(action.layer, !state.modificaciones);
+                return Object.assign({},state,{modificaciones: !state.modificaciones})
+            break;
+            case 'limitecomunal':
+                changeLayerVisibility(action.layer, !state.limitecomunal);
+                return Object.assign({},state,{limitecomunal: !state.limitecomunal})
+            break;
+            default:
+              return state;
+          }
+      break;
+    default:
+      return state;
+  }
+
 }

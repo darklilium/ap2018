@@ -51,7 +51,7 @@ class SearchWidget extends React.Component {
     }
 
     render() {
-        const { busquedaType, busquedaTypeDefault, onChangeBusqueda, onClickBusqueda } = this.props;
+        const { busquedaType, busquedaTypeDefault, onChangeBusqueda, onClickBusqueda, found } = this.props;
 
         return (
            <Rail className="rail_busqueda_wrapper" attached internal position='left'>
@@ -60,7 +60,7 @@ class SearchWidget extends React.Component {
               <Divider inverted />
               <Dropdown className="dropdown_busqueda" placeholder='Seleccione Elemento' fluid selection options={options}
               defaultValue={busquedaTypeDefault} onChange={onChangeBusqueda}/>
-              <Input type="text" id="inputBusqueda" className="input_busqueda" placeholder='Valor' />
+              <Input type="text" id="inputBusqueda" className="input_busqueda" placeholder='Valor' text={found.value} />
               <Divider inverted />
               <Button className="btn_busqueda" onClick={this.onClick}>Buscar</Button>
               <BottomMessage />
@@ -78,7 +78,7 @@ const mapStateToProps = (state) =>{
     busquedaTypeDefault: state.busqueda.searchType,
     token: state.credentials.token,
     mapa: mapa.getMap(),
-    found: state.busqueda.found,
+    found: state.busqueda,
     comuna: state.selected_comuna
   }
 }

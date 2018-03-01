@@ -149,17 +149,17 @@ class Municipalidad extends React.Component {
     layerDefinitions[2] = "COMUNA = '"+ this.props.comuna[0].queryvalue+"'";
     layerDefinitions[4] = "nombre = '"+ this.props.comuna[0].queryvalue+"'";
 
-    var modificacionesLayer = new ArcGISDynamicMapServiceLayer(layers.read_dynamic_ap(this.props.token),{});
+    var modificacionesLayer = new ArcGISDynamicMapServiceLayer(layers.read_dynamic_ap(this.props.token),{id:"ap_modificaciones"});
     modificacionesLayer.setImageFormat("png32");
     modificacionesLayer.setVisibleLayers([0]);
     modificacionesLayer.setLayerDefinitions(layerDefinitions);
 
-    var luminariasLayer = new ArcGISDynamicMapServiceLayer(layers.read_dynamic_ap(this.props.token),{ minScale: 6000});
+    var luminariasLayer = new ArcGISDynamicMapServiceLayer(layers.read_dynamic_ap(this.props.token),{id:"ap_luminarias", minScale: 6000});
     luminariasLayer.setImageFormat("png32");
     luminariasLayer.setVisibleLayers([1]);
     luminariasLayer.setLayerDefinitions(layerDefinitions);
 
-    var tramosLayer = new ArcGISDynamicMapServiceLayer(layers.read_dynamic_ap(this.props.token),{minScale: 6000});
+    var tramosLayer = new ArcGISDynamicMapServiceLayer(layers.read_dynamic_ap(this.props.token),{id:"ap_tramos", minScale: 6000});
     tramosLayer.setImageFormat("png32");
     tramosLayer.setVisibleLayers([2]);
     tramosLayer.setLayerDefinitions(layerDefinitions);
