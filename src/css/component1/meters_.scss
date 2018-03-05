@@ -1,10 +1,14 @@
+$transparent_color: #e21616e8;
+$normal_color:  #e21616;
+
+
 .rail_meters_wrapper{
   width: 50%;
   height: 100%;
 }
 
 .wrapper_meters{
-  background: #e21616;
+  background: $transparent_color;
   z-index: 15;
   position: absolute;
   width: 100%;
@@ -12,7 +16,7 @@
 }
 
 .wrapper_meters_768{
-  background: #e21616;
+  background: $transparent_color;
   z-index: 15;
   position: absolute;
   width: 50%;

@@ -34,6 +34,9 @@ function layers(){
     },
     read_equipos(token){
       return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/3?f=json&token=" + token;
+    },
+    read_tramos(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/MapServer/2?f=json&token=" + token;
     }
 
 

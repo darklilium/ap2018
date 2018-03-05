@@ -5,55 +5,11 @@ import ReactTable from "react-table";
 import matchSorter from 'match-sorter';
 import $ from 'jquery';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
-
-
-var data = [{
-    oid: '123123123',
-    idequipo: "5441126718",
-    nro_medidor: "239445_LIN_DDS71NE",
-    nis:"723644",
-    cant_luminarias: "19",
-    cant_tramos: "23",
-    tipo: "Equipo Medida AP + Equipo Control AP",
-    rotulo: "999999"
-  },{
-      oid: '123123123',
-    idequipo: "341126718222",
-    nro_medidor: "56165156_LIN_DDS71NE",
-    nis:"9999",
-    cant_luminarias: "9",
-    cant_tramos: "3",
-    tipo: "Equipo Control AP",
-    rotulo: "999999"
-  },{
-      oid: '123123123',
-    idequipo: "341126718222",
-    nro_medidor: "56165156_LIN_DDS71NE",
-    nis:"9999",
-    cant_luminarias: "19",
-    cant_tramos: "3",
-    tipo: "Equipo Control AP",
-    rotulo: "999999"
-  },{
-      oid: '123123123',
-    idequipo: "341126718222",
-    nro_medidor: "56165156_LIN_DDS71NE",
-    nis:"9999",
-    cant_luminarias: "29",
-    cant_tramos: "3",
-    tipo: "Equipo Control AP",
-    rotulo: "999999"
-  },{
-      oid: '123123123',
-    idequipo: "341126718222",
-    nro_medidor: "56165156_LIN_DDS71NE",
-    nis:"9999",
-    cant_luminarias: "39",
-    cant_tramos: "3",
-    tipo: "Equipo Control AP",
-    rotulo: "999999"
-}];
-
+import {connect} from 'react-redux';
+import {getMetersData, getMeterLocation, getDataLuminariasAsociadas, getDataTramosAsociados, getLuminariaInfo, selectedMenu} from '../redux/actions';
+import {gLayerMedidor} from '../../services/medidores_service';
+import graphicsUtils from 'esri/graphicsUtils';
+import mapa from '../../services/map_service';
 
 const columns = [{
     Header: 'OBJECTID',
@@ -99,19 +55,53 @@ const columns = [{
     filterAll: true
   }]
 
+  const columnsLum = [{
+      Header: 'OBJECTID',
+      accessor: 'oid',
+      filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["oid"] }),
+      filterAll: true,
+      show: false
+    }, {
+      Header: 'ID Luminaria',
+      accessor: 'idluminaria',
+      filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["idluminaria"] }),
+      filterAll: true
+    }, {
+      Header: 'Tipo Conexión',
+      accessor: 'tipo_conexion',
+      filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["tipo_conexion"] }),
+      filterAll: true
+    }, {
+      Header: 'Propiedad',
+      accessor: 'propiedad', // Custom value accessors!
+      filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["propiedad"] }),
+      filterAll: true
+    }, {
+      Header: 'Tipo', // Custom header components!
+      accessor: 'tipo',
+      filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["tipo"] }),
+      filterAll: true
+    }, {
+      Header: 'Rótulo', // Custom header components!
+      accessor: 'rotulo',
+      filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["rotulo"] }),
+      filterAll: true
+    }]
 
 class MetersWidget extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        idequipo: '5615616',
-        nromedidor: '9845891',
+        idequipo: '',
+        nromedidor: '',
         width: 0,
         selectedMedidor: null,
-        selectedLuminaria: null
+        selectedLuminaria: null,
+        cantidad_luminarias: 0,
+        cantidad_tramos: 0
       }
 
-      this.onClickRow = this.onClickRow.bind(this);
+
       this.onClickMedidor = this.onClickMedidor.bind(this);
       this.onClickLuminaria = this.onClickLuminaria.bind(this);
 
@@ -121,25 +111,69 @@ class MetersWidget extends React.Component {
 
     handleChange = (e, { value }) => this.setState({ value })
 
-    onClickRow(row){
-      console.log(row,"clicked");
+    onClickMedidor(index, info){
+      this.setState({selectedMedidor: index});
+      var map = mapa.getMap();
+
+      (info.nro_medidor==" ") ? this.setState({idequipo: info.idequipo, nromedidor: 'No especificado'}) : this.setState({idequipo: info.idequipo, nromedidor: info.nro_medidor});
+
+      //obtener luminarias asociadas a medidor:
+      this.props.getDataLuminariasAsociadas(this.props.token, this.props.comuna, info.idequipo);
+
+      //obtener tramos asociados a medidor
+      this.props.getDataTramosAsociados(this.props.token, this.props.comuna, info.idequipo)
+        .then(tramos=>{
+          //Obtener ubicacion del medidor
+          this.props.onClickUbicarMedidor(this.props.token, info.idequipo)
+            .then(medidores=>{
+
+              if(!tramos.length){
+                console.log("tramos", tramos.length);
+                var mql = window.matchMedia("(max-width: 767px)");
+                var myExtend = graphicsUtils.graphicsExtent(medidores);
+                (mql.matches) ? map.setExtent(myExtend.offset(0,7),true) :  map.setExtent(myExtend.offset(-6,-3), true);
+              }else{
+                var mql = window.matchMedia("(max-width: 767px)");
+                var myExtend = graphicsUtils.graphicsExtent(tramos);
+                (mql.matches) ? map.setExtent(myExtend.offset(0,7),true) :  map.setExtent(myExtend.offset(-50,-3), true);
+              }
+            });
+        })
+        .catch(error=>{
+          this.setState({cantidad_tramos: 0})
+        })
     }
 
-    onClickMedidor(index){
-        this.setState({selectedMedidor: index});
-    }
-
-    onClickLuminaria(index){
+    onClickLuminaria(index, info){
       this.setState({selectedLuminaria: index});
+      this.props.getLuminariaInfo(this.props.token, info.idluminaria)
+      .then(luminaria=>{
+        console.log(luminaria,"holi");
+        document.getElementById("editar_btn").addEventListener('click', (e)=>{
+          console.log("holi desde boton click editar"); //funciona
+          this.props.selectedMenu('edit');
+        })
+      })
+      .catch(error=>{
+        console.log(error,"adios");
+      })
+
+    }
+
+    componentDidMount(){
+      this.props.getDataMedidores(this.props.token,this.props.comuna)
+      .then(data=>{
+
+      })
+      .catch(error=>{
+
+      })
     }
 
     render() {
         const {width} = this.state;
-        const qualityType = {
-          0: 'good',
-          1: 'bad',
-          2: 'unknown'
-        };
+        const {dataMedidores, dataLuminarias} = this.props;
+
         return (
 
          <Rail className="rail_meters_wrapper" attached internal position='left'>
@@ -151,7 +185,7 @@ class MetersWidget extends React.Component {
               </div>
 
              <ReactTable
-                data={data}
+                data={dataMedidores}
                 filterable
                 columns={columns}
                 defaultPageSize={3}
@@ -161,7 +195,7 @@ class MetersWidget extends React.Component {
                   if(typeof rowInfo !== 'undefined'){
                     return {
                         onClick: (e) => {
-                            this.onClickMedidor(rowInfo.index)
+                            this.onClickMedidor(rowInfo.index, rowInfo.row)
                         },
                         style: {
                             background: rowInfo.index === this.state.selectedMedidor ? '#980000' : '',
@@ -171,7 +205,7 @@ class MetersWidget extends React.Component {
                   }else{
                     return {
                         onClick: (e) => {
-                            this.onClickMedidor(rowInfo.index)
+                            this.onClickMedidor(rowInfo.index, rowInfo.row)
                         }
                   }}
                 }}
@@ -188,9 +222,9 @@ class MetersWidget extends React.Component {
                 <h3>N° Medidor: {this.state.nromedidor}</h3>
               </div>
             <ReactTable
-              data={data}
+              data={dataLuminarias}
               filterable
-              columns={columns}
+              columns={columnsLum}
               defaultPageSize={3}
               showPageSizeOptions={false}
               className="-striped -highlight"
@@ -198,7 +232,7 @@ class MetersWidget extends React.Component {
                 if(typeof rowInfo !== 'undefined'){
                   return {
                       onClick: (e) => {
-                          this.onClickLuminaria(rowInfo.index)
+                          this.onClickLuminaria(rowInfo.index, rowInfo.row)
                       },
                       style: {
                           background: rowInfo.index === this.state.selectedLuminaria ? '#980000' : '',
@@ -208,7 +242,7 @@ class MetersWidget extends React.Component {
                 }else{
                   return {
                       onClick: (e) => {
-                          this.onClickLuminaria(rowInfo.index)
+                          this.onClickLuminaria(rowInfo.index, rowInfo.row)
                       }
                 }}
               }}
@@ -224,7 +258,7 @@ class MetersWidget extends React.Component {
                 <Button color="red" circular className="meter_export_btn" onClick={this.onClick} >Exportar</Button>
               </div>
               <ReactTable
-                 data={data}
+                 data={dataMedidores}
                  filterable
                  columns={columns}
                  defaultPageSize={3}
@@ -234,7 +268,7 @@ class MetersWidget extends React.Component {
                    if(typeof rowInfo !== 'undefined'){
                      return {
                          onClick: (e) => {
-                             this.onClickMedidor(rowInfo.index)
+                             this.onClickMedidor(rowInfo.index, rowInfo.row)
                          },
                          style: {
                              background: rowInfo.index === this.state.selectedMedidor ? '#980000' : '',
@@ -244,7 +278,7 @@ class MetersWidget extends React.Component {
                    }else{
                      return {
                          onClick: (e) => {
-                             this.onClickMedidor(rowInfo.index)
+                             this.onClickMedidor(rowInfo.index, rowInfo.row)
                          }
                    }}
                  }}
@@ -261,17 +295,17 @@ class MetersWidget extends React.Component {
                   <h3>N° Medidor: {this.state.nromedidor}</h3>
               </div>
               <ReactTable
-                data={data}
+                data={dataLuminarias}
                 filterable
-                columns={columns}
+                columns={columnsLum}
                 defaultPageSize={3}
-                  showPageSizeOptions={false}
+                showPageSizeOptions={false}
                 className="-striped -highlight"
                 getTdProps={(state,rowInfo,column,instance)=>{
                   if(typeof rowInfo !== 'undefined'){
                     return {
                         onClick: (e) => {
-                            this.onClickLuminaria(rowInfo.index)
+                            this.onClickLuminaria(rowInfo.index, rowInfo.row)
                         },
                         style: {
                             background: rowInfo.index === this.state.selectedLuminaria ? '#980000' : '',
@@ -281,7 +315,7 @@ class MetersWidget extends React.Component {
                   }else{
                     return {
                         onClick: (e) => {
-                            this.onClickLuminaria(rowInfo.index)
+                            this.onClickLuminaria(rowInfo.index, rowInfo.row)
                         }
                   }}
                 }}
@@ -300,4 +334,26 @@ class MetersWidget extends React.Component {
 
 }
 
-export default MetersWidget
+const mapStateToProps = (state) =>{
+  return {
+    dataMedidores: state.medidores_data.dataMedidores,
+    dataLuminarias: state.luminarias_asociadas.luminariasAsociadas,
+    dataTramos: state.tramos_asociados.tramosAsociados,
+    comuna: state.selected_comuna[0].value,
+    token: state.credentials.token,
+    luminariaSelected: state.luminaria_asociada_info.luminariaSelected
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    getDataMedidores: (token,comuna) => dispatch(getMetersData(token,comuna)),
+    onClickUbicarMedidor: (token, idequipo) => dispatch(getMeterLocation(token, idequipo)),
+    getDataLuminariasAsociadas: (token, comuna, idequipo) => dispatch(getDataLuminariasAsociadas(token,comuna,idequipo)),
+    getDataTramosAsociados:  (token, comuna, idequipo) => dispatch(getDataTramosAsociados(token,comuna,idequipo)),
+    getLuminariaInfo: (token,idluminaria) => dispatch(getLuminariaInfo(token,idluminaria)),
+    selectedMenu: (selected) => dispatch(selectedMenu(selected))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MetersWidget)

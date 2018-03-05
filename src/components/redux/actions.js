@@ -2,7 +2,9 @@
 import getTokenForDefaultUser from '../../services/login_service';
 import {loginMuniOptions} from '../../services/login_service';
 import {searchElement} from '../../services/busqueda_service';
-
+import {getSelectedMeterLocation, getDataMedidores} from '../../services/medidores_service';
+import {getLuminariasAsociadas, getLuminariaLocation} from '../../services/luminarias_service';
+import {getTramosMedidor} from '../../services/tramos_service';
 //LOGIN ACTIONS-----------------------------------------------------------------
 
 export function changeWidth(width){
@@ -98,7 +100,7 @@ export function toggleSegment(visible){
 }
 
 export function toggleVisibility(visible){
-  console.log("estoy en toggleVisibility", visible);
+
   if(visible){
 
     return {
@@ -147,11 +149,11 @@ export function onChangeBusqueda(searchType){
 }
 
 export function onClickBusquedaWidget(searchType, value, token, mapa, comuna){
-  console.log(comuna);
+
   return dispatch =>{
       return searchElement(searchType, value, token, mapa, comuna)
       .then(found =>{
-        console.log(found.length,"length");
+
         if(found.length){
           dispatch({
             type: "SEARCH_IS_DONE",
@@ -196,7 +198,139 @@ export function layer_selected(layer){
   }
 }
 
+//MetersWidget actions
 
+export function getMetersData(token,comuna){
+  return dispatch =>{
+    return getDataMedidores(token,comuna)
+    .then(data=>{
+      dispatch({
+        type: 'GOT_METERS_DATA',
+        data
+      })
+
+      return data;
+    })
+    .catch(error=>{
+      dispatch({
+        type: 'ERROR_GETTING_METERS_DATA',
+        error
+      })
+
+
+      return error;
+    })
+
+  }
+}
+
+export function getMeterLocation(token,idequipo){
+  return dispatch =>{
+    return getSelectedMeterLocation(token,idequipo)
+    .then(location=>{
+      dispatch({
+        type: 'MEDIDOR_LOCATION_FOUND',
+        location
+      })
+      return location;
+    }).catch(error=>{
+      dispatch({
+        type: 'MEDIDOR_LOCATION_NOT_FOUND',
+        error
+      })
+      return error;
+    })
+  }
+
+}
+
+export function getDataLuminariasAsociadas(token,comuna,idequipo){
+  return dispatch =>{
+    return getLuminariasAsociadas(token,comuna,idequipo)
+    .then(luminarias=>{
+
+      if(luminarias.length>0){
+
+        dispatch({
+          type: 'LUMINARIAS_ASOCIADAS_FOUND',
+          luminarias
+        })
+
+      }else{
+        dispatch({
+          type: 'LUMINARIAS_ASOCIADAS_NOT_FOUND',
+          luminarias
+        })
+      }
+
+      return luminarias;
+    })
+    .catch(error=>{
+      dispatch({
+        type: 'LUMINARIAS_ASOCIADAS_ERROR',
+        error
+      })
+      return error;
+    })
+  }
+}
+
+export function getDataTramosAsociados(token,comuna,idequipo){
+  return dispatch => {
+    return getTramosMedidor(token,comuna,idequipo)
+    .then(tramos=>{
+      if(tramos.length>0){
+        dispatch({
+          type: "TRAMOS_ASOCIADOS_FOUND",
+          tramos
+        })
+        return tramos;
+      }else{
+        dispatch({
+          type: "TRAMOS_ASOCIADOS_NOT_FOUND",
+          tramos
+        })
+        return tramos;
+      }
+    })
+    .catch(error=>{
+        dispatch({
+          type: 'TRAMOS_ASOCIADOS_ERROR',
+          error
+        })
+        return error;
+    })
+  }
+}
+
+export function getLuminariaInfo(token,idluminaria){
+  return dispatch => {
+    return getLuminariaLocation(token,idluminaria)
+    .then(luminaria =>{
+      console.log(luminaria.length,"ola", token);
+      if(luminaria.length>0){
+        dispatch({
+          type: 'LUMINARIA_ASOCIADA_INFO_FOUND',
+          luminaria
+        })
+        return luminaria;
+      }else{
+        dispatch({
+          type: 'LUMINARIA_ASOCIADA_INFO_NOT_FOUND',
+          luminaria
+        })
+        return luminaria;
+      }
+    })
+    .catch(error=>{
+        dispatch({
+          type: 'LUMINARIA_ASOCIADA_INFO_ERROR',
+          error
+        })
+        return error;
+    })
+  }
+}
 //------------------------------------------------------------------------------
 //OTHERS COMPONENTS actions
 

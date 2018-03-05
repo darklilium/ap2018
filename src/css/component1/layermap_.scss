@@ -1,5 +1,8 @@
+$transparent_color: #e21616e8;
+$normal_color:  #e21616;
+
 .wrapper_layermap{
-  background: #e21616;
+  background: $transparent_color;
   z-index: 15;
   position: absolute;
   width: 100%;
