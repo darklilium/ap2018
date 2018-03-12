@@ -37,11 +37,28 @@ function layers(){
     },
     read_tramos(token){
       return serviceURL + "AP_Municipal/AP_MUNICIPAL/MapServer/2?f=json&token=" + token;
+    },
+    read_potencia(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/6?f=json&token=" + token;
+    },
+    read_tipo_conexion(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/8?f=json&token=" + token;
+    },
+    read_tipo_luminarias(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/9?f=json&token=" + token;
+    },
+    read_tipo_propiedad(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/7?f=json&token=" + token;
+    },
+    read_modificaciones(token){
+      return serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/0/applyedits";
+    },
+    read_fotografias(token){
+      return  serviceURL + "AP_Municipal/AP_MUNICIPAL/FeatureServer/10?f=json&token=" + token;
     }
-
-
   };
 }
+
 
 export function changeLayerVisibility(layer, visible){
     var mapp = mapa.getMap();

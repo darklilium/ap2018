@@ -1,0 +1,80 @@
+.tab_menu{
+  background: #e52b2b;
+  color: white;
+}
+
+.ui.secondary.pointing.menu .active.item {
+  border-color: #ffffff;
+  color: #FFF;
+}
+
+.ui.menu .item {
+  color: #FFF;
+}
+
+.ui.secondary.pointing.menu a:hover{
+  color: #FFF !important;
+  border-color: #ffffff !important;
+}
+
+.tab1_, .tab2_, .tab3_ {
+  background: #e52b2b !important;
+}
+
+.ui.tabular.menu .item{
+    color: white !important;
+}
+
+.ui.tabular.menu .active.item{
+  background: #ef1f1f !important;
+}
+
+.wrapper_titles_edit{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper_titles_edit_h3{
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper_buttons_edit{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  padding: 0;
+}
+
+.btn_chevron{
+  color: white !important;
+  background: #e25050 !important;
+}
+
+.divider_edit{
+  margin: 5px;
+}
+
+.btn_editwidget_actions{
+        color: white !important;
+}
+
+.btn_actions_wrapper{
+  border: 1px solid rgb(255, 255, 255)!important;
+}
+
+.ui.basic.button, .ui.basic.buttons .button{
+  color: rgb(255, 255, 255)!important
+}
+
+.image-gallery-left-nav, .image-gallery-right-nav{
+    padding: 0 !important;
+}
+
+@import "node_modules/react-image-gallery/styles/scss/image-gallery.scss";

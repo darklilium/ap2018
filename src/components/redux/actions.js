@@ -3,8 +3,11 @@ import getTokenForDefaultUser from '../../services/login_service';
 import {loginMuniOptions} from '../../services/login_service';
 import {searchElement} from '../../services/busqueda_service';
 import {getSelectedMeterLocation, getDataMedidores} from '../../services/medidores_service';
-import {getLuminariasAsociadas, getLuminariaLocation} from '../../services/luminarias_service';
+import {getLuminariasAsociadas, getLuminariaLocation, getFotografias, getDataLuminariasComuna} from '../../services/luminarias_service';
 import {getTramosMedidor} from '../../services/tramos_service';
+import {getPotenciaLuminaria, getTipoConexiones, getTipoLuminarias, getPropiedadesLuminarias} from '../../services/combo_service';
+import {edit_query} from '../../services/edit_service';
+
 //LOGIN ACTIONS-----------------------------------------------------------------
 
 export function changeWidth(width){
@@ -275,6 +278,40 @@ export function getDataLuminariasAsociadas(token,comuna,idequipo){
   }
 }
 
+export function highlightRow(index, type, idequipo, nromedidor){
+  console.log(index,"highlight");
+  switch (type) {
+    case 'medidor':
+      return {
+        type: "SELECTED_MEDIDOR",
+        index, idequipo, nromedidor
+      }
+    break;
+
+    case 'luminariaAsoc':
+      return {
+        type: "SELECTED_LUMINARIA_ASOCIADA",
+        index
+      }
+    break;
+
+    case 'luminaria':
+      return {
+        type: "SELECTED_LUMINARIA",
+        index
+      }
+    break;
+
+  }
+  return {
+
+  }
+}
+
+export function highlightMedidor(index){
+
+}
+
 export function getDataTramosAsociados(token,comuna,idequipo){
   return dispatch => {
     return getTramosMedidor(token,comuna,idequipo)
@@ -307,7 +344,7 @@ export function getLuminariaInfo(token,idluminaria){
   return dispatch => {
     return getLuminariaLocation(token,idluminaria)
     .then(luminaria =>{
-      console.log(luminaria.length,"ola", token);
+
       if(luminaria.length>0){
         dispatch({
           type: 'LUMINARIA_ASOCIADA_INFO_FOUND',
@@ -328,6 +365,226 @@ export function getLuminariaInfo(token,idluminaria){
           error
         })
         return error;
+    })
+  }
+}
+
+export function getLuminariaInfo2(luminaria){
+  if(luminaria.length>0){
+    return {
+      type: 'LUMINARIA_ASOCIADA_INFO_FOUND',
+      luminaria
+    }
+  }else{
+    return {
+      type: 'LUMINARIA_ASOCIADA_INFO_NOT_FOUND',
+      luminaria
+    }
+  }
+}
+//EditWidget ACTIONS
+
+//EditLuminaria:
+export function getPotencias(token) {
+  return dispatch =>{
+    return getPotenciaLuminaria(token)
+    .then(potencias=>{
+      if (potencias.length>0) {
+        dispatch({
+          type: 'POTENCIAS_OBTAINED',
+          potencias
+        })
+      }
+    })
+    .catch(error=>{
+      dispatch({
+        type: 'ERROR_GETTING_POTENCIAS',
+        error
+      })
+    })
+  }
+}
+
+export function getTipoConexion(token) {
+  return dispatch =>{
+    return getTipoConexiones(token)
+    .then(tipoconexion=>{
+      dispatch({
+        type: 'TIPO_CONEXION_OBTAINED',
+        tipoconexion
+      })
+    })
+    .catch(error=>{
+      dispatch({
+        type: 'ERROR_GETTING_TIPO_CONEXION',
+        error
+      })
+    })
+  }
+}
+
+
+export function getTipoLuminaria(token) {
+  return dispatch =>{
+    return getTipoLuminarias(token)
+    .then(tipoLuminaria=>{
+      dispatch({
+        type: 'TIPO_LUMINARIA_OBTAINED',
+        tipoLuminaria
+      })
+    })
+    .catch(error=>{
+      dispatch({
+        type: 'ERROR_GETTING_TIPO_LUMINARIA',
+        error
+      })
+    })
+  }
+}
+export function getPropiedades(token) {
+  return dispatch => {
+    return getPropiedadesLuminarias(token)
+    .then(propiedades=>{
+      dispatch({
+        type: 'PROPIEDAD_OBTAINED',
+        propiedades
+      })
+    })
+    .catch(error=>{
+      dispatch({
+        type: 'ERROR_GETTING_PROPIEDADES',
+        error
+      })
+    })
+  }
+}
+
+export function onChangeEdition(name, value) {
+
+  return {
+    type: 'ONCHANGE_COMBO_EDITION',
+    name,
+    value
+  }
+}
+
+export function onChangeEditionObject(attrName, value) {
+  console.log(attrName, value);
+  return {
+    type: 'ONCHANGE_OBJECT_EDITION',
+    attrName,
+    value
+  }
+}
+
+export function onClickEditWidget(name, values, geometry, token){
+  return dispatch =>{
+    switch (name) {
+      case 'btnActualizar':
+        return edit_query(values, geometry, token)
+        .then(done=>{
+          dispatch({
+            type: 'DONE_UPDATE',
+            done
+          })
+          return done;
+        })
+        .catch(error=>{
+          dispatch({
+            type: 'ERROR_UPDATE',
+            done
+          })
+            return error;
+        })
+
+      break;
+
+      case 'btnEliminar':
+        return edit_query(values, geometry, token)
+        .then(done=>{
+          dispatch({
+            type: 'ON_DELETE',
+            done
+          })
+            return done;
+        })
+        .catch(error=>{
+          dispatch({
+            type: 'ERROR_DELETE',
+            name,values
+          })
+            return error;
+        })
+      break;
+
+      case 'btnNuevo':
+
+        return edit_query(values, geometry, token)
+        .then(done=>{
+          dispatch({
+            type: 'ON_CREATE',
+            name,values
+          })
+        })
+        .catch(error=>{
+          dispatch({
+            type: 'ERROR_CREATE',
+            name,values
+          })
+        })
+      break;
+
+      default:
+        dispatch({
+          type: 'ON_ERROR',
+          name,values
+        })
+      break;
+    }
+  }
+
+
+}
+
+export function findPictures(token, idnodo){
+  return dispatch =>{
+    return getFotografias(token,idnodo)
+    .then(fotos=>{
+      console.log(fotos,"fotos recibidas");
+      dispatch({
+        type: 'PICTURED_FOUND',
+        fotos
+      })
+
+      return fotos;
+    })
+    .catch(error=>{
+      console.log(error,"fotografias no recibidas");
+      dispatch({
+        type: 'PICTURED_NOT_FOUND',
+        error
+      })
+
+      return error;
+    })
+  }
+}
+
+export function getDataLuminarias (token,comuna){
+  return dispatch => {
+    return getDataLuminariasComuna(token,comuna)
+    .then(luminarias=>{
+      dispatch({
+        type: 'LUMINARIAS_FOUND',
+        luminarias
+      });
+
+    })
+    .catch(error=>{
+      dispatch({
+        type: 'LUMINARIAS_NOT_FOUND',
+        error
+      })
     })
   }
 }

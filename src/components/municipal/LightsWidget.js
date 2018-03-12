@@ -3,79 +3,35 @@ import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container, Dropdow
 import mupropiedadtyle from '../../css/component1/meters_.scss';
 import ReactTable from "react-table";
 import matchSorter from 'match-sorter';
+import {connect} from 'react-redux';
+import {getDataLuminarias, getLuminariaInfo, findPictures, selectedMenu} from '../redux/actions';
 
-var data = [{
-    idluminaria: "5441126718",
-    tipo_conexion: "239445_LIN_DDS71NE",
-    propiedad:"723644",
-    medido: "19",
-    tipo: "23",
-    potencia: "Equipo Medida AP + Equipo Control AP",
-    rotulo: "999999"
-},{
-    idluminaria: "341126718222",
-    tipo_conexion: "56165156_LIN_DDS71NE",
-    propiedad:"9999",
-    medido: "9",
-    tipo: "3",
-    potencia: "Equipo Control AP",
-    rotulo: "999999"
-},{
-    idluminaria: "341126718222",
-    tipo_conexion: "56165156_LIN_DDS71NE",
-    propiedad:"9999",
-    medido: "19",
-    tipo: "3",
-    potencia: "Equipo Control AP",
-    rotulo: "999999"
-},{
-    idluminaria: "341126718222",
-    tipo_conexion: "56165156_LIN_DDS71NE",
-    propiedad:"9999",
-    medido: "29",
-    tipo: "3",
-    potencia: "Equipo Control AP",
-    rotulo: "999999"
-},{
-    idluminaria: "341126718222",
-    tipo_conexion: "56165156_LIN_DDS71NE",
-    propiedad:"9999",
-    medido: "39",
-    tipo: "3",
-    potencia: "Equipo Control AP",
-    rotulo: "999999"
-}];
 
-const columns = [{
-    Header: 'ID Equipo',
+const columnsLum = [{
+    Header: 'OBJECTID',
+    accessor: 'oid',
+    filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["oid"] }),
+    filterAll: true,
+    show: false
+  }, {
+    Header: 'ID Luminaria',
     accessor: 'idluminaria',
     filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["idluminaria"] }),
     filterAll: true
   }, {
-    Header: 'Nro. Medidor',
+    Header: 'Tipo Conexión',
     accessor: 'tipo_conexion',
     filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["tipo_conexion"] }),
     filterAll: true
   }, {
-    id: 'propiedad', // Required because our accessor is not a string
-    Header: 'propiedad',
+    Header: 'Propiedad',
     accessor: 'propiedad', // Custom value accessors!
     filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["propiedad"] }),
     filterAll: true
   }, {
-    Header: 'Cant. Luminarias', // Custom header components!
-    accessor: 'medido',
-    filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["medido"] }),
-    filterAll: true
-  }, {
-    Header: 'Cant. Tramos', // Custom header components!
-    accessor: 'tipo',
-    filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["tipo"] }),
-    filterAll: true
-  }, {
     Header: 'Tipo', // Custom header components!
     accessor: 'tipo',
-    filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["potencia"] }),
+    filterMethod: (filter, rows) => matchSorter(rows, filter.value, { keys: ["tipo"] }),
     filterAll: true
   }, {
     Header: 'Rótulo', // Custom header components!
@@ -85,18 +41,69 @@ const columns = [{
   }]
 
 class LightsWidget extends React.Component {
-    state = {}
-    handleChange = (e, { value }) => this.setState({ value })
+    constructor(props){
+      super(props);
+      this.state = {
+        selectedMedidor: null,
+        selectedLuminaria: null
+      }
+
+      this.onClickLuminaria = this.onClickLuminaria.bind(this);
+
+    }
+    onClickLuminaria(index, info){
+      this.setState({selectedLuminaria: index});
+      this.props.getLuminariaInfo(this.props.token, info.idluminaria)
+      .then(luminaria=>{
+
+        document.getElementById("editar_btn").addEventListener('click', (e)=>{
+          console.log("holi desde boton click editar"); //funciona
+          //buscar fotos de esa luminaria
+          this.props.getPictures(this.props.token, luminaria[0].attributes.ID_NODO);
+          this.props.selectedMenu('editsingle');
+        })
+      })
+      .catch(error=>{
+        console.log(error,"adios");
+      })
+
+    }
+
+    componentDidMount(){
+      this.props.getDataLuminarias(this.props.token, this.props.comuna);
+    }
+
     render() {
+        const {dataLuminarias} = this.props;
+
         return (
          <Rail className="rail_meters_wrapper" attached internal position='left'>
             <div className="wrapper_meters">
             <ReactTable
-              data={data}
+              data={dataLuminarias}
               filterable
-              columns={columns}
+              columns={columnsLum}
               defaultPageSize={3}
+              showPageSizeOptions={false}
               className="-striped -highlight"
+              getTdProps={(state,rowInfo,column,instance)=>{
+                if(typeof rowInfo !== 'undefined'){
+                  return {
+                      onClick: (e) => {
+                          this.onClickLuminaria(rowInfo.index, rowInfo.row)
+                      },
+                      style: {
+                          background: rowInfo.index === this.state.selectedLuminaria ? '#980000' : '',
+                          color: rowInfo.index === this.state.selectedLuminaria ? 'white' : ''
+                      }
+                  }
+                }else{
+                  return {
+                      onClick: (e) => {
+                          this.onClickLuminaria(rowInfo.index, rowInfo.row)
+                      }
+                }}
+              }}
             />
 
             </div>
@@ -106,4 +113,21 @@ class LightsWidget extends React.Component {
 
 }
 
-export default LightsWidget
+const mapStateToProps = state => {
+  return {
+    dataLuminarias: state.luminarias.luminariasComuna,
+    comuna: state.selected_comuna[0].queryvalue,
+    token: state.credentials.token
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getDataLuminarias: (token, comuna) => dispatch(getDataLuminarias(token,comuna)),
+    getLuminariaInfo: (token,idluminaria) => dispatch(getLuminariaInfo(token,idluminaria)),
+    getPictures: (token,idnodoOID) => dispatch(findPictures(token,idnodoOID)),
+    selectedMenu: (selected) => dispatch(selectedMenu(selected))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LightsWidget);

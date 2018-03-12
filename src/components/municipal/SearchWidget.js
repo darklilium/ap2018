@@ -1,7 +1,7 @@
 import React from 'react'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container, Dropdown,  Divider, Rail,Input  } from 'semantic-ui-react';
 import muniStyle from '../../css/component1/busqueda_.scss';
-import {onChangeBusqueda, onClickBusquedaWidget, showNotification, setMessage, selectedMenu} from '../redux/actions';
+import {onChangeBusqueda, onClickBusquedaWidget, showNotification, setMessage, selectedMenu, getLuminariaInfo2, findPictures} from '../redux/actions';
 import { connect } from 'react-redux';
 import mapa from '../../services/map_service';
 import BottomMessage from '../others/BottomMessage';
@@ -25,7 +25,7 @@ class SearchWidget extends React.Component {
 
       let inputValue = document.getElementById('inputBusqueda').value;
       this.props
-        .onClickBusqueda(this.props.busquedaType,inputValue, this.props.token, this.props.mapa, this.props.comuna[0].value)
+        .onClickBusqueda(this.props.busquedaType,inputValue, this.props.token, this.props.mapa, this.props.comuna[0].queryvalue)
         .then(done=>{
           console.log(done,"hecho");
           if(done.length){
@@ -34,7 +34,14 @@ class SearchWidget extends React.Component {
             if((this.props.busquedaType=='IDNODO') || (this.props.busquedaType=='ROTULO')){
               document.getElementById("editar_btn").addEventListener('click', (e)=>{
                 console.log("holi desde boton click editar"); //funciona
-                this.props.selectedMenu('edit');
+
+                //buscar info de luminaria buscada.
+                this.props.getLuminariaInfo(done)
+                //buscar fotos de esa luminaria
+                this.props.getPictures(this.props.token, done[0].attributes.ID_NODO);
+                this.props.selectedMenu('editsingle');
+
+
               })
             }
 
@@ -72,13 +79,13 @@ class SearchWidget extends React.Component {
 }
 
 const mapStateToProps = (state) =>{
-  console.log(state);
+
   return {
-    busquedaType: state.busqueda.searchType,
-    busquedaTypeDefault: state.busqueda.searchType,
+    busquedaType: state.luminaria_asociada_info.searchType,
+    busquedaTypeDefault: state.luminaria_asociada_info.searchType,
     token: state.credentials.token,
     mapa: mapa.getMap(),
-    found: state.busqueda,
+    found: state.luminaria_asociada_info,
     comuna: state.selected_comuna
   }
 }
@@ -91,7 +98,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(showNotification(visibility)),
       dispatch(setMessage(notification))
     },
-    selectedMenu: (selected) => dispatch(selectedMenu(selected))
+    selectedMenu: (selected) => dispatch(selectedMenu(selected)),
+    getLuminariaInfo: (values) => dispatch(getLuminariaInfo2(values)),
+    getPictures: (token,idnodoOID) => dispatch(findPictures(token,idnodoOID))
   }
 }
 

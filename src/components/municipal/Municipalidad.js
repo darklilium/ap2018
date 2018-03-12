@@ -11,8 +11,12 @@ import SearchWidget from './SearchWidget';
 import LayerMapWidget from './LayerMapWidget';
 import MetersWidget from './MetersWidget';
 import LightsWidget from './LightsWidget';
-import EditWidget from './EditWidget';
+import EditWidgetSingle from './EditWidgetSingle';
+import EditWidgetMultiple from './EditWidgetMultiple';
+
 import {selectedMenu, toggleSidebarVisibility, saveMap} from '../redux/actions';
+import {getPotencias, getTipoConexion, getTipoLuminaria, getPropiedades} from '../redux/actions';
+
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container , Modal, Rail } from 'semantic-ui-react';
 import mapa from '../../services/map_service';
 
@@ -24,6 +28,7 @@ import Popup from "esri/dijit/Popup";
 import Color from "esri/Color";
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import layers from '../../services/layers_service';
+
 
 
 
@@ -72,8 +77,12 @@ class Municipalidad extends React.Component {
          myItem =  <LightsWidget />
          break;
 
-         case 'edit':
-         myItem = <EditWidget />
+         case 'editsingle':
+         myItem = <EditWidgetSingle />
+         break;
+
+         case 'editmultiple':
+         myItem = <EditWidgetMultiple />
          break;
 
          default:
@@ -173,6 +182,12 @@ class Municipalidad extends React.Component {
     mapp.on('dbl-click', (event)=>{
       console.log("doble click");
     });
+
+    //cargar combos de edit EditWidget que se usan:
+    this.props.getPotencias(this.props.token);
+    this.props.getTipoConexion(this.props.token);
+    this.props.getTipo(this.props.token);
+    this.props.getPropiedad(this.props.token);
   }
 }
 
@@ -192,7 +207,11 @@ const mapDispatchToProps = dispatch =>{
   return {
     selectedMenu: (selected) => dispatch(selectedMenu(selected)),
     toggleSidebarVisibility: (visible) => dispatch(toggleSidebarVisibility(visible)),
-    saveMap: (mapa) => dispatch(saveMap(mapa))
+    saveMap: (mapa) => dispatch(saveMap(mapa)),
+    getPotencias: (token) => dispatch(getPotencias(token)),
+    getTipoConexion: (token) => dispatch(getTipoConexion(token)),
+    getTipo: (token) => dispatch(getTipoLuminaria(token)),
+    getPropiedad: (token) => dispatch(getPropiedades(token))
   }
 }
 

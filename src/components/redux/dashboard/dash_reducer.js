@@ -1,7 +1,7 @@
 import {MuniImages} from '../../../services/apmuni_images';
 //combineReducers
 
-const comunaDefault = MuniImages.filter(comuna=>{return comuna.value==='valparaiso'});
+const comunaDefault = MuniImages.filter(comuna=>{return comuna.value==='lacruz'});
 
 export function comunas(state=MuniImages, action){
  switch (action.type) {

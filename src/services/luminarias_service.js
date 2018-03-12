@@ -8,6 +8,8 @@ import mapa from './map_service';
 import extent from 'esri/geometry/Extent';
 import graphicsUtils from 'esri/graphicsUtils';
 import {ap_infoWindow_luminaria, ap_infoWindow_medidor} from './makeInfowindow';
+import FeatureLayer from 'esri/layers/FeatureLayer';
+
 
 var gLayerMedidor = new GraphicsLayer();
 var gLayerLuminarias = new GraphicsLayer();
@@ -69,7 +71,7 @@ export function getLuminariaLocation(token, idluminaria){
     qLuminaria.where = "ID_LUMINARIA  =" + idluminaria ;
 
     qTaskLuminaria.execute(qLuminaria, (featureSet)=>{
-      console.log(featureSet,"hola");
+
       if(!featureSet.features.length){
         return resolve([]);
       }
@@ -98,6 +100,69 @@ export function getLuminariaLocation(token, idluminaria){
       return reject([]);
     });
   })
+
+  return promise;
+
+}
+
+export function getDataLuminariasComuna(token,comuna){
+
+  var promise = new Promise((resolve,reject)=>{
+
+    var map = mapa.getMap();
+    var qTaskMedidores = new QueryTask(layers.read_luminarias(token));
+    var qMedidores = new Query();
+
+    qMedidores.returnGeometry = true;
+    qMedidores.outFields=["*"];
+    qMedidores.where = "COMUNA ='" + comuna + "'";
+
+    qTaskMedidores.execute(qMedidores, (featureSet)=>{
+
+      if(!featureSet.features.length){
+        return resolve([])
+      }
+
+      return resolve(featureSet.features);
+    }, (error)=>{
+      console.log(error,"Error doing query for getDataLuminariasComuna");
+      return reject(error);
+    });
+  });
+
+  return promise;
+}
+export function getFotografias(token, idnodo){
+
+  var promise = new Promise((resolve,reject)=>{
+    console.log("buscando fotos para nodo...:",idnodo);
+
+    var qTaskFotografías = new esri.tasks.QueryTask(layers.read_fotografias(token));
+    var qFotografias = new esri.tasks.Query();
+
+    qFotografias.returnGeometry = true;
+    qFotografias.outFields=["*"];
+    qFotografias.where = "id_nodo =" + idnodo ;
+
+    qTaskFotografías.execute(qFotografias, (featureSet)=>{
+      console.log("fotos encontradas...",featureSet.features.length);
+      if(!featureSet.features.length){
+        return resolve([]);
+      }
+
+      var queryAttachments = new FeatureLayer(layers.read_fotografias(token));
+      queryAttachments.queryAttachmentInfos(featureSet.features[0].attributes['OBJECTID'],(fotos)=>{
+
+        return resolve(fotos);
+      });
+
+
+    }, (Errorq)=>{
+      console.log(Errorq,"Error doing query for getFotografías");
+      return reject([]);
+    });
+
+  });
 
   return promise;
 

@@ -2,7 +2,7 @@ import {MuniImages} from '../../../services/apmuni_images';
 
 export function credentials(state={
   login: true,
-  token: "Wjp0Xbf6kSk-7iScEQ_mXI18gK225inumqDMzOs_FdW2475nemv2c0raMC9LSPXOb-ST1hzEsaYAkJOZ6scRmQ..",
+  token: "Wjp0Xbf6kSk-7iScEQ_mXG191R1pq99nBjLii21HC46re1nNpSayKLFg70adgR0kW12X1PTsLdali2zGl2WUcw..",
   user: {
     municipal: false,
     password: "Chilquinta12",

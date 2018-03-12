@@ -25,7 +25,9 @@ function searchIDNODO(searchType,value, token, mapa, comuna) {
     qTask.execute(q, (featureSet)=>{
       console.log("Resultados: ",featureSet.features.length);
       if(!featureSet.features.length){
+          mapa.infoWindow.hide();
           return resolve([]);
+
       }
       gLayerFind.add(new Graphic(featureSet.features[0].geometry,pointSymbol));
       mapa.addLayer(gLayerFind,1);
@@ -66,6 +68,7 @@ function searchROTULO(searchType,value, token, mapa, comuna) {
     qTask.execute(q, (featureSet)=>{
       console.log("Resultados: ",featureSet.features.length);
       if(!featureSet.features.length){
+        mapa.infoWindow.hide();
           return resolve([]);
       }
       gLayerFind.add(new Graphic(featureSet.features[0].geometry,pointSymbol));
@@ -106,6 +109,7 @@ function searchNMEDIDOR(searchType,value, token, mapa, comuna) {
     qTask.execute(q, (featureSet)=>{
       console.log("Resultados: ",featureSet.features.length);
       if(!featureSet.features.length){
+        mapa.infoWindow.hide();
           return resolve([]);
       }
       gLayerFind.add(new Graphic(featureSet.features[0].geometry,pointSymbol));
@@ -139,6 +143,7 @@ function searchNCLIENTE(searchType,value, token, mapa, comuna) {
     qTask.execute(q, (featureSet)=>{
       console.log("Resultados: ",featureSet.features.length);
       if(!featureSet.features.length){
+        mapa.infoWindow.hide();
           return resolve([]);
       }
       gLayerFind.add(new Graphic(featureSet.features[0].geometry,pointSymbol));

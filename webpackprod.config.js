@@ -58,22 +58,22 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
+        test: /(\.scss|\.css)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: ['css-loader', 'sass-loader']
         })
-      }/*,
+      },
       {
         test: /\.(png|svg|jpg|gif)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]',
-          outputPath: '../cortocircuito/css/images/',
+          outputPath: '../ap/css/images/',
 
         }
       }
-      */
+
 
    ]
  },
@@ -95,7 +95,7 @@ module.exports = {
      allChunks: true
    }),
    new webpack.HotModuleReplacementPlugin(),
-
+/*
    new UglifyJSPlugin({
     uglifyOptions: {
       ie8: false,
@@ -109,6 +109,7 @@ module.exports = {
       warnings: false
     }
   }),
+  */
    new webpack.DefinePlugin({
      'process.env.NODE_ENV': JSON.stringify('production')
    })

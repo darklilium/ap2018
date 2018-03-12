@@ -6,10 +6,11 @@ import matchSorter from 'match-sorter';
 import $ from 'jquery';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {connect} from 'react-redux';
-import {getMetersData, getMeterLocation, getDataLuminariasAsociadas, getDataTramosAsociados, getLuminariaInfo, selectedMenu} from '../redux/actions';
+import {getMetersData, getMeterLocation, getDataLuminariasAsociadas, getDataTramosAsociados, getLuminariaInfo, selectedMenu, findPictures, highlightRow} from '../redux/actions';
 import {gLayerMedidor} from '../../services/medidores_service';
 import graphicsUtils from 'esri/graphicsUtils';
 import mapa from '../../services/map_service';
+import {exportToExcel} from '../../services/exportToExcel';
 
 const columns = [{
     Header: 'OBJECTID',
@@ -92,18 +93,19 @@ class MetersWidget extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        idequipo: '',
-        nromedidor: '',
+        //idequipo: '',
+        //nromedidor: '',
         width: 0,
-        selectedMedidor: null,
-        selectedLuminaria: null,
-        cantidad_luminarias: 0,
+        //selectedMedidor: null,
+        //selectedLuminaria: null,
         cantidad_tramos: 0
       }
 
 
       this.onClickMedidor = this.onClickMedidor.bind(this);
       this.onClickLuminaria = this.onClickLuminaria.bind(this);
+      this.onClickExportar = this.onClickExportar.bind(this);
+
 
     }
 
@@ -112,10 +114,15 @@ class MetersWidget extends React.Component {
     handleChange = (e, { value }) => this.setState({ value })
 
     onClickMedidor(index, info){
-      this.setState({selectedMedidor: index});
+      //this.setState({selectedMedidor: index});
       var map = mapa.getMap();
 
-      (info.nro_medidor==" ") ? this.setState({idequipo: info.idequipo, nromedidor: 'No especificado'}) : this.setState({idequipo: info.idequipo, nromedidor: info.nro_medidor});
+      if(info.nro_medidor==" "){
+        this.props.highlightRow(index, "medidor", info.idequipo, 'No especificado');
+      }else{
+        this.props.highlightRow(index, "medidor", info.idequipo, info.nro_medidor);
+        //this.setState({idequipo: info.idequipo, nromedidor: info.nro_medidor});
+      }
 
       //obtener luminarias asociadas a medidor:
       this.props.getDataLuminariasAsociadas(this.props.token, this.props.comuna, info.idequipo);
@@ -128,7 +135,7 @@ class MetersWidget extends React.Component {
             .then(medidores=>{
 
               if(!tramos.length){
-                console.log("tramos", tramos.length);
+
                 var mql = window.matchMedia("(max-width: 767px)");
                 var myExtend = graphicsUtils.graphicsExtent(medidores);
                 (mql.matches) ? map.setExtent(myExtend.offset(0,7),true) :  map.setExtent(myExtend.offset(-6,-3), true);
@@ -145,13 +152,16 @@ class MetersWidget extends React.Component {
     }
 
     onClickLuminaria(index, info){
-      this.setState({selectedLuminaria: index});
+      this.props.highlightRow(index, "luminariaAsoc");
+    //this.setState({selectedLuminaria: index});
       this.props.getLuminariaInfo(this.props.token, info.idluminaria)
       .then(luminaria=>{
-        console.log(luminaria,"holi");
+
         document.getElementById("editar_btn").addEventListener('click', (e)=>{
           console.log("holi desde boton click editar"); //funciona
-          this.props.selectedMenu('edit');
+          //buscar fotos de esa luminaria
+          this.props.getPictures(this.props.token, luminaria[0].attributes.ID_NODO);
+          this.props.selectedMenu('editsingle');
         })
       })
       .catch(error=>{
@@ -161,8 +171,10 @@ class MetersWidget extends React.Component {
     }
 
     componentDidMount(){
+      //console.log("creado meters widget");
       this.props.getDataMedidores(this.props.token,this.props.comuna)
       .then(data=>{
+        //resetear seleccion de luminarias asociadas
 
       })
       .catch(error=>{
@@ -170,9 +182,29 @@ class MetersWidget extends React.Component {
       })
     }
 
+    onClickExportar(e,name){
+      console.log(name, "btnExportar");
+      const {dataMedidores, dataLuminarias} = this.props;
+
+      switch (name.id) {
+        case 'meter_export_btn':
+          exportToExcel(dataMedidores, "MedidoresAP_", true)
+        break;
+
+        case 'luminariasAsoc_export_btn':
+          exportToExcel(dataLuminarias, "LuminariasAP_Asociadas_ID_Equipo_"+ this.state.idequipo , true);
+
+        break;
+
+        default:
+        break;
+      }
+
+    }
+
     render() {
         const {width} = this.state;
-        const {dataMedidores, dataLuminarias} = this.props;
+        const {dataMedidores, dataLuminarias, selectedLuminaria, selectedMedidor, idequipo, nromedidor} = this.props;
 
         return (
 
@@ -181,7 +213,7 @@ class MetersWidget extends React.Component {
             <div className="wrapper_meters">
               <div className="wrapper_divider_export">
                 <Divider className="meters_horizontal_divider" horizontal inverted>Medidores:</Divider>
-                  <Button color="red" circular className="meter_export_btn" onClick={this.onClick} >Exportar</Button>
+                  <Button color="red" id="meter_export_btn" circular className="meter_export_btn" onClick={this.onClickExportar}>Exportar</Button>
               </div>
 
              <ReactTable
@@ -198,8 +230,8 @@ class MetersWidget extends React.Component {
                             this.onClickMedidor(rowInfo.index, rowInfo.row)
                         },
                         style: {
-                            background: rowInfo.index === this.state.selectedMedidor ? '#980000' : '',
-                            color: rowInfo.index === this.state.selectedMedidor ? 'white' : ''
+                            background: rowInfo.index === selectedMedidor ? '#980000' : '',
+                            color: rowInfo.index === selectedMedidor ? 'white' : ''
                         }
                     }
                   }else{
@@ -214,12 +246,12 @@ class MetersWidget extends React.Component {
 
               <div className="wrapper_divider_export wrapper_divider_export_padding">
                   <Divider className="meters_horizontal_divider" horizontal inverted>Luminarias Asociadas: </Divider>
-                  <Button color="red" circular className="meter_export_btn" onClick={this.onClick} >Exportar</Button>
+                  <Button color="red" id="luminariasAsoc_export_btn" circular className="meter_export_btn" onClick={this.onClickExportar} >Exportar</Button>
               </div>
 
               <div className="wrapper_meters_titles">
-                <h3>Luminarias de ID Equipo: {this.state.idequipo}</h3>
-                <h3>N° Medidor: {this.state.nromedidor}</h3>
+                <h3>Luminarias de ID Equipo: {idequipo}</h3>
+                <h3>N° Medidor: {nromedidor}</h3>
               </div>
             <ReactTable
               data={dataLuminarias}
@@ -235,8 +267,8 @@ class MetersWidget extends React.Component {
                           this.onClickLuminaria(rowInfo.index, rowInfo.row)
                       },
                       style: {
-                          background: rowInfo.index === this.state.selectedLuminaria ? '#980000' : '',
-                          color: rowInfo.index === this.state.selectedLuminaria ? 'white' : ''
+                          background: rowInfo.index === selectedLuminaria ? '#980000' : '',
+                          color: rowInfo.index === selectedLuminaria ? 'white' : ''
                       }
                   }
                 }else{
@@ -255,7 +287,7 @@ class MetersWidget extends React.Component {
             <div className="wrapper_meters_left">
               <div className="wrapper_divider_export">
                 <Divider className="meters_horizontal_divider" horizontal inverted>Medidores:</Divider>
-                <Button color="red" circular className="meter_export_btn" onClick={this.onClick} >Exportar</Button>
+                <Button color="red" id="meter_export_btn" circular className="meter_export_btn" onClick={this.onClickExportar} >Exportar</Button>
               </div>
               <ReactTable
                  data={dataMedidores}
@@ -271,8 +303,8 @@ class MetersWidget extends React.Component {
                              this.onClickMedidor(rowInfo.index, rowInfo.row)
                          },
                          style: {
-                             background: rowInfo.index === this.state.selectedMedidor ? '#980000' : '',
-                             color: rowInfo.index === this.state.selectedMedidor ? 'white' : ''
+                             background: rowInfo.index === selectedMedidor ? '#980000' : '',
+                             color: rowInfo.index === selectedMedidor ? 'white' : ''
                          }
                      }
                    }else{
@@ -288,11 +320,11 @@ class MetersWidget extends React.Component {
             <div className="wrapper_meters_right">
               <div className="wrapper_divider_export">
                   <Divider className="meters_horizontal_divider" horizontal inverted>Luminarias Asociadas: </Divider>
-                  <Button color="red" circular className="meter_export_btn" onClick={this.onClick} >Exportar</Button>
+                  <Button color="red" id="luminariasAsoc_export_btn" circular className="meter_export_btn" onClick={this.onClickExportar} >Exportar</Button>
               </div>
               <div className="wrapper_meters_titles">
-                  <h3>Luminarias de ID Equipo: {this.state.idequipo}</h3>
-                  <h3>N° Medidor: {this.state.nromedidor}</h3>
+                  <h3>Luminarias de ID Equipo: {idequipo}</h3>
+                  <h3>N° Medidor: {nromedidor}</h3>
               </div>
               <ReactTable
                 data={dataLuminarias}
@@ -308,8 +340,8 @@ class MetersWidget extends React.Component {
                             this.onClickLuminaria(rowInfo.index, rowInfo.row)
                         },
                         style: {
-                            background: rowInfo.index === this.state.selectedLuminaria ? '#980000' : '',
-                            color: rowInfo.index === this.state.selectedLuminaria ? 'white' : ''
+                            background: rowInfo.index === selectedLuminaria ? '#980000' : '',
+                            color: rowInfo.index === selectedLuminaria ? 'white' : ''
                         }
                     }
                   }else{
@@ -339,9 +371,13 @@ const mapStateToProps = (state) =>{
     dataMedidores: state.medidores_data.dataMedidores,
     dataLuminarias: state.luminarias_asociadas.luminariasAsociadas,
     dataTramos: state.tramos_asociados.tramosAsociados,
-    comuna: state.selected_comuna[0].value,
+    comuna: state.selected_comuna[0].queryvalue,
     token: state.credentials.token,
-    luminariaSelected: state.luminaria_asociada_info.luminariaSelected
+    luminariaSelected: state.luminaria_asociada_info.luminariaSelected,
+    selectedLuminaria: state.luminarias_asociadas.luminariaAsociadaSelected,
+    selectedMedidor: state.medidor_location.selectedMedidor,
+    nromedidor: state.medidor_location.nromedidor,
+    idequipo: state.medidor_location.idequipo,
   }
 }
 
@@ -352,7 +388,9 @@ const mapDispatchToProps = (dispatch) =>{
     getDataLuminariasAsociadas: (token, comuna, idequipo) => dispatch(getDataLuminariasAsociadas(token,comuna,idequipo)),
     getDataTramosAsociados:  (token, comuna, idequipo) => dispatch(getDataTramosAsociados(token,comuna,idequipo)),
     getLuminariaInfo: (token,idluminaria) => dispatch(getLuminariaInfo(token,idluminaria)),
-    selectedMenu: (selected) => dispatch(selectedMenu(selected))
+    selectedMenu: (selected) => dispatch(selectedMenu(selected)),
+    getPictures: (token,idnodoOID) => dispatch(findPictures(token,idnodoOID)),
+    highlightRow: (index,type, idequipo, nromedidor) => dispatch(highlightRow(index, type, idequipo, nromedidor))
   }
 }
 
