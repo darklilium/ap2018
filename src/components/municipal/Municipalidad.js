@@ -28,9 +28,13 @@ import Popup from "esri/dijit/Popup";
 import Color from "esri/Color";
 import FeatureLayer from 'esri/layers/FeatureLayer';
 import layers from '../../services/layers_service';
-
-
-
+import makeSymbol from '../../services/makeSymbol';
+import IdentifyTask from "esri/tasks/IdentifyTask";
+import IdentifyParameters from "esri/tasks/IdentifyParameters";
+import arrayUtils from "dojo/_base/array";
+import InfoTemplate from "esri/InfoTemplate";
+import Graphic from 'esri/graphic';
+import {ap_infoWindow_luminaria} from '../../services/makeInfowindow';
 
 var myItem = null;
 
@@ -96,7 +100,7 @@ class Municipalidad extends React.Component {
 
      return (
          <div className="muni-wrapper">
-          
+
           <HeaderMenu comuna={comuna}/>
               {/*Push al mapa solamente*/}
               <Sidebar.Pushable as={Segment} className="pushable_menu_wrapper">
@@ -181,14 +185,64 @@ class Municipalidad extends React.Component {
 
 
     mapp.on('dbl-click', (event)=>{
-      console.log("doble click");
-    });
+        var identifyTask, identifyParams;
+        identifyTask = new IdentifyTask(layers.read_dynamic_ap(this.props.token));
+        identifyParams = new IdentifyParameters();
+        identifyParams.tolerance = 10;
+        identifyParams.returnGeometry = true;
+        identifyParams.layerIds = [0, 1];
+        identifyParams.layerOption = IdentifyParameters.LAYER_OPTION_ALL;
+        identifyParams.width = mapp.width;
+        identifyParams.height = mapp.height;
+        identifyParams.geometry = event.mapPoint;
+        identifyParams.mapExtent = mapp.extent;
+        var onlyLum = [];
+
+
+      var deferred = identifyTask.execute(identifyParams, (callback)=>{
+        if(!callback.length){
+          console.log("no hay length", callback);
+        }else{
+          let arrResults = callback.map(result => {
+            let r = {
+              features: result.feature,
+              layerName: result.layerName
+            }
+            return r;
+          });
+          mapp.centerAndZoom(arrResults[0].features.geometry,20);
+          onlyLum = arrResults.filter(element =>{ return element.layerName=='Luminarias' });
+          return onlyLum;
+        }
+
+        },(errback)=>{
+          console.log("ee",errback);
+      });
+
+     deferred.then(encontrados=>{
+       console.log(encontrados,"encontrados");
+       ap_infoWindow_luminaria(
+         encontrados.feature.attributes.ID_LUMINARIA,
+         encontrados.feature.attributes.ROTULO,
+         encontrados.feature.attributes.TIPO_CONEXION,
+         encontrados.feature.attributes.TIPO,
+         encontrados.feature.attributes.PROPIEDAD,
+         encontrados.feature.attributes.MEDIDO_TERRENO,
+         encontrados.feature.geometry
+       );
+
+     })
+
+  });
+
+
 
     //cargar combos de edit EditWidget que se usan:
     this.props.getPotencias(this.props.token);
     this.props.getTipoConexion(this.props.token);
     this.props.getTipo(this.props.token);
     this.props.getPropiedad(this.props.token);
+
   }
 }
 
