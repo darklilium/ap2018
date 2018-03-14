@@ -96,6 +96,7 @@ class Municipalidad extends React.Component {
 
      return (
          <div className="muni-wrapper">
+          
           <HeaderMenu comuna={comuna}/>
               {/*Push al mapa solamente*/}
               <Sidebar.Pushable as={Segment} className="pushable_menu_wrapper">

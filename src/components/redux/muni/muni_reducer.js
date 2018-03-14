@@ -184,7 +184,7 @@ export function luminarias_asociadas(state= {
   luminariasAsociadas: [],
   luminariaAsociadaSelected: null
  }, action){
-   console.log(action,"highlight?");
+
   switch (action.type) {
     case 'LUMINARIAS_ASOCIADAS_FOUND':
 
@@ -244,7 +244,10 @@ export function luminaria_asociada_info(state={
   searchType: "ROTULO",
   found: [],
   value: '',
-  fotografias: []}, action){
+  fotografias: [],
+  luminariasMismoCircuito: [],
+  tabActiveIndex: 0
+}, action){
 
   switch (action.type) {
     case 'LUMINARIA_ASOCIADA_INFO_FOUND':
@@ -296,6 +299,35 @@ export function luminaria_asociada_info(state={
 
     case "PICTURED_NOT_FOUND":
       return Object.assign({},state, {fotografias: action.fotos})
+    break;
+
+    case "CHANGED_TAB_INDEX":
+      return Object.assign({},state,{tabActiveIndex: action.index})
+    break;
+
+    case "LUMINARIA_ASOCIADA_INFO_FOUND_WIDGET":
+      let lumi = action.luminarias.map(l=>{
+      
+        return {
+          idnodo: l.attributes.ID_NODO,
+          idluminaria: l.attributes.ID_LUMINARIA,
+          tipo: l.attributes.TIPO,
+          tipo_conexion: l.attributes.TIPO_CONEXION,
+          potencia: l.attributes.POTENCIA,
+          propiedad: l.attributes.PROPIEDAD,
+          rotulo: l.attributes.ROTULO,
+          observacion: l.attributes.OBSERVACION,
+          geometry: l.geometry
+        }
+      })
+        return Object.assign({},state,{luminariasMismoCircuito: lumi});
+    break;
+    case 'LUMINARIA_ASOCIADA_INFO_NOT_FOUND_WIDGET':
+        return Object.assign({},state, {luminariasMismoCircuito: []});
+    break;
+
+    case 'LUMINARIA_ASOCIADA_INFO_ERROR_WIDGET':
+        return Object.assign({},state,{luminariasMismoCircuito: []});
     break;
 
     default:
@@ -473,5 +505,28 @@ export function onclick_editwidget(state={resultQueryAction: []}, action){
     default:
       return state;
     break;
+  }
+}
+
+export function toggle_loader_visibility(state= {active: true, type: ''}, action){
+  switch (action.type) {
+    case 'ACTIVE_LOADER_LIGHTS_ON':
+      return Object.assign({}, state, {active: true, type: 'LIGHTS'});
+    break;
+
+    case 'ACTIVE_LOADER_LIGHTS_OFF':
+      return Object.assign({}, state, {active: false, type: 'LIGHTS'});
+    break;
+
+    case 'ACTIVE_LOADER_METERS_ON':
+      return Object.assign({}, state, {active: true, type: 'METERS'});
+    break;
+
+    case 'ACTIVE_LOADER_METERS_OFF':
+      return Object.assign({}, state, {active: false, type: 'METERS'});
+    break;
+
+    default:
+        return state;
   }
 }

@@ -21,7 +21,7 @@ export function getDataMedidores(token, comuna){
     qMedidores.where = "comuna ='" + comuna + "'";
 
     qTaskMedidores.execute(qMedidores, (featureSet)=>{
-    
+      console.log(featureSet.features);
       if(!featureSet.features.length){
         return resolve([])
       }

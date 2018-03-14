@@ -34,7 +34,7 @@ class SearchWidget extends React.Component {
             if((this.props.busquedaType=='IDNODO') || (this.props.busquedaType=='ROTULO')){
               document.getElementById("editar_btn").addEventListener('click', (e)=>{
                 console.log("holi desde boton click editar"); //funciona
-
+                console.log(done,"tengo estas luminarias");
                 //buscar info de luminaria buscada.
                 this.props.getLuminariaInfo(done)
                 //buscar fotos de esa luminaria

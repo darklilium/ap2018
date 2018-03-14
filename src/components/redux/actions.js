@@ -119,7 +119,7 @@ export function toggleVisibility(visible){
   }
 
 }
-
+//Permite cambiar la visibilidad del menu sidebar
 export function toggleSidebarVisibility(visible){
   if (visible) {
     return {
@@ -134,7 +134,7 @@ export function toggleSidebarVisibility(visible){
   }
 
 }
-
+//Permite cambiar la visibilidad de los menu al seleccionarlos.
 export function toggleMenuVisibility(menu){
   return {
     type: 'TOGGLE_MENU_VISIBILITY',
@@ -142,7 +142,8 @@ export function toggleMenuVisibility(menu){
   }
 }
 
-//SearchWidget actions
+//SearchWidget actions ------------------------------------------------------------------------
+//Permite cambiar el parámetro de tipo de búsqueda
 export function onChangeBusqueda(searchType){
   return {
     type: "CHANGE_BUSQUEDA_TYPE",
@@ -150,7 +151,7 @@ export function onChangeBusqueda(searchType){
   }
 
 }
-
+//Permite buscar de acuerdo al elemento (rotulo, id nodo, nromedidor, etc)
 export function onClickBusquedaWidget(searchType, value, token, mapa, comuna){
 
   return dispatch =>{
@@ -184,7 +185,8 @@ export function onClickBusquedaWidget(searchType, value, token, mapa, comuna){
 
 }
 
-//LayerMapWidget actions
+//LayerMapWidget actions --------------------------------------------------------------------
+//Permite seleccionar el mapa deseado
 export function map_selected(value){
 
   return {
@@ -192,7 +194,7 @@ export function map_selected(value){
     value
   }
 }
-
+//Permite cambiar la visibilidad del layer deseado
 export function layer_selected(layer){
 
   return {
@@ -201,8 +203,8 @@ export function layer_selected(layer){
   }
 }
 
-//MetersWidget actions
-
+//MetersWidget actions ----------------------------------------------------------------------------------
+//obtiene todos los medidores de acuerdo a la comuna
 export function getMetersData(token,comuna){
   return dispatch =>{
     return getDataMedidores(token,comuna)
@@ -226,7 +228,7 @@ export function getMetersData(token,comuna){
 
   }
 }
-
+//busca la localización de un medidor en el mapa.
 export function getMeterLocation(token,idequipo){
   return dispatch =>{
     return getSelectedMeterLocation(token,idequipo)
@@ -246,7 +248,7 @@ export function getMeterLocation(token,idequipo){
   }
 
 }
-
+//busca las luminarias asociadas a un id equipo.
 export function getDataLuminariasAsociadas(token,comuna,idequipo){
   return dispatch =>{
     return getLuminariasAsociadas(token,comuna,idequipo)
@@ -277,9 +279,8 @@ export function getDataLuminariasAsociadas(token,comuna,idequipo){
     })
   }
 }
-
+//hace highlight a las filas de las grid de medidores, luminarias y luminarias asociadas.
 export function highlightRow(index, type, idequipo, nromedidor){
-  console.log(index,"highlight");
   switch (type) {
     case 'medidor':
       return {
@@ -307,11 +308,7 @@ export function highlightRow(index, type, idequipo, nromedidor){
 
   }
 }
-
-export function highlightMedidor(index){
-
-}
-
+//busca los tramos asociados a un id equipo que forman parte de un circuito
 export function getDataTramosAsociados(token,comuna,idequipo){
   return dispatch => {
     return getTramosMedidor(token,comuna,idequipo)
@@ -339,10 +336,10 @@ export function getDataTramosAsociados(token,comuna,idequipo){
     })
   }
 }
-
-export function getLuminariaInfo(token,idluminaria){
+//busca luminarias asociadas de acuerdo a un idluminaria seleccionado en la grid de luminarias asociadas.
+export function getLuminariaInfo(token,idluminaria, comuna){
   return dispatch => {
-    return getLuminariaLocation(token,idluminaria)
+    return getLuminariaLocation(token,idluminaria, comuna)
     .then(luminaria =>{
 
       if(luminaria.length>0){
@@ -368,7 +365,7 @@ export function getLuminariaInfo(token,idluminaria){
     })
   }
 }
-
+//sobreescribe la informacion de la luminaria asociada encontrada para desplegarla en el edit.
 export function getLuminariaInfo2(luminaria){
   if(luminaria.length>0){
     return {
@@ -382,9 +379,41 @@ export function getLuminariaInfo2(luminaria){
     }
   }
 }
-//EditWidget ACTIONS
+//solo asociadas :
 
-//EditLuminaria:
+export function getLuminariaInfo3(token,comuna, idequipo){
+  return dispatch =>{
+    return getLuminariasAsociadas(token,comuna,idequipo)
+    .then(luminarias=>{
+
+      if(luminarias.length>0){
+
+        dispatch({
+          type: 'LUMINARIA_ASOCIADA_INFO_FOUND_WIDGET',
+          luminarias
+        })
+
+      }else{
+        dispatch({
+          type: 'LUMINARIA_ASOCIADA_INFO_NOT_FOUND_WIDGET',
+          luminarias
+        })
+      }
+
+      return luminarias;
+    })
+    .catch(error=>{
+      dispatch({
+        type: 'LUMINARIA_ASOCIADA_INFO_ERROR_WIDGET',
+        error
+      })
+      return error;
+    })
+  }
+}
+//EditWidget ACTIONS -----------------------------------------------------------------------------
+  //EditLuminaria:
+//obtiene las potencias para el widget editar
 export function getPotencias(token) {
   return dispatch =>{
     return getPotenciaLuminaria(token)
@@ -404,7 +433,7 @@ export function getPotencias(token) {
     })
   }
 }
-
+//obtiene el tipo de conexion para el widget editar
 export function getTipoConexion(token) {
   return dispatch =>{
     return getTipoConexiones(token)
@@ -422,8 +451,7 @@ export function getTipoConexion(token) {
     })
   }
 }
-
-
+//obtiene el tipo de luminaria para el widget editar
 export function getTipoLuminaria(token) {
   return dispatch =>{
     return getTipoLuminarias(token)
@@ -441,6 +469,7 @@ export function getTipoLuminaria(token) {
     })
   }
 }
+//obtiene las propiedades para el widget editar
 export function getPropiedades(token) {
   return dispatch => {
     return getPropiedadesLuminarias(token)
@@ -458,7 +487,7 @@ export function getPropiedades(token) {
     })
   }
 }
-
+// cambia el valor de los combos del edit widget
 export function onChangeEdition(name, value) {
 
   return {
@@ -467,16 +496,15 @@ export function onChangeEdition(name, value) {
     value
   }
 }
-
 export function onChangeEditionObject(attrName, value) {
-  console.log(attrName, value);
+
   return {
     type: 'ONCHANGE_OBJECT_EDITION',
     attrName,
     value
   }
 }
-
+// realiza las acciones de editar, actualizar o crear del edit widget
 export function onClickEditWidget(name, values, geometry, token){
   return dispatch =>{
     switch (name) {
@@ -544,8 +572,8 @@ export function onClickEditWidget(name, values, geometry, token){
   }
 
 
-}
-
+ }
+//busca las fotos relacionadas a una luminaria
 export function findPictures(token, idnodo){
   return dispatch =>{
     return getFotografias(token,idnodo)
@@ -569,7 +597,7 @@ export function findPictures(token, idnodo){
     })
   }
 }
-
+//obtiene todas las luminarias de la comuna
 export function getDataLuminarias (token,comuna){
   return dispatch => {
     return getDataLuminariasComuna(token,comuna)
@@ -578,16 +606,28 @@ export function getDataLuminarias (token,comuna){
         type: 'LUMINARIAS_FOUND',
         luminarias
       });
-
+      return luminarias;
     })
     .catch(error=>{
       dispatch({
         type: 'LUMINARIAS_NOT_FOUND',
         error
       })
+
+      return error;
     })
   }
 }
+//cambia el tab index del menuItem
+export function changeActiveIndex(index){
+  console.log(index);
+  return {
+    type: "CHANGED_TAB_INDEX",
+    index
+  }
+}
+
+
 //------------------------------------------------------------------------------
 //OTHERS COMPONENTS actions
 
@@ -625,4 +665,40 @@ export const saveMap = (mapa) =>{
     type: "SAVE_MAP",
     mapa
   }
+}
+
+export function activeLoader(activeStatus, type){
+  switch (type) {
+    case 'LIGHTS':
+      if(activeStatus){
+        return {
+          type: 'ACTIVE_LOADER_LIGHTS_ON',
+          activeStatus
+        }
+      }else{
+        return {
+          type: 'ACTIVE_LOADER_LIGHTS_OFF',
+          activeStatus
+        }
+      }
+
+    break;
+
+    case 'METERS':
+      if (activeStatus) {
+        return {
+          type: 'ACTIVE_LOADER_METERS_ON',
+          activeStatus
+        }
+      }else{
+        return {
+          type: 'ACTIVE_LOADER_METERS_OFF',
+          activeStatus
+        }
+      }
+
+    break;
+
+  }
+
 }

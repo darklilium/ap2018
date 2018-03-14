@@ -4,8 +4,11 @@ import mupropiedadtyle from '../../css/component1/meters_.scss';
 import ReactTable from "react-table";
 import matchSorter from 'match-sorter';
 import {connect} from 'react-redux';
-import {getDataLuminarias, getLuminariaInfo, findPictures, selectedMenu} from '../redux/actions';
-
+import LoaderMsg from '../others/LoaderMsg';
+import {getLuminariaInfo3, showNotification, setMessage, tLuminariaInfo3, getDataLuminarias, changeActiveIndex , getMetersData, getMeterLocation, getDataLuminariasAsociadas, getDataTramosAsociados, getLuminariaInfo, selectedMenu, findPictures, highlightRow, activeLoader} from '../redux/actions';
+import {gLayerMedidor} from '../../services/medidores_service';
+import graphicsUtils from 'esri/graphicsUtils';
+import mapa from '../../services/map_service';
 
 const columnsLum = [{
     Header: 'OBJECTID',
@@ -52,15 +55,50 @@ class LightsWidget extends React.Component {
 
     }
     onClickLuminaria(index, info){
+      var map = mapa.getMap();
       this.setState({selectedLuminaria: index});
-      this.props.getLuminariaInfo(this.props.token, info.idluminaria)
+      this.props.getLuminariaInfo(this.props.token, info.idluminaria, this.props.comuna)
       .then(luminaria=>{
 
         document.getElementById("editar_btn").addEventListener('click', (e)=>{
-          console.log("holi desde boton click editar"); //funciona
-          //buscar fotos de esa luminaria
+          console.log("holi desde boton click editar en lights widget y tengo estas lumis", luminaria); //funciona
+
           this.props.getPictures(this.props.token, luminaria[0].attributes.ID_NODO);
+          this.props.changeTab(0);
           this.props.selectedMenu('editsingle');
+
+          //obtener luminarias asociadas a medidor con id diferente a 0:
+          if(luminaria[0].attributes.ID_EQUIPO_AP!=0){
+            this.props.getDataLuminariasAsociadasWidget(this.props.token, this.props.comuna, luminaria[0].attributes.ID_EQUIPO_AP)
+
+
+            //obtener tramos asociados a medidor
+            this.props.getDataTramosAsociados(this.props.token, this.props.comuna, luminaria[0].attributes.ID_EQUIPO_AP)
+              .then(tramos=>{
+                //Obtener ubicacion del medidor
+                this.props.onClickUbicarMedidor(this.props.token, luminaria[0].attributes.ID_EQUIPO_AP)
+                  .then(medidores=>{
+
+                    if(!tramos.length){
+
+                      var mql = window.matchMedia("(max-width: 767px)");
+                      var myExtend = graphicsUtils.graphicsExtent(medidores);
+                      (mql.matches) ? map.setExtent(myExtend.offset(0,7),true) :  map.setExtent(myExtend.offset(-6,-3), true);
+                    }else{
+                      var mql = window.matchMedia("(max-width: 767px)");
+                      var myExtend = graphicsUtils.graphicsExtent(tramos);
+                      (mql.matches) ? map.setExtent(myExtend.offset(0,7),true) :  map.setExtent(myExtend.offset(-50,-3), true);
+                    }
+                  });
+              })
+              .catch(error=>{
+                this.setState({cantidad_tramos: 0})
+              })
+          }else{
+              this.props.handleDismiss("Resultado no encontrado", true);
+          }
+
+
         })
       })
       .catch(error=>{
@@ -70,7 +108,16 @@ class LightsWidget extends React.Component {
     }
 
     componentDidMount(){
-      this.props.getDataLuminarias(this.props.token, this.props.comuna);
+      this.props.activeLoader(true,'LIGHTS');
+      this.props.getDataLuminarias(this.props.token, this.props.comuna)
+      .then(luminarias=>{
+        console.log(luminarias,"luminarias");
+        this.props.activeLoader(false,'LIGHTS');
+      })
+      .catch(error=>{
+        console.log(error);
+          this.props.activeLoader(false,'LIGHTS');
+      })
     }
 
     render() {
@@ -78,7 +125,9 @@ class LightsWidget extends React.Component {
 
         return (
          <Rail className="rail_meters_wrapper" attached internal position='left'>
+
             <div className="wrapper_meters">
+            <LoaderMsg />
             <ReactTable
               data={dataLuminarias}
               filterable
@@ -124,9 +173,18 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getDataLuminarias: (token, comuna) => dispatch(getDataLuminarias(token,comuna)),
-    getLuminariaInfo: (token,idluminaria) => dispatch(getLuminariaInfo(token,idluminaria)),
+    getLuminariaInfo: (token,idluminaria, comuna) => dispatch(getLuminariaInfo(token,idluminaria, comuna)),
     getPictures: (token,idnodoOID) => dispatch(findPictures(token,idnodoOID)),
-    selectedMenu: (selected) => dispatch(selectedMenu(selected))
+    selectedMenu: (selected) => dispatch(selectedMenu(selected)),
+    activeLoader: (activeStatus, type) => dispatch(activeLoader(activeStatus,type)),
+    changeTab: (activeIndex) => dispatch(changeActiveIndex(activeIndex)),
+    getDataLuminariasAsociadasWidget: (token, comuna, idequipo) => dispatch(getLuminariaInfo3(token,comuna,idequipo)),
+    getDataTramosAsociados:  (token, comuna, idequipo) => dispatch(getDataTramosAsociados(token,comuna,idequipo)),
+    onClickUbicarMedidor: (token, idequipo) => dispatch(getMeterLocation(token, idequipo)),
+    handleDismiss(notification,visibility) {
+      dispatch(showNotification(visibility)),
+      dispatch(setMessage(notification))
+    }
   }
 }
 

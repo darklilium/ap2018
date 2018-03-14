@@ -57,7 +57,7 @@ export function getLuminariasAsociadas(token, comuna, idequipo){
   return promise;
 }
 
-export function getLuminariaLocation(token, idluminaria){
+export function getLuminariaLocation(token, idluminaria, comuna){
   var promise = new Promise((resolve,reject)=>{
 
     let mySymbol = makeSymbol.makePoint();
@@ -68,7 +68,7 @@ export function getLuminariaLocation(token, idluminaria){
 
     qLuminaria.returnGeometry = true;
     qLuminaria.outFields=["*"];
-    qLuminaria.where = "ID_LUMINARIA  =" + idluminaria ;
+    qLuminaria.where = "ID_LUMINARIA  =" + idluminaria + "AND COMUNA='"+ comuna+"'" ;
 
     qTaskLuminaria.execute(qLuminaria, (featureSet)=>{
 
@@ -145,14 +145,14 @@ export function getFotografias(token, idnodo){
     qFotografias.where = "id_nodo =" + idnodo ;
 
     qTaskFotografías.execute(qFotografias, (featureSet)=>{
-      console.log("fotos encontradas...",featureSet.features.length);
+
       if(!featureSet.features.length){
         return resolve([]);
       }
 
       var queryAttachments = new FeatureLayer(layers.read_fotografias(token));
       queryAttachments.queryAttachmentInfos(featureSet.features[0].attributes['OBJECTID'],(fotos)=>{
-
+          console.log("fotos encontradas...",fotos.length);
         return resolve(fotos);
       });
 
