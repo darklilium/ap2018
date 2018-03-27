@@ -55,14 +55,14 @@ class LuminariasAsociadasWidget extends React.Component {
     this.props.getLuminariaInfo(this.props.token, info.idluminaria, this.props.comuna)
     .then(luminaria=>{
 
-      document.getElementById("editar_btn").addEventListener('click', (e)=>{
+      
         console.log("holi desde boton click editar luminarias asociadas widget"); //funciona
         //buscar fotos de esa luminaria
         this.props.getPictures(this.props.token, luminaria[0].attributes.ID_NODO);
         //cambiar a index 0 (primer tab)
         this.props.changeTab(0);
         this.props.selectedMenu('editsingle');
-      })
+
     })
     .catch(error=>{
       console.log(error,"adios");

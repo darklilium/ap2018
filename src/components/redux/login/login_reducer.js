@@ -1,15 +1,27 @@
 import {MuniImages} from '../../../services/apmuni_images';
 
-export function credentials(state={
+const devCreds = {
   login: true,
-  token: "Wjp0Xbf6kSk-7iScEQ_mXG191R1pq99nBjLii21HC46re1nNpSayKLFg70adgR0kW12X1PTsLdali2zGl2WUcw..",
+  token: "Wjp0Xbf6kSk-7iScEQ_mXOIkbcTGcC5O_igR2emUvVYfSlUZMz8ShEwl-zyZqZL6B2mDpxHTN5XidFk71rv3HQ..",
   user: {
     municipal: false,
     password: "Chilquinta12",
     user: "vialactea\\ehernanr",
     vialactea: true,
   }
-}, action){
+}
+
+const prodCreds = {
+  login: false,
+  token: "",
+  user: {
+    municipal: false,
+    password: "",
+    user: "",
+    vialactea: false,
+  }
+}
+export function credentials(state=devCreds, action){
   switch (action.type) {
 
     case 'GOT_TOKEN':
@@ -31,11 +43,12 @@ export function muniOptions(state=[], action){
 
 
     case 'GET_OPTIONS_USER_MUNICIPAL':
+      let comunaUser = action.options.user.substring(4,action.options.user.length);
 
       var filtered = MuniImages.filter(comuna=>{
-         return comuna.text.toUpperCase()===action.options.comuna;
+         return comuna.value.toUpperCase().trim()==comunaUser.toUpperCase();
       });
-
+        console.log(filtered,"filtrada comuna");
       return Object.assign({}, state, {comunaValue: filtered});
     break;
 

@@ -45,6 +45,7 @@ export function getMuniOptions(user, token){
   return dispatch => {
     return loginMuniOptions(user, token)
       .then(options =>{
+
         dispatch({
           type: 'GET_OPTIONS_USER_MUNICIPAL',
           options
@@ -228,6 +229,13 @@ export function getMetersData(token,comuna){
 
   }
 }
+
+export function medidor_is_zero(idequipoap){
+  return {
+    type: "MEDIDOR_IS_ZERO",
+    idequipoap
+  }
+}
 //busca la localización de un medidor en el mapa.
 export function getMeterLocation(token,idequipo){
   return dispatch =>{
@@ -365,6 +373,36 @@ export function getLuminariaInfo(token,idluminaria, comuna){
     })
   }
 }
+
+export function getLuminariasInfo(token, id_nodo, comuna){
+  return dispatch =>{
+    return getLuminariasInThisPoint(token, id_nodo, comuna)
+    .then(luminarias =>{
+      if(luminarias.length>0){
+        dispatch({
+          type: "LUMINARIA_ASOCIADA_INFO_FOUND_2",
+          luminarias
+        })
+        return luminarias;
+
+      }else{
+        dispatch({
+          type: 'LUMINARIA_ASOCIADA_INFO_ERROR_2',
+          luminarias
+        })
+      }
+
+    })
+    .catch(error=>{
+      dispatch({
+        type: 'LUMINARIA_ASOCIADA_INFO_ERROR_2',
+        error
+      })
+      return error;
+    })
+  }
+}
+
 //sobreescribe la informacion de la luminaria asociada encontrada para desplegarla en el edit.
 export function getLuminariaInfo2(luminaria){
   if(luminaria.length>0){
@@ -417,7 +455,9 @@ export function getLuminariaInfo3(token,comuna, idequipo){
 export function getPotencias(token) {
   return dispatch =>{
     return getPotenciaLuminaria(token)
+
     .then(potencias=>{
+
       if (potencias.length>0) {
         dispatch({
           type: 'POTENCIAS_OBTAINED',
@@ -489,13 +529,14 @@ export function getPropiedades(token) {
 }
 // cambia el valor de los combos del edit widget
 export function onChangeEdition(name, value) {
-
+  console.log(name,value, "log");
   return {
     type: 'ONCHANGE_COMBO_EDITION',
     name,
     value
   }
 }
+/*
 export function onChangeEditionObject(attrName, value) {
 
   return {
@@ -504,6 +545,7 @@ export function onChangeEditionObject(attrName, value) {
     value
   }
 }
+*/
 // realiza las acciones de editar, actualizar o crear del edit widget
 export function onClickEditWidget(name, values, geometry, token){
   return dispatch =>{
@@ -573,30 +615,7 @@ export function onClickEditWidget(name, values, geometry, token){
 
 
  }
-//busca las fotos relacionadas a una luminaria
-export function findPictures(token, idnodo){
-  return dispatch =>{
-    return getFotografias(token,idnodo)
-    .then(fotos=>{
-      console.log(fotos,"fotos recibidas");
-      dispatch({
-        type: 'PICTURED_FOUND',
-        fotos
-      })
 
-      return fotos;
-    })
-    .catch(error=>{
-      console.log(error,"fotografias no recibidas");
-      dispatch({
-        type: 'PICTURED_NOT_FOUND',
-        error
-      })
-
-      return error;
-    })
-  }
-}
 //obtiene todas las luminarias de la comuna
 export function getDataLuminarias (token,comuna){
   return dispatch => {
@@ -620,13 +639,92 @@ export function getDataLuminarias (token,comuna){
 }
 //cambia el tab index del menuItem
 export function changeActiveIndex(index){
-  console.log(index);
+
   return {
     type: "CHANGED_TAB_INDEX",
     index
   }
 }
 
+export function onclick_luminaria(luminarias){
+  return {
+    type: 'CLICKED_LUMINARIA_ON_MAP',
+    luminarias
+  }
+}
+
+export function changeIndex(index){
+  return {
+    type: 'CHANGED_CURRENT_INDEX',
+    index
+  }
+}
+
+//edits widget v2
+export function onclickresults(results){
+  if(results.length){
+    return {
+      type: 'GOT_ONCLICK_RESULTS',
+      results
+    }
+  }else{
+    return {
+      type: 'GOT_NONE_ONCLICK_RESULTS',
+      results
+    }
+  }
+
+}
+
+export function onclicklumscircuito(token, comuna, idequipo){
+  return dispatch => {
+    return getLuminariasAsociadas(token, comuna, idequipo)
+    .then(luminarias=> {
+
+      dispatch({
+        type: "LUMS_ASOC_CIRCUITO",
+        luminarias
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: "LUMS_ASOC_CIRCUITO_ERROR",
+        error
+      })
+    })
+  }
+}
+
+export function showElement(index){
+  return {
+    type: "CHANGE_ELEMENT_INDEX",
+    index
+  }
+}
+
+// (O) busca las fotos relacionadas a una luminaria
+export function findPictures(token, idnodo){
+  return dispatch =>{
+    return getFotografias(token,idnodo)
+    .then(fotos=>{
+      dispatch({
+        type: 'PICTURED_FOUND',
+        fotos
+      })
+
+      return fotos;
+    })
+    .catch(error=>{
+
+      dispatch({
+        type: 'PICTURED_NOT_FOUND',
+        error
+      })
+
+      return error;
+    })
+  }
+}
 
 //------------------------------------------------------------------------------
 //OTHERS COMPONENTS actions
@@ -667,6 +765,8 @@ export const saveMap = (mapa) =>{
   }
 }
 
+
+
 export function activeLoader(activeStatus, type){
   switch (type) {
     case 'LIGHTS':
@@ -700,5 +800,26 @@ export function activeLoader(activeStatus, type){
     break;
 
   }
+
+}
+
+export function showModal(header, contenido, open){
+
+    if(open){
+      return {
+            type: 'SHOW_MODAL',
+            header,
+            contenido,
+            open
+      }
+    }else{
+      return {
+            type: 'HIDE_MODAL',
+            header,
+            contenido,
+            open
+      }
+    }
+
 
 }

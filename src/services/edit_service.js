@@ -8,6 +8,8 @@ import layers from './layers_service';
     console.log(geometry,"values");
     console.log(token,"values");
     var promise = new Promise((resolve,reject)=>{
+
+      resolve(true);
       /*
       const data = {
         f: 'json',

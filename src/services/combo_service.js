@@ -11,7 +11,7 @@ export function getPotenciaLuminaria(token) {
     var qTask = new QueryTask(layers.read_potencia(token));
     var q = new Query();
 
-    q.returnGeometry = true;
+    q.returnGeometry = false;
     q.outFields=["*"];
     q.where = "1=1";
 

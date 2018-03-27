@@ -1,12 +1,12 @@
 import React from 'react'
-import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container, Dropdown,  Divider , Rail, Form, Radio,Checkbox, Input, Tab } from 'semantic-ui-react';
+import {Modal, Sidebar, Segment, Button, Menu, Image, Icon, Header, Container, Dropdown,  Divider , Rail, Form, Radio,Checkbox, Input, Tab } from 'semantic-ui-react';
 import muniStyle from '../../css/component1/layermap_.scss';
 import muniStyle2 from '../../css/component1/busqueda_.scss';
 import muniStyle3 from '../../css/component1/edit_.scss'
 import { connect } from 'react-redux';
-import {onChangeEdition, onChangeEditionObject, onClickEditWidget} from '../redux/actions';
+import {showModal, onChangeEdition, onChangeEditionObject, onClickEditWidget} from '../redux/actions';
 
-class EditElement extends React.Component {
+class EditLuminariaSingle extends React.Component {
 
     constructor(props){
       super(props);
@@ -55,7 +55,12 @@ class EditElement extends React.Component {
 
 
       onClickManager(name.id, nuevosAttr, luminaria[0].geometry, token)
+      .then(done=>{
+        this.props.showModal("Edición de Luminaria", "Operación " + accion + " realizada", true )
+      })
+      .catch(error=>{
 
+      })
     }
 
     render(){
@@ -125,7 +130,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onChangeEdit: (e,{name,value}) => dispatch(onChangeEdition(name, value)),
     onChangeEditionObject: (attrName, value) => dispatch(onChangeEditionObject(attrName, value)),
-    onClickManager: (name, values, geometry, token) => dispatch(onClickEditWidget(name, values, geometry, token))
+    onClickManager: (name, values, geometry, token) => dispatch(onClickEditWidget(name, values, geometry, token)),
+    showModal: (header, content, open) => dispatch(showModal(header, content, open))
   }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(EditElement)
+export default connect(mapStateToProps,mapDispatchToProps)(EditLuminariaSingle)

@@ -60,8 +60,8 @@ class LightsWidget extends React.Component {
       this.props.getLuminariaInfo(this.props.token, info.idluminaria, this.props.comuna)
       .then(luminaria=>{
 
-        document.getElementById("editar_btn").addEventListener('click', (e)=>{
-          console.log("holi desde boton click editar en lights widget y tengo estas lumis", luminaria); //funciona
+
+          console.log("holi desde clicking in grid on lights widget y tengo estas lumis", luminaria); //funciona
 
           this.props.getPictures(this.props.token, luminaria[0].attributes.ID_NODO);
           this.props.changeTab(0);
@@ -99,7 +99,7 @@ class LightsWidget extends React.Component {
           }
 
 
-        })
+
       })
       .catch(error=>{
         console.log(error,"adios");

@@ -160,7 +160,7 @@ class MetersWidget extends React.Component {
       this.props.getLuminariaInfo(this.props.token, info.idluminaria, this.props.comuna)
       .then(luminaria=>{
 
-        document.getElementById("editar_btn").addEventListener('click', (e)=>{
+
           console.log("holi desde boton click METERS EDIT widget", luminaria); //funciona
           //buscar fotos de esa luminaria
           this.props.getPictures(this.props.token, luminaria[0].attributes.ID_NODO);
@@ -198,7 +198,7 @@ class MetersWidget extends React.Component {
           }else{
               this.props.handleDismiss("Resultado no encontrado", true);
           }
-        })
+
       })
       .catch(error=>{
         console.log(error,"adios");
@@ -211,6 +211,7 @@ class MetersWidget extends React.Component {
       this.props.activeLoader(true,'METERS');
       this.props.getDataMedidores(this.props.token,this.props.comuna)
       .then(data=>{
+        console.log(data,"medidores");
         //resetear seleccion de luminarias asociadas
         this.props.activeLoader(false,'METERS');
       })

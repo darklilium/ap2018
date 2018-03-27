@@ -8,7 +8,7 @@ import LuminariasAsociadasWidget from './LuminariasAsociadasWidget';
 import {changeActiveIndex} from '../redux/actions';
 import BottomMessage from '../others/BottomMessage';
 
-class EditWidget extends React.Component {
+class EditWidgetSingle extends React.Component {
     constructor(props){
       super(props);
     }
@@ -44,4 +44,4 @@ const mapDispatchToProps = dispatch => {
     handleTabChange: (e, { activeIndex }) => dispatch(changeActiveIndex(activeIndex))
   }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(EditWidget)
+export default connect(mapStateToProps,mapDispatchToProps)(EditWidgetSingle)

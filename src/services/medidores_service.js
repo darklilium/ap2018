@@ -39,11 +39,11 @@ export function getDataMedidores(token, comuna){
 export function getSelectedMeterLocation(token, idequipo){
   var promise = new Promise((resolve, reject)=>{
 
-    gLayerMedidor.clear();
+
     var map = mapa.getMap();
     var qTaskMedidores = new QueryTask(layers.read_equipos(token));
     var qMedidores = new Query();
-
+    gLayerMedidor.clear();//no borra graficos
     qMedidores.returnGeometry = true;
     qMedidores.outFields=["*"];
     qMedidores.where = "id_medidor ='" + idequipo + "'";

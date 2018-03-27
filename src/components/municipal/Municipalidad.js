@@ -14,7 +14,10 @@ import LightsWidget from './LightsWidget';
 import EditWidgetSingle from './EditWidgetSingle';
 import EditWidgetMultiple from './EditWidgetMultiple';
 
-import {selectedMenu, toggleSidebarVisibility, saveMap} from '../redux/actions';
+import ModalExampleShorthand from '../others/ModalWindow';
+
+
+import {changeIndex, onclicklumscircuito, getDataTramosAsociados, onclickresults, getMeterLocation, selectedMenu, toggleSidebarVisibility, saveMap} from '../redux/actions';
 import {getPotencias, getTipoConexion, getTipoLuminaria, getPropiedades} from '../redux/actions';
 
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container , Modal, Rail } from 'semantic-ui-react';
@@ -34,7 +37,10 @@ import IdentifyParameters from "esri/tasks/IdentifyParameters";
 import arrayUtils from "dojo/_base/array";
 import InfoTemplate from "esri/InfoTemplate";
 import Graphic from 'esri/graphic';
-import {ap_infoWindow_luminaria} from '../../services/makeInfowindow';
+import {ap_infoWindow_luminaria, ap_info} from '../../services/makeInfowindow';
+
+
+import on from 'dojo/on';
 
 var myItem = null;
 
@@ -86,7 +92,7 @@ class Municipalidad extends React.Component {
          break;
 
          case 'editmultiple':
-         myItem = <EditWidgetMultiple />
+         myItem = <EditWidgetMultiple/>
          break;
 
          default:
@@ -101,7 +107,7 @@ class Municipalidad extends React.Component {
      return (
          <div className="muni-wrapper">
 
-          <HeaderMenu comuna={comuna}/>
+              <HeaderMenu comuna={comuna}/>
               {/*Push al mapa solamente*/}
               <Sidebar.Pushable as={Segment} className="pushable_menu_wrapper">
                 <Sidebar as={Menu} animation='push' direction='top' visible={visible} inverted className="pushable_menu_">
@@ -126,7 +132,7 @@ class Municipalidad extends React.Component {
                   <div id="map" className="map_wrapper"></div>
                 </Sidebar.Pusher>
               </Sidebar.Pushable>
-
+              <ModalExampleShorthand />
          </div>
      )
   }
@@ -140,13 +146,6 @@ class Municipalidad extends React.Component {
       visibility: "visible"
     });
 
-
-    /*var mapa = new Map("map", {
-      center: this.props.comuna[0].extent,
-      zoom: 13,
-      basemap: "topo"
-    });
-    */
     var popup = new Popup({
          fillSymbol: new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID,
            new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
@@ -183,8 +182,17 @@ class Municipalidad extends React.Component {
 
     mapp.addLayers([limiteComunalLayer, tramosLayer,luminariasLayer, modificacionesLayer]);
 
+    //cargar combos de edit EditWidget que se usan:
+    this.props.getPotencias(this.props.token);
+    this.props.getTipoConexion(this.props.token);
+    this.props.getTipo(this.props.token);
+    this.props.getPropiedad(this.props.token);
 
-    mapp.on('dbl-click', (event)=>{
+
+    mapp.on('click', (event)=>{
+        this.props.changeIndex(0);
+        this.props.selectedMenu('');
+
         var identifyTask, identifyParams;
         identifyTask = new IdentifyTask(layers.read_dynamic_ap(this.props.token));
         identifyParams = new IdentifyParameters();
@@ -198,52 +206,67 @@ class Municipalidad extends React.Component {
         identifyParams.mapExtent = mapp.extent;
         var onlyLum = [];
 
+     var deferred = identifyTask.execute(identifyParams, (callback)=>{
+       if(!callback.length){
+         console.log("No hay resultados aquí");
+         this.props.onclickresults([]);
+       }else{
+         let arrayResults = callback.map(r=>{
+           let res = {
+             features: r.feature,
+             layerName: r.layerName
+           }
 
-      var deferred = identifyTask.execute(identifyParams, (callback)=>{
-        if(!callback.length){
-          console.log("no hay length", callback);
-        }else{
-          let arrResults = callback.map(result => {
-            let r = {
-              features: result.feature,
-              layerName: result.layerName
-            }
-            return r;
-          });
-          mapp.centerAndZoom(arrResults[0].features.geometry,20);
-          onlyLum = arrResults.filter(element =>{ return element.layerName=='Luminarias' });
-          return onlyLum;
-        }
+           return res;
+         });
 
-        },(errback)=>{
-          console.log("ee",errback);
+         this.props.onclickresults(arrayResults);
+
+       }
+     },(error=>{
+       console.log("Error", error);
+     }));
+
+    deferred.addCallback(response=>{
+      let ress = response.filter(r=>{return r.layerName=="Luminarias"});
+
+      return arrayUtils.map(ress, function (result) {
+
+        var feature = result.feature;
+        var layerName = result.layerName;
+
+          feature.attributes.layerName = layerName;
+          if(layerName === 'Luminarias'){
+            var luminariasTemplate = new InfoTemplate("ID Luminaria: ${ID_LUMINARIA}",
+              "Rótulo: ${ROTULO} <br />" +
+              "Tipo Conexión: ${TIPO_CONEXION}<br /> " +
+              "Potencia: ${POTENCIA} <br/> " +
+              "Tipo: ${TIPO} <br/>" +
+              "Propiedad: ${PROPIEDAD} <br/>" +
+              "Medido: ${MEDIDO_TERRENO} <br /><Button class='editar_btn ui button'>Editar</Button><Button class='verTrazado_btn ui button'>Ver Circuito</Button>");
+              feature.setInfoTemplate(luminariasTemplate);
+
+          }
+        return feature;
       });
+    })
 
-     deferred.then(encontrados=>{
-       console.log(encontrados,"encontrados");
-       ap_infoWindow_luminaria(
-         encontrados.feature.attributes.ID_LUMINARIA,
-         encontrados.feature.attributes.ROTULO,
-         encontrados.feature.attributes.TIPO_CONEXION,
-         encontrados.feature.attributes.TIPO,
-         encontrados.feature.attributes.PROPIEDAD,
-         encontrados.feature.attributes.MEDIDO_TERRENO,
-         encontrados.feature.geometry
-       );
+    var that = this;
 
-     })
+    on(document.getElementById('map'), '.editar_btn:click', function() {
+      that.props.selectedMenu('editmultiple');
+    });
 
-  });
+    on(document.getElementById('map'), '.verTrazado_btn:click', function() {
+      const {token, idequipo, verCircuito, comuna} = that.props;
+      verCircuito(token, idequipo[0].attributes.ID_EQUIPO_AP, comuna[0].queryvalue)
+    });
 
+    mapp.infoWindow.setFeatures([deferred]);
+    mapp.infoWindow.show(event.mapPoint);
 
-
-    //cargar combos de edit EditWidget que se usan:
-    this.props.getPotencias(this.props.token);
-    this.props.getTipoConexion(this.props.token);
-    this.props.getTipo(this.props.token);
-    this.props.getPropiedad(this.props.token);
-
-  }
+   });
+ }
 }
 
 const mapStateToProps = state =>{
@@ -254,7 +277,10 @@ const mapStateToProps = state =>{
     visible: state.toggle_visibility.visibleMenu,
     menuClicked: state.selected_menu.selectedMenu,
     token: state.credentials.token,
-    sidebar: state.toggle_sidebar_visibility.visible
+    sidebar: state.toggle_sidebar_visibility.visible,
+    idequipo: state.clickedResulset.lumsFoundInPoint,
+    idnodo: state.clickedResulset.lumsFoundInPoint
+
   }
 }
 
@@ -266,7 +292,14 @@ const mapDispatchToProps = dispatch =>{
     getPotencias: (token) => dispatch(getPotencias(token)),
     getTipoConexion: (token) => dispatch(getTipoConexion(token)),
     getTipo: (token) => dispatch(getTipoLuminaria(token)),
-    getPropiedad: (token) => dispatch(getPropiedades(token))
+    getPropiedad: (token) => dispatch(getPropiedades(token)),
+    verCircuito(token, idequipo, comuna) {
+      dispatch(getMeterLocation(token,idequipo)),
+      dispatch(getDataTramosAsociados(token, comuna, idequipo)),
+      dispatch(onclicklumscircuito(token,comuna,idequipo))
+    },
+    onclickresults: (results) => dispatch(onclickresults(results)),
+    changeIndex: (index) => dispatch(changeIndex(index))
   }
 }
 

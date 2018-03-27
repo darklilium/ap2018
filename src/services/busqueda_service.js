@@ -74,7 +74,7 @@ function searchROTULO(searchType,value, token, mapa, comuna) {
       gLayerFind.add(new Graphic(featureSet.features[0].geometry,pointSymbol));
       mapa.addLayer(gLayerFind,1);
       mapa.centerAndZoom(featureSet.features[0].geometry,20);
-      ap_infoWindow_luminaria(
+    /*  ap_infoWindow_luminaria(
         featureSet.features[0].attributes.ID_LUMINARIA,
         featureSet.features[0].attributes.ROTULO,
         featureSet.features[0].attributes.TIPO_CONEXION,
@@ -82,6 +82,7 @@ function searchROTULO(searchType,value, token, mapa, comuna) {
         featureSet.features[0].attributes.PROPIEDAD,
         featureSet.features[0].attributes.MEDIDO_TERRENO,
         featureSet.features[0].geometry)
+        */
       return resolve(featureSet.features)
     }, (Errorq)=>{
       console.log(Errorq,"Error doing query for searchROTULO");

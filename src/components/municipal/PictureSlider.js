@@ -25,7 +25,6 @@ class PictureSlider extends React.Component {
         const images = fotografias.map(f=>{
           return {
             original: f.url,
-
           }
         })
 
@@ -51,8 +50,8 @@ class PictureSlider extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    luminaria: state.luminaria_asociada_info.luminariaSelected[0].idluminaria,
-    fotografias: state.luminaria_asociada_info.fotografias
+    luminaria: state.clickedResulset.showCurrent.idluminaria,
+    fotografias: state.clickedResulset.fotografias
   }
 }
 const mapDispatchToProps = dispatch => {

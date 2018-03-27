@@ -46,6 +46,7 @@ class Login extends React.Component {
          if (credentials.municipal) {
            this.props.getMuniOptions(credentials.user,this.props.credentials.token)
            .then(()=>{
+
              //guardar la comuna del usuario municipal e ir a la vista municipalidad:
              if(this.props.muniValue.length){
                 this.props.selectedComuna(this.props.muniValue[0].value);

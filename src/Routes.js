@@ -10,7 +10,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import Municipalidad from './components/municipal/Municipalidad';
 import App from './components/App';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
 
 
