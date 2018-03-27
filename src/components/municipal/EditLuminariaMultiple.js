@@ -20,19 +20,8 @@ class EditLuminariaMultiple extends React.Component {
     }
 
     onClick(e, name){
-      /*
 
-      let {valoresEditados, onChangeEditionObject, luminaria, onClickManager, comuna, token} = this.props;
-
-      Object.keys(valoresEditados).map(key => {
-
-        if(valoresEditados[key] == ''){
-          onChangeEditionObject(key, luminaria[0][key])
-          valoresEditados[key] = luminaria[0][key]
-        }
-
-      });
-      */
+      const {luminaria, comuna, token, onClickManager} = this.props;
 
       var accion = "nuevo";
 
@@ -43,31 +32,34 @@ class EditLuminariaMultiple extends React.Component {
         accion="eliminar";
       }
 
+      console.log(luminaria);
+
 
       let nuevosAttr = {
-        rotulo: document.getElementById('txtRotulo').value,
+        rotulo: luminaria.rotulo,
         Comuna: comuna,
         corregido: "Revisar",
-        tipo_cnx: valoresEditados.tipo_conexion,
-        tipo:  valoresEditados.tipo,
-        potencia:  valoresEditados.potencia,
-        propiedad: valoresEditados.propiedad,
+        tipo_cnx: luminaria.tipoconexion,
+        tipo:  luminaria.tipo,
+        potencia:  luminaria.potencia,
+        propiedad: luminaria.propiedad,
         eliminar: accion,
-        obs: document.getElementById('txtObservacion').value,
-        id_luminaria: luminaria[0].idluminaria,
-        id_nodo: luminaria[0].idnodo
+        obs: luminaria.observacion,
+        id_luminaria: luminaria.idluminaria,
+        id_nodo: luminaria.idnodo
       }
 
-      console.log("Datos:", name.id, nuevosAttr, luminaria[0].geometry, token);
+      console.log("Datos:", name.id, nuevosAttr, luminaria.geometry, token);
 
 
-      onClickManager(name.id, nuevosAttr, luminaria[0].geometry, token)
+      onClickManager(name.id, nuevosAttr, luminaria.geometry, token)
       .then(done=>{
         this.props.showModal("Edición de Luminaria", "Operación " + accion + " realizada", true )
       })
       .catch(error=>{
 
       })
+
     }
 
     onChangeEdit(e,{name,value}){
