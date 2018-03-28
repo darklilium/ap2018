@@ -9,28 +9,29 @@ import env from '../../services/config';
 class PictureSlider extends React.Component {
     constructor(props){
       super(props);
-      this.afterChange = this.afterChange.bind(this);
+
 
     }
-    afterChange(e){
-
-      let c = "foto"+e;
-        console.log(c,"traigo esto after change");
-      //this.setState({currentPic: c})
-    }
-
-
     render() {
-        const {luminaria, fotografias} = this.props;
-        const images = fotografias.map(f=>{
-          return {
-            original: f.url,
-          }
-        })
+        const {idnodo, fotografias} = this.props;
+        let images = [{}];
+
+        if(!fotografias.length){
+          images = [{
+            original: env.CSSDIRECTORY+'/images/nofoto.png'
+          }]
+        }else{
+          images = fotografias.map(f=>{
+            return {
+              original: f.url,
+            }
+          })
+        }
+
 
         return (
           <div className="wrapper_pictureSlider">
-            <h3>Fotografías Luminaria: {luminaria}</h3>
+            <h3>Fotografías ID NODO: {idnodo}</h3>
             <ImageGallery
               items={images}
               showIndex={true}
@@ -41,22 +42,15 @@ class PictureSlider extends React.Component {
             <Divider className="divider_edit" inverted />
             <Button className="btn_busqueda" >Ver en visor de fotos </Button>
             </div>
-
-
         );
     }
-
 }
 
 const mapStateToProps = state => {
   return {
-    luminaria: state.clickedResulset.showCurrent.idluminaria,
-    fotografias: state.clickedResulset.fotografias
+    idnodo: state.editWidgetManager.showCurrent.idnodo,
+    fotografias: state.editWidgetManager.fotografias
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {
 
-  }
-}
-export default connect(mapStateToProps,mapDispatchToProps)(PictureSlider)
+export default connect(mapStateToProps)(PictureSlider)

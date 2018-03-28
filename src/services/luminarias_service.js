@@ -16,7 +16,7 @@ var gLayerLuminarias = new GraphicsLayer();
 var gLayerLumAsoc = new GraphicsLayer();
 
 export function getLuminariasAsociadas(token, comuna, idequipo){
-  console.log(token,comuna,idequipo);
+
   var promise = new Promise((resolve, reject)=>{
     gLayerLuminarias.clear()
     var map = mapa.getMap();
@@ -76,14 +76,6 @@ export function getLuminariaLocation(token, idluminaria, comuna){
       if(!featureSet.features.length){
         return resolve([]);
       }
-      ap_infoWindow_luminaria(
-        featureSet.features[0].attributes.ID_LUMINARIA,
-        featureSet.features[0].attributes.ROTULO,
-        featureSet.features[0].attributes.TIPO_CONEXION,
-        featureSet.features[0].attributes.TIPO,
-        featureSet.features[0].attributes.PROPIEDAD,
-        featureSet.features[0].attributes.MEDIDO_TERRENO,
-        featureSet.features[0].geometry)
 
       gLayerLumAsoc.add(new esri.Graphic(featureSet.features[0].geometry,mySymbol));
 

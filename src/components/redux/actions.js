@@ -81,7 +81,7 @@ export function selectedComuna(comuna){
 //------------------------------------------------------------------------------
 //MUNICIPALIDAD ACTIONS
 
-//Menu actions
+// (O) Permite manejar la barra de menus que se seleccionan (edicion, luminarias, medidores, busqueda, etc)
 export function selectedMenu(menu){
   return {
     type: 'SELECTED_MENU',
@@ -120,21 +120,7 @@ export function toggleVisibility(visible){
   }
 
 }
-//Permite cambiar la visibilidad del menu sidebar
-export function toggleSidebarVisibility(visible){
-  if (visible) {
-    return {
-      type: 'TOGGLE_SIDEBAR_VISIBILITY_SHOW',
-      visible
-    }
-  }else{
-    return {
-      type: 'TOGGLE_SIDEBAR_VISIBILITY_HIDE',
-      visible
-    }
-  }
 
-}
 //Permite cambiar la visibilidad de los menu al seleccionarlos.
 export function toggleMenuVisibility(menu){
   return {
@@ -236,7 +222,8 @@ export function medidor_is_zero(idequipoap){
     idequipoap
   }
 }
-//busca la localización de un medidor en el mapa.
+
+//(O) Busca la localización de un medidor en el mapa y la dibuja.
 export function getMeterLocation(token,idequipo){
   return dispatch =>{
     return getSelectedMeterLocation(token,idequipo)
@@ -256,7 +243,7 @@ export function getMeterLocation(token,idequipo){
   }
 
 }
-//busca las luminarias asociadas a un id equipo.
+// (O) busca las luminarias asociadas a un id equipo.
 export function getDataLuminariasAsociadas(token,comuna,idequipo){
   return dispatch =>{
     return getLuminariasAsociadas(token,comuna,idequipo)
@@ -287,7 +274,7 @@ export function getDataLuminariasAsociadas(token,comuna,idequipo){
     })
   }
 }
-//hace highlight a las filas de las grid de medidores, luminarias y luminarias asociadas.
+//(O) hace highlight a las filas de las grid de medidores, luminarias y luminarias asociadas.
 export function highlightRow(index, type, idequipo, nromedidor){
   switch (type) {
     case 'medidor':
@@ -316,7 +303,7 @@ export function highlightRow(index, type, idequipo, nromedidor){
 
   }
 }
-//busca los tramos asociados a un id equipo que forman parte de un circuito
+// (O) busca los tramos asociados a un id equipo que forman parte de un circuito
 export function getDataTramosAsociados(token,comuna,idequipo){
   return dispatch => {
     return getTramosMedidor(token,comuna,idequipo)
@@ -344,35 +331,63 @@ export function getDataTramosAsociados(token,comuna,idequipo){
     })
   }
 }
-//busca luminarias asociadas de acuerdo a un idluminaria seleccionado en la grid de luminarias asociadas.
-export function getLuminariaInfo(token,idluminaria, comuna){
-  return dispatch => {
+// (O) Busca luminarias asociadas de acuerdo a un idluminaria seleccionado en la grid de luminarias asociadas.
+export function getLuminariaInfo(token,idluminaria, comuna, type){
+  return dispatch =>{
     return getLuminariaLocation(token,idluminaria, comuna)
     .then(luminaria =>{
 
-      if(luminaria.length>0){
-        dispatch({
-          type: 'LUMINARIA_ASOCIADA_INFO_FOUND',
-          luminaria
-        })
-        return luminaria;
-      }else{
-        dispatch({
-          type: 'LUMINARIA_ASOCIADA_INFO_NOT_FOUND',
-          luminaria
-        })
-        return luminaria;
+      if(type=="meters"){
+        if(luminaria.length>0){
+          dispatch({
+            type: 'LUMINARIA_LOCATION',
+            luminaria
+          })
+        }else{
+          dispatch({
+            type: 'LUMINARIA_LOCATION_NOT_FOUND',
+            luminaria: []
+          })
+        }
       }
+
+      if(type=="lights"){
+        if(luminaria.length>0){
+          dispatch({
+            type: 'LUMINARIA_LOCATION_L',
+            luminaria
+          })
+        }else{
+          dispatch({
+            type: 'LUMINARIA_LOCATION_NOT_FOUND_L',
+            luminaria: []
+          })
+        }
+      }
+
+      return luminaria;
     })
     .catch(error=>{
+
+      if(type=="meters"){
         dispatch({
-          type: 'LUMINARIA_ASOCIADA_INFO_ERROR',
-          error
+          type: 'LUMINARIA_LOCATION_NOT_FOUND',
+          luminaria: []
         })
-        return error;
+      }
+
+      if(type=="lights"){
+        dispatch({
+          type: 'LUMINARIA_LOCATION_NOT_FOUND_L',
+          luminaria: []
+        })
+      }
+      return error;
     })
   }
 }
+
+
 
 export function getLuminariasInfo(token, id_nodo, comuna){
   return dispatch =>{
@@ -403,52 +418,9 @@ export function getLuminariasInfo(token, id_nodo, comuna){
   }
 }
 
-//sobreescribe la informacion de la luminaria asociada encontrada para desplegarla en el edit.
-export function getLuminariaInfo2(luminaria){
-  if(luminaria.length>0){
-    return {
-      type: 'LUMINARIA_ASOCIADA_INFO_FOUND',
-      luminaria
-    }
-  }else{
-    return {
-      type: 'LUMINARIA_ASOCIADA_INFO_NOT_FOUND',
-      luminaria
-    }
-  }
-}
+
 //solo asociadas :
 
-export function getLuminariaInfo3(token,comuna, idequipo){
-  return dispatch =>{
-    return getLuminariasAsociadas(token,comuna,idequipo)
-    .then(luminarias=>{
-
-      if(luminarias.length>0){
-
-        dispatch({
-          type: 'LUMINARIA_ASOCIADA_INFO_FOUND_WIDGET',
-          luminarias
-        })
-
-      }else{
-        dispatch({
-          type: 'LUMINARIA_ASOCIADA_INFO_NOT_FOUND_WIDGET',
-          luminarias
-        })
-      }
-
-      return luminarias;
-    })
-    .catch(error=>{
-      dispatch({
-        type: 'LUMINARIA_ASOCIADA_INFO_ERROR_WIDGET',
-        error
-      })
-      return error;
-    })
-  }
-}
 //EditWidget ACTIONS -----------------------------------------------------------------------------
   //EditLuminaria:
 //obtiene las potencias para el widget editar
@@ -536,16 +508,7 @@ export function onChangeEdition(name, value) {
     value
   }
 }
-/*
-export function onChangeEditionObject(attrName, value) {
 
-  return {
-    type: 'ONCHANGE_OBJECT_EDITION',
-    attrName,
-    value
-  }
-}
-*/
 // realiza las acciones de editar, actualizar o crear del edit widget
 export function onClickEditWidget(name, values, geometry, token){
   return dispatch =>{
@@ -616,7 +579,7 @@ export function onClickEditWidget(name, values, geometry, token){
 
  }
 
-//obtiene todas las luminarias de la comuna
+// (O) obtiene todas las luminarias de la comuna
 export function getDataLuminarias (token,comuna){
   return dispatch => {
     return getDataLuminariasComuna(token,comuna)
@@ -653,6 +616,7 @@ export function onclick_luminaria(luminarias){
   }
 }
 
+//(O) cambia el index del tab en el menu edición de luminarias.
 export function changeIndex(index){
   return {
     type: 'CHANGED_CURRENT_INDEX',
@@ -660,7 +624,7 @@ export function changeIndex(index){
   }
 }
 
-//edits widget v2
+//(O) Guarda los resultados obtenidos desde el click para ser usados en el edit widget
 export function onclickresults(results){
   if(results.length){
     return {
@@ -676,6 +640,7 @@ export function onclickresults(results){
 
 }
 
+//(O) Almacena las luminarias asociadas al circuito.
 export function onclicklumscircuito(token, comuna, idequipo){
   return dispatch => {
     return getLuminariasAsociadas(token, comuna, idequipo)
@@ -757,16 +722,30 @@ export const setMessage = (message) => {
   }
 }
 
-export const saveMap = (mapa) =>{
 
-  return {
-    type: "SAVE_MAP",
-    mapa
-  }
+
+
+//(O) Muestra ventana emergente
+export function showModal(header, contenido, open){
+
+    if(open){
+      return {
+            type: 'SHOW_MODAL',
+            header,
+            contenido,
+            open
+      }
+    }else{
+      return {
+            type: 'HIDE_MODAL',
+            header,
+            contenido,
+            open
+      }
+    }
 }
 
-
-
+//(O) ACTIVA / DESACTIVA LOADER PARA MODULOS
 export function activeLoader(activeStatus, type){
   switch (type) {
     case 'LIGHTS':
@@ -798,28 +777,5 @@ export function activeLoader(activeStatus, type){
       }
 
     break;
-
   }
-
-}
-
-export function showModal(header, contenido, open){
-
-    if(open){
-      return {
-            type: 'SHOW_MODAL',
-            header,
-            contenido,
-            open
-      }
-    }else{
-      return {
-            type: 'HIDE_MODAL',
-            header,
-            contenido,
-            open
-      }
-    }
-
-
 }

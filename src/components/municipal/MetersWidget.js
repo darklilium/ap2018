@@ -6,7 +6,7 @@ import matchSorter from 'match-sorter';
 import $ from 'jquery';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import {connect} from 'react-redux';
-import {getLuminariaInfo3, changeActiveIndex, getMetersData, getMeterLocation, getDataLuminariasAsociadas, getDataTramosAsociados, getLuminariaInfo, selectedMenu, findPictures, highlightRow, activeLoader} from '../redux/actions';
+import {changeActiveIndex, getMetersData, getMeterLocation, getDataLuminariasAsociadas, getDataTramosAsociados, getLuminariaInfo, findPictures, highlightRow, activeLoader} from '../redux/actions';
 import {gLayerMedidor} from '../../services/medidores_service';
 import graphicsUtils from 'esri/graphicsUtils';
 import mapa from '../../services/map_service';
@@ -96,27 +96,17 @@ class MetersWidget extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        //idequipo: '',
-        //nromedidor: '',
         width: 0,
-        //selectedMedidor: null,
-        //selectedLuminaria: null,
         cantidad_tramos: 0
       }
-
-
       this.onClickMedidor = this.onClickMedidor.bind(this);
       this.onClickExportar = this.onClickExportar.bind(this);
-
-
     }
 
     handleOnUpdate = (e, { width }) => {};
-
-    handleChange = (e, { value }) => this.setState({ value })
-
+    //OK
     onClickMedidor(index, info){
-      //this.setState({selectedMedidor: index});
+
       var map = mapa.getMap();
 
       if(info.nro_medidor==" "){
@@ -152,66 +142,19 @@ class MetersWidget extends React.Component {
           this.setState({cantidad_tramos: 0})
         })
     }
-
+    //Revisar
     onClickLuminaria(index, info){
       var map = mapa.getMap();
       this.props.highlightRow(index, "luminariaAsoc");
-      //this.setState({selectedLuminaria: index});
-      this.props.getLuminariaInfo(this.props.token, info.idluminaria, this.props.comuna)
-      .then(luminaria=>{
-
-
-          console.log("holi desde boton click METERS EDIT widget", luminaria); //funciona
-          //buscar fotos de esa luminaria
-          this.props.getPictures(this.props.token, luminaria[0].attributes.ID_NODO);
-          //cambiar a index 0 (primer tab)
-          this.props.changeTab(0);
-          //buscar luminarias asociadas a ese id equipo:
-          this.props.selectedMenu('editsingle');
-
-          if(luminaria[0].attributes.ID_EQUIPO_AP!=0){
-            this.props.getDataLuminariasAsociadasWidget(this.props.token, this.props.comuna, luminaria[0].attributes.ID_EQUIPO_AP)
-
-
-            //obtener tramos asociados a medidor
-            this.props.getDataTramosAsociados(this.props.token, this.props.comuna, luminaria[0].attributes.ID_EQUIPO_AP)
-              .then(tramos=>{
-                //Obtener ubicacion del medidor
-                this.props.onClickUbicarMedidor(this.props.token, luminaria[0].attributes.ID_EQUIPO_AP)
-                  .then(medidores=>{
-
-                    if(!tramos.length){
-
-                      var mql = window.matchMedia("(max-width: 767px)");
-                      var myExtend = graphicsUtils.graphicsExtent(medidores);
-                      (mql.matches) ? map.setExtent(myExtend.offset(0,7),true) :  map.setExtent(myExtend.offset(-6,-3), true);
-                    }else{
-                      var mql = window.matchMedia("(max-width: 767px)");
-                      var myExtend = graphicsUtils.graphicsExtent(tramos);
-                      (mql.matches) ? map.setExtent(myExtend.offset(0,7),true) :  map.setExtent(myExtend.offset(-50,-3), true);
-                    }
-                  });
-              })
-              .catch(error=>{
-                this.setState({cantidad_tramos: 0})
-              })
-          }else{
-              this.props.handleDismiss("Resultado no encontrado", true);
-          }
-
-      })
-      .catch(error=>{
-        console.log(error,"adios");
-      })
+      this.props.getLuminariaInfo(this.props.token, info.idluminaria, this.props.comuna, "meters")
 
     }
 
     componentDidMount(){
-      //console.log("creado meters widget");
+
       this.props.activeLoader(true,'METERS');
       this.props.getDataMedidores(this.props.token,this.props.comuna)
       .then(data=>{
-        console.log(data,"medidores");
         //resetear seleccion de luminarias asociadas
         this.props.activeLoader(false,'METERS');
       })
@@ -406,16 +349,15 @@ class MetersWidget extends React.Component {
 
 const mapStateToProps = (state) =>{
   return {
-    dataMedidores: state.medidores_data.dataMedidores,
-    dataLuminarias: state.luminarias_asociadas.luminariasAsociadas,
-    dataTramos: state.tramos_asociados.tramosAsociados,
+    dataMedidores: state.metersWidgetManager.dataMedidores,
+    selectedMedidor: state.metersWidgetManager.medidorSelected.highlightMedidorSelected,
+    dataLuminarias: state.metersWidgetManager.luminariasAsociadasMedidor,
+    selectedLuminaria: state.metersWidgetManager.luminariaSelected.highlightLuminariaSelected,
+    dataTramos: state.metersWidgetManager.tramosAsociados,
     comuna: state.selected_comuna[0].queryvalue,
     token: state.credentials.token,
-    luminariaSelected: state.luminaria_asociada_info.luminariaSelected,
-    selectedLuminaria: state.luminarias_asociadas.luminariaAsociadaSelected,
-    selectedMedidor: state.medidor_location.selectedMedidor,
-    nromedidor: state.medidor_location.nromedidor,
-    idequipo: state.medidor_location.idequipo,
+    nromedidor: state.metersWidgetManager.medidorSelected.nromedidor,
+    idequipo: state.metersWidgetManager.medidorSelected.idequipo
   }
 }
 
@@ -424,15 +366,11 @@ const mapDispatchToProps = (dispatch) =>{
     getDataMedidores: (token,comuna) => dispatch(getMetersData(token,comuna)),
     onClickUbicarMedidor: (token, idequipo) => dispatch(getMeterLocation(token, idequipo)),
     getDataLuminariasAsociadas: (token, comuna, idequipo) => dispatch(getDataLuminariasAsociadas(token,comuna,idequipo)),
+    getLuminariaInfo: (token,idluminaria, comuna, type) => dispatch(getLuminariaInfo(token,idluminaria, comuna, type)),
     getDataTramosAsociados:  (token, comuna, idequipo) => dispatch(getDataTramosAsociados(token,comuna,idequipo)),
-    getLuminariaInfo: (token,idluminaria, comuna) => dispatch(getLuminariaInfo(token,idluminaria, comuna)),
-    selectedMenu: (selected) => dispatch(selectedMenu(selected)),
-    getPictures: (token,idnodoOID) => dispatch(findPictures(token,idnodoOID)),
     highlightRow: (index,type, idequipo, nromedidor) => dispatch(highlightRow(index, type, idequipo, nromedidor)),
     activeLoader: (activeStatus, type) => dispatch(activeLoader(activeStatus,type)),
-    changeTab: (activeIndex) => dispatch(changeActiveIndex(activeIndex)),
-    getDataLuminariasAsociadasWidget: (token, comuna, idequipo) => dispatch(getLuminariaInfo3(token,comuna,idequipo)),
-
+    changeTab: (activeIndex) => dispatch(changeActiveIndex(activeIndex))
   }
 }
 

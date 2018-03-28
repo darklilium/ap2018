@@ -5,7 +5,7 @@ import muniStyle2 from '../../css/component1/busqueda_.scss';
 import muniStyle3 from '../../css/component1/edit_.scss'
 import muniStyle4 from '../../css/component1/react-select.scss'
 import { connect } from 'react-redux';
-import {onChangeEditionObject , showModal, onChangeEdition,  onClickEditWidget} from '../redux/actions';
+import {showModal, onChangeEdition,  onClickEditWidget} from '../redux/actions';
 import deepEquals from 'deep-equal';
 //import Select from 'react-select';
 import myyy from 'react-select/dist/react-select.css';
@@ -57,7 +57,7 @@ class EditLuminariaMultiple extends React.Component {
         this.props.showModal("Edición de Luminaria", "Operación " + accion + " realizada", true )
       })
       .catch(error=>{
-
+        this.props.showModal("Edición de Luminaria", "Operación " + accion + " no ha sido realizada. Favor contacte al admnistrador de la plataforma", true )
       })
 
     }
@@ -127,8 +127,8 @@ class EditLuminariaMultiple extends React.Component {
 const mapStateToProps = state => {
 
   return {
-    luminaria: state.clickedResulset.showCurrent,
-    countLuminarias: state.clickedResulset.lumsFoundInPoint.length,
+    luminaria: state.editWidgetManager.showCurrent,
+    countLuminarias: state.editWidgetManager.lumsFoundInPoint.length,
     token: state.credentials.token,
     opcionesTipoConexion: state.combos_luminarias.tipo_conexion,
     opcionesTipo: state.combos_luminarias.tipo,
@@ -136,13 +136,13 @@ const mapStateToProps = state => {
     opcionesPropiedad: state.combos_luminarias.propiedad,
     valoresEditados: state.change_combos_edition,
     comuna: state.selected_comuna[0].queryvalue,
-    currentIndex: state.clickedResulset.currentIndex
+    currentIndex: state.editWidgetManager.currentIndex
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
     onChangeCombo: (name,value) => dispatch(onChangeEdition(name, value)),
-    onChangeEditionObject: (attrName, value) => dispatch(onChangeEditionObject(attrName, value)),
+
     onClickManager: (name, values, geometry, token) => dispatch(onClickEditWidget(name, values, geometry, token)),
     showModal: (header, content, open) => dispatch(showModal(header, content, open))
   }

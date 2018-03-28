@@ -11,14 +11,24 @@ import SearchWidget from './SearchWidget';
 import LayerMapWidget from './LayerMapWidget';
 import MetersWidget from './MetersWidget';
 import LightsWidget from './LightsWidget';
-import EditWidgetSingle from './EditWidgetSingle';
 import EditWidgetMultiple from './EditWidgetMultiple';
-
 import ModalExampleShorthand from '../others/ModalWindow';
 
 
-import {changeIndex, onclicklumscircuito, getDataTramosAsociados, onclickresults, getMeterLocation, selectedMenu, toggleSidebarVisibility, saveMap} from '../redux/actions';
-import {getPotencias, getTipoConexion, getTipoLuminaria, getPropiedades} from '../redux/actions';
+import {
+  changeIndex,
+  onclicklumscircuito,
+  getDataTramosAsociados,
+  onclickresults,
+  getMeterLocation,
+  selectedMenu,
+  getPotencias,
+  getTipoConexion,
+  getTipoLuminaria,
+  getPropiedades,
+  showModal
+} from '../redux/actions';
+
 
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container , Modal, Rail } from 'semantic-ui-react';
 import mapa from '../../services/map_service';
@@ -55,16 +65,16 @@ class Municipalidad extends React.Component {
   onClick = (e,{name}) => {
 
     this.props.selectedMenu(name);
-    if (this.props.visible) {
+    /*if (this.props.visible) {
       this.props.toggleSidebarVisibility(this.props.visible)
     }else{
       this.props.toggleSidebarVisibility(!this.props.visible)
     }
-
+*/
   }
 
   render(){
-     const {comuna, menuClicked, visible, showSegment, sidebar} = this.props;
+     const {comuna, menuClicked, visible, showSegment} = this.props;
 
      if(showSegment){
 
@@ -85,10 +95,6 @@ class Municipalidad extends React.Component {
          break;
          case 'light':
          myItem =  <LightsWidget />
-         break;
-
-         case 'editsingle':
-         myItem = <EditWidgetSingle />
          break;
 
          case 'editmultiple':
@@ -153,8 +159,6 @@ class Municipalidad extends React.Component {
        }, domConstruct.create("div"));
     dojo.addClass(popup.domNode, "modernGrey");
     var mapp = mapa.createMap("map","topo",this.props.comuna[0].extent,13, popup);
-
-    //this.props.saveMap(mapa);
 
     var layerDefinitions = [];
     layerDefinitions[0] = "COMUNA = '"+ this.props.comuna[0].queryvalue+"'";
@@ -259,7 +263,13 @@ class Municipalidad extends React.Component {
 
     on(document.getElementById('map'), '.verTrazado_btn:click', function() {
       const {token, idequipo, verCircuito, comuna} = that.props;
-      verCircuito(token, idequipo[0].attributes.ID_EQUIPO_AP, comuna[0].queryvalue)
+
+      if(idequipo[0].attributes.ID_EQUIPO_AP != 0){
+        console.log(idequipo[0].attributes.ID_EQUIPO_AP, "??" );
+        verCircuito(token, idequipo[0].attributes.ID_EQUIPO_AP, comuna)
+      }else{
+        that.props.showModal("Información:", "No se encuentra ID Equipo para mostrar circuito y elementos asociados",true )
+      }
     });
 
     mapp.infoWindow.setFeatures([deferred]);
@@ -274,12 +284,12 @@ const mapStateToProps = state =>{
   return {
     comuna: state.selected_comuna,
     showSegment: state.toggle_segment,
-    visible: state.toggle_visibility.visibleMenu,
-    menuClicked: state.selected_menu.selectedMenu,
+    visible: state.menu_handler.visibleMenu,
+    menuClicked: state.menu_handler.selectedMenu,
     token: state.credentials.token,
-    sidebar: state.toggle_sidebar_visibility.visible,
-    idequipo: state.clickedResulset.lumsFoundInPoint,
-    idnodo: state.clickedResulset.lumsFoundInPoint
+    //sidebar: state.toggle_sidebar_visibility.visible,
+    idequipo: state.editWidgetManager.lumsFoundInPoint,
+    idnodo: state.editWidgetManager.lumsFoundInPoint
 
   }
 }
@@ -287,8 +297,8 @@ const mapStateToProps = state =>{
 const mapDispatchToProps = dispatch =>{
   return {
     selectedMenu: (selected) => dispatch(selectedMenu(selected)),
-    toggleSidebarVisibility: (visible) => dispatch(toggleSidebarVisibility(visible)),
-    saveMap: (mapa) => dispatch(saveMap(mapa)),
+    //toggleSidebarVisibility: (visible) => dispatch(toggleSidebarVisibility(visible)),
+
     getPotencias: (token) => dispatch(getPotencias(token)),
     getTipoConexion: (token) => dispatch(getTipoConexion(token)),
     getTipo: (token) => dispatch(getTipoLuminaria(token)),
@@ -299,7 +309,8 @@ const mapDispatchToProps = dispatch =>{
       dispatch(onclicklumscircuito(token,comuna,idequipo))
     },
     onclickresults: (results) => dispatch(onclickresults(results)),
-    changeIndex: (index) => dispatch(changeIndex(index))
+    changeIndex: (index) => dispatch(changeIndex(index)),
+    showModal: (header, content, open) => dispatch(showModal(header, content, open))
   }
 }
 

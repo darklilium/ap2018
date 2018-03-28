@@ -1,7 +1,7 @@
 import React from 'react'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header, Container, Dropdown,  Divider, Rail,Input  } from 'semantic-ui-react';
 import muniStyle from '../../css/component1/busqueda_.scss';
-import {onChangeBusqueda, onClickBusquedaWidget, showNotification, setMessage, selectedMenu, getLuminariaInfo2, findPictures} from '../redux/actions';
+import {onChangeBusqueda, onClickBusquedaWidget, showNotification, setMessage, selectedMenu, findPictures} from '../redux/actions';
 import { connect } from 'react-redux';
 import mapa from '../../services/map_service';
 import BottomMessage from '../others/BottomMessage';
@@ -31,24 +31,9 @@ class SearchWidget extends React.Component {
           if(done.length){
             this.props.handleDismiss("Resultado encontrado", true)
 
-            if((this.props.busquedaType=='IDNODO') || (this.props.busquedaType=='ROTULO')){
-              document.getElementById("editar_btn").addEventListener('click', (e)=>{
-                console.log("holi desde boton click editar"); //funciona
-                console.log(done,"tengo estas luminarias");
-                //buscar info de luminaria buscada.
-                this.props.getLuminariaInfo(done)
-                //buscar fotos de esa luminaria
-                this.props.getPictures(this.props.token, done[0].attributes.ID_NODO);
-                this.props.selectedMenu('editsingle');
-
-
-              })
-            }
-
           }else{
             this.props.handleDismiss("Resultado no encontrado", true);
           }
-
         })
         .catch(error=>{
           console.log(error,"error");
@@ -81,11 +66,11 @@ class SearchWidget extends React.Component {
 const mapStateToProps = (state) =>{
 
   return {
-    busquedaType: state.luminaria_asociada_info.searchType,
-    busquedaTypeDefault: state.luminaria_asociada_info.searchType,
+    busquedaType: state.searchWidgetManager.searchType,
+    busquedaTypeDefault: state.searchWidgetManager.searchType,
     token: state.credentials.token,
     mapa: mapa.getMap(),
-    found: state.luminaria_asociada_info,
+    found: state.searchWidgetManager,
     comuna: state.selected_comuna
   }
 }
@@ -99,7 +84,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(setMessage(notification))
     },
     selectedMenu: (selected) => dispatch(selectedMenu(selected)),
-    getLuminariaInfo: (values) => dispatch(getLuminariaInfo2(values)),
+
     getPictures: (token,idnodoOID) => dispatch(findPictures(token,idnodoOID))
   }
 }

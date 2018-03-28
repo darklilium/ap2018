@@ -5,7 +5,7 @@ import { Image, Header, Button, Icon, Responsive, Container} from 'semantic-ui-r
 import {connect} from 'react-redux';
 import store from '../../index';
 import $ from 'jquery';
-import {selectedMenu, showSegment, toggleVisibility, toggleSidebarVisibility} from '../redux/actions';
+import {selectedMenu, showSegment, toggleVisibility} from '../redux/actions';
 
 const Logo = () =>{
   return (
@@ -54,20 +54,18 @@ class HeaderMenu extends React.Component {
     }
 
     toggleVisible() {
-      //this.setState({ visible: !this.state.visible, showSegment: !this.state.visible});
+
       var {visible, nameClicked} = this.props;
 
       this.props.toggleVisibility(!visible);
 
-
       if(!visible){
         console.log("enabled");
-
 
       }else{
         console.log("disabled");
         this.props.selectedMenu('');
-          this.props.toggleSidebarVisibility(!visible);
+
         //this.setState({nameClicked: ''});
 
 
@@ -99,15 +97,15 @@ class HeaderMenu extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    visible: state.toggle_visibility.visibleMenu
+    visible: state.menu_handler.visibleMenu
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     toggleVisibility: (visible) => dispatch(toggleVisibility(visible)),
-    selectedMenu: (selected) => dispatch(selectedMenu(selected)),
-    toggleSidebarVisibility: (visible) => dispatch(toggleSidebarVisibility(visible))
+    selectedMenu: (selected) => dispatch(selectedMenu(selected))
+
   }
 }
 

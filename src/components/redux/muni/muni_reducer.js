@@ -4,23 +4,42 @@ import {getSelectedMeterLocation} from '../../../services/medidores_service';
 
 //------------------------------
 import getFotografias from '../../../services/luminarias_service'
+//(O) cambia la visibilidad del loader
+export function toggle_loader_visibility(state= {active: true, type: ''}, action){
+  switch (action.type) {
+    case 'ACTIVE_LOADER_LIGHTS_ON':
+      return Object.assign({}, state, {active: true, type: 'LIGHTS'});
+    break;
 
-export function selected_menu(state={selectedMenu: ''}, action){
+    case 'ACTIVE_LOADER_LIGHTS_OFF':
+      return Object.assign({}, state, {active: false, type: 'LIGHTS'});
+    break;
+
+    case 'ACTIVE_LOADER_METERS_ON':
+      return Object.assign({}, state, {active: true, type: 'METERS'});
+    break;
+
+    case 'ACTIVE_LOADER_METERS_OFF':
+      return Object.assign({}, state, {active: false, type: 'METERS'});
+    break;
+
+    default:
+        return state;
+  }
+}
+
+//(O) Maneja la visibilidad de los menú de la aplicación:
+
+export function menu_handler(state = {
+  selectedMenu: '',
+  visibleMenu: false
+ }, action){
 
   switch (action.type) {
     case 'SELECTED_MENU':
       return Object.assign({},state,{selectedMenu: action.menu});
     break;
 
-    default:
-      return state;
-    break;
-  }
-
-}
-
-export function toggle_visibility(state={visibleMenu:false}, action){
-  switch (action.type) {
     case 'TOGGLE_VISIBILITY_HIDE':
         return Object.assign({}, state,{visibleMenu: false});
     break;
@@ -29,12 +48,15 @@ export function toggle_visibility(state={visibleMenu:false}, action){
         return Object.assign({}, state,{visibleMenu: true});
     break;
 
+
     default:
       return state;
-
+    break;
   }
+
 }
 
+/*
 export function toggle_sidebar_visibility(state={visible:false}, action){
 
 
@@ -52,6 +74,7 @@ export function toggle_sidebar_visibility(state={visible:false}, action){
 
   }
 }
+*/
 
 export function toggle_segment(state={showSegment:false}, action){
 
@@ -69,16 +92,6 @@ export function toggle_segment(state={showSegment:false}, action){
   }
 }
 
-export function mapa(state={mapa: {}}, action){
-
-  switch (action.type) {
-    case 'SAVE_MAP':
-      return Object.assign({},state,{mapa: action.mapa});
-    break;
-    default:
-      return state;
-  }
-}
 
 export function map_selector(state={value:'topo'}, action){
   switch (action.type) {
@@ -126,166 +139,16 @@ export function layer_selector(state={
 
 }
 
-export function medidores_data(state={dataMedidores: []}, action){
 
-  switch (action.type) {
-    case 'GOT_METERS_DATA':
-    let data = action.data.map(d=>{
-      return {
-        oid: d.attributes.OBJECTID,
-        idequipo: d.attributes.id_medidor,
-        nro_medidor: d.attributes.numero_medidor,
-        nis: d.attributes.nis,
-        cant_luminarias: d.attributes.luminarias,
-        cant_tramos: d.attributes.tramos_ap,
-        tipo: d.attributes.tipo_equipo,
-        rotulo: d.attributes.rotulo
-      }
-    })
-      return Object.assign({}, state, {dataMedidores: data})
-    break;
 
-    case 'ERROR_GETTING_METERS_DATA':
-      return state;
-    break;
-    default:
-        return state;
-  }
-}
-
-export function medidor_location(state= {
-  meterLocation: [],
-  nromedidor: '' ,
-  idequipo: '',
-  selectedMedidor: null
-  }, action){
-
-  switch (action.type) {
-    case 'MEDIDOR_LOCATION_FOUND':
-      return Object.assign({},state, {meterLocation: action.location})
-    break;
-
-    case 'MEDIDOR_LOCATION_NOT_FOUND':
-        return Object.assign({},state, {meterLocation: action.error})
-    break;
-
-    case 'SELECTED_MEDIDOR':
-        return Object.assign({},state, {
-          selectedMedidor: action.index,
-          idequipo: action.idequipo,
-          nromedidor: action.nromedidor
-        })
-    break;
-
-    case "MEDIDOR_IS_ZERO":
-        return Object.assign({},state, {meterLocation: []})
-    break;
-
-    default:
-        return state;
-  }
-}
-
-export function luminarias_asociadas(state= {
-  luminariasAsociadas: [],
-  luminariaAsociadaSelected: null
- }, action){
-
-  switch (action.type) {
-    case 'LUMINARIAS_ASOCIADAS_FOUND':
-
-    let data = action.luminarias.map((l, index)=>{
-      return {
-        oid: l.attributes.OBJECTID,
-        idluminaria: l.attributes.ID_LUMINARIA,
-        tipo_conexion: l.attributes.TIPO_CONEXION,
-        propiedad: l.attributes.PROPIEDAD,
-        tipo: l.attributes.TIPO,
-        rotulo: l.attributes.ROTULO
-      }
-
-    });
-        return Object.assign({},state,{luminariasAsociadas: data});
-    break;
-
-    case 'LUMINARIAS_ASOCIADAS_NOT_FOUND':
-        return Object.assign({},state, {luminariasAsociadas: []});
-    break;
-
-    case 'LUMINARIAS_ASOCIADAS_ERROR':
-        return Object.assign({},state,{luminariasAsociadas: []});
-    break;
-
-    case "SELECTED_LUMINARIA_ASOCIADA":
-        return Object.assign({},state,{luminariaAsociadaSelected: action.index});
-    break;
-
-    default:
-        return state;
-  }
-}
-
-export function tramos_asociados(state={tramosAsociados: []}, action){
-
-  switch (action.type) {
-    case 'TRAMOS_ASOCIADOS_FOUND':
-        return Object.assign({},state,{tramosAsociados: action.tramos});
-    break;
-
-    case 'TRAMOS_ASOCIADOS_NOT_FOUND':
-        return Object.assign({},state, {tramosAsociados: []});
-    break;
-
-    case 'TRAMOS_ASOCIADOS_ERROR':
-        return Object.assign({},state,{tramosAsociados: []});
-    break;
-
-    default:
-        return state;
-  }
-}
-
-//??
-export function luminaria_asociada_info(state={
-  luminariaSelected: [],
+//(O)
+export function searchWidgetManager(state={
   searchType: "ROTULO",
   found: [],
   value: '',
-  fotografias: [],
-  luminariasMismoCircuito: [],
-  tabActiveIndex: 0,
-
 }, action){
 
   switch (action.type) {
-    case 'LUMINARIA_ASOCIADA_INFO_FOUND':
-
-        let lum = action.luminaria.map(l=>{
-          console.log(l,"hola44");
-          return {
-            idnodo: l.attributes.ID_NODO,
-            idluminaria: l.attributes.ID_LUMINARIA,
-            tipo: l.attributes.TIPO,
-            tipo_conexion: l.attributes.TIPO_CONEXION,
-            potencia: l.attributes.POTENCIA,
-            propiedad: l.attributes.PROPIEDAD,
-            rotulo: l.attributes.ROTULO,
-            observacion: l.attributes.OBSERVACION,
-            geometry: l.geometry
-          }
-        })
-
-        return Object.assign({},state,{luminariaSelected: lum});
-    break;
-
-    case 'LUMINARIA_ASOCIADA_INFO_NOT_FOUND':
-        return Object.assign({},state, {luminariaSelected: []});
-    break;
-
-    case 'LUMINARIA_ASOCIADA_INFO_ERROR':
-        return Object.assign({},state,{luminariaSelected: []});
-    break;
-
     case "CHANGE_BUSQUEDA_TYPE":
         return Object.assign({}, state, {searchType: action.searchType})
     break;
@@ -301,68 +164,12 @@ export function luminaria_asociada_info(state={
       return Object.assign({},state, {found: action.error, value: action.value})
     break;
 
-
-
-    case "CHANGED_TAB_INDEX":
-      return Object.assign({},state,{tabActiveIndex: action.index})
-    break;
-
-    case "LUMINARIA_ASOCIADA_INFO_FOUND_WIDGET":
-      let lumi = action.luminarias.map(l=>{
-
-        return {
-          idnodo: l.attributes.ID_NODO,
-          idluminaria: l.attributes.ID_LUMINARIA,
-          tipo: l.attributes.TIPO,
-          tipo_conexion: l.attributes.TIPO_CONEXION,
-          potencia: l.attributes.POTENCIA,
-          propiedad: l.attributes.PROPIEDAD,
-          rotulo: l.attributes.ROTULO,
-          observacion: l.attributes.OBSERVACION,
-          geometry: l.geometry
-        }
-      })
-        return Object.assign({},state,{luminariasMismoCircuito: lumi});
-    break;
-    case 'LUMINARIA_ASOCIADA_INFO_NOT_FOUND_WIDGET':
-        return Object.assign({},state, {luminariasMismoCircuito: []});
-    break;
-
-    case 'LUMINARIA_ASOCIADA_INFO_ERROR_WIDGET':
-        return Object.assign({},state,{luminariasMismoCircuito: []});
-    break;
-
     default:
         return state;
   }
 }
 
-export function luminarias(state={luminariasComuna: []},action){
 
-  switch (action.type) {
-    case 'LUMINARIAS_FOUND':
-    let data = action.luminarias.map(d=>{
-      return {
-        oid: d.attributes.OBJECTID,
-        idluminaria: d.attributes.ID_LUMINARIA,
-        tipo_conexion: d.attributes.TIPO_CONEXION,
-        propiedad: d.attributes.PROPIEDAD,
-        tipo_conexion: d.attributes.TIPO_CONEXION,
-        rotulo: d.attributes.ROTULO,
-        tipo: d.attributes.TIPO,
-        rotulo: d.attributes.ROTULO
-      }
-    })
-      return Object.assign({}, state, {luminariasComuna: data})
-    break;
-
-    case 'LUMINARIAS_NOT_FOUND':
-      return Object.assign({},state,{luminariasComuna: []});
-    break;
-    default:
-      return state;
-  }
-}
 
 export function combos_luminarias(state= {
   potencia: [],
@@ -441,41 +248,6 @@ export function combos_luminarias(state= {
   }
 }
 
-export function change_combos_edition(state= {
-    TIPO: "",
-    TIPO_CONEXION: "",
-    POTENCIA: "",
-    PROPIEDAD: "",
-  },action){
-
-  switch (action.type) {
-
-
-    case 'ONCHANGE_OBJECT_EDITION':
-        switch (action.attrName) {
-          case 'tipo':
-              return Object.assign({}, state, {TIPO: action.value})
-          break;
-          case 'tipo_conexion':
-              return Object.assign({}, state, {TIPO_CONEXION: action.value})
-          break;
-          case 'potencia':
-              return Object.assign({}, state, {POTENCIA: action.value})
-          break;
-          case 'propiedad':
-              return Object.assign({}, state, {PROPIEDAD: action.value})
-          break;
-
-          default:
-            return state;
-        }
-    break;
-
-    default:
-      return state;
-  }
-}
-
 export function onclick_editwidget(state={resultQueryAction: []}, action){
 
   switch (action.type) {
@@ -497,28 +269,7 @@ export function onclick_editwidget(state={resultQueryAction: []}, action){
   }
 }
 
-export function toggle_loader_visibility(state= {active: true, type: ''}, action){
-  switch (action.type) {
-    case 'ACTIVE_LOADER_LIGHTS_ON':
-      return Object.assign({}, state, {active: true, type: 'LIGHTS'});
-    break;
 
-    case 'ACTIVE_LOADER_LIGHTS_OFF':
-      return Object.assign({}, state, {active: false, type: 'LIGHTS'});
-    break;
-
-    case 'ACTIVE_LOADER_METERS_ON':
-      return Object.assign({}, state, {active: true, type: 'METERS'});
-    break;
-
-    case 'ACTIVE_LOADER_METERS_OFF':
-      return Object.assign({}, state, {active: false, type: 'METERS'});
-    break;
-
-    default:
-        return state;
-  }
-}
 //show modal related
 export function showNotificationDML(state = {
   header: '',
@@ -554,7 +305,7 @@ export function showNotificationDML(state = {
 
 //------------------------------------------------------------------------------------------------
 //Reducer para editar luminaria multiple. (SE USA)
-export function clickedResulset(state={
+export function editWidgetManager(state={
   lumsFoundInPoint: [],
   showCurrent: {
     objectid: '',
@@ -570,8 +321,10 @@ export function clickedResulset(state={
   },
   lumsAsociadasCircuito: [],
   currentIndex: 0,
-  fotografias: []
-},action){
+  fotografias: [],
+  tabActiveIndex: 0
+ },action){
+
   switch (action.type) {
     case 'GOT_ONCLICK_RESULTS':
       let lums = action.results.filter(r=>{
@@ -610,7 +363,7 @@ export function clickedResulset(state={
     break;
 
     case 'CHANGE_ELEMENT_INDEX':
-      console.log(state.lumsFoundInPoint);
+
       return Object.assign({}, state, {
         showCurrent: {
           objectid: state.lumsFoundInPoint[action.index].attributes.OBJECTID,
@@ -709,8 +462,205 @@ export function clickedResulset(state={
       return Object.assign({},state, {fotografias: action.fotos})
     break;
 
+    case "CHANGED_TAB_INDEX":
+      return Object.assign({},state,{tabActiveIndex: action.index})
+    break;
+
     default:
       return state;
     break;
+  }
+}
+
+//Reducer que maneja los estados del widget para medidores:
+export function metersWidgetManager(state= {
+  dataMedidores: [],
+  medidorSelected: {
+    highlightMedidorSelected: null,
+    idequipo: '',
+    nromedidor:'',
+    meterLocation: []
+  },
+  luminariaSelected: {
+    highlightLuminariaSelected: null,
+    luminariaLocation: []
+  },
+  luminariasAsociadasMedidor: [],
+  tramosAsociados: []
+  },
+  action){
+
+  switch (action.type) {
+    case 'GOT_METERS_DATA':
+    let data = action.data.map(d=>{
+      return {
+        oid: d.attributes.OBJECTID,
+        idequipo: d.attributes.id_medidor,
+        nro_medidor: d.attributes.numero_medidor,
+        nis: d.attributes.nis,
+        cant_luminarias: d.attributes.luminarias,
+        cant_tramos: d.attributes.tramos_ap,
+        tipo: d.attributes.tipo_equipo,
+        rotulo: d.attributes.rotulo
+      }
+    })
+      return Object.assign({}, state, {dataMedidores: data})
+    break;
+
+    case 'ERROR_GETTING_METERS_DATA':
+      return state;
+    break;
+
+    case 'SELECTED_MEDIDOR':
+        return {...state,
+          medidorSelected: {
+            ...state.medidorSelected,
+            highlightMedidorSelected: action.index,
+            idequipo: action.idequipo,
+            nromedidor: action.nromedidor
+          }
+        }
+    break;
+
+    case 'LUMINARIAS_ASOCIADAS_FOUND':
+
+    let dataLumsAsoc = action.luminarias.map((l, index)=>{
+      return {
+        oid: l.attributes.OBJECTID,
+        idluminaria: l.attributes.ID_LUMINARIA,
+        tipo_conexion: l.attributes.TIPO_CONEXION,
+        propiedad: l.attributes.PROPIEDAD,
+        tipo: l.attributes.TIPO,
+        rotulo: l.attributes.ROTULO
+      }
+
+    });
+        return Object.assign({},state,{luminariasAsociadasMedidor: dataLumsAsoc});
+    break;
+
+    case 'LUMINARIAS_ASOCIADAS_NOT_FOUND':
+        return Object.assign({},state, {luminariasAsociadasMedidor: []});
+    break;
+
+    case 'LUMINARIAS_ASOCIADAS_ERROR':
+        return Object.assign({},state,{luminariasAsociadasMedidor: []});
+    break;
+
+    case "SELECTED_LUMINARIA_ASOCIADA":
+        return {...state,
+          luminariaSelected: {
+            ...state.luminariaSelected,
+            highlightLuminariaSelected: action.index
+          }
+        }
+    break;
+
+    case 'MEDIDOR_LOCATION_FOUND':
+      return {...state,
+        medidorSelected: {
+          ...state.medidorSelected,
+          meterLocation: action.location
+        }
+      }
+    break;
+
+    case 'MEDIDOR_LOCATION_NOT_FOUND':
+      return {...state,
+        medidorSelected: {
+          ...state.medidorSelected,
+          meterLocation: action.error
+        }
+      }
+    break;
+
+    case "MEDIDOR_IS_ZERO":
+    return {...state,
+      medidorSelected: {
+        ...state.medidorSelected,
+        meterLocation: []
+      }
+    }
+    break;
+
+    case 'LUMINARIA_LOCATION':
+        return {
+          ...state,
+          luminariaSelected: {
+            ...state.luminariaSelected,
+            luminariaLocation: action.luminaria
+          }
+        }
+    break;
+
+    case 'LUMINARIA_LOCATION_NOT_FOUND':
+        return {
+          ...state,
+          luminariaSelected: {
+            ...state.luminariaSelected,
+            luminariaLocation: action.luminaria
+          }
+        }
+    break;
+
+    case 'TRAMOS_ASOCIADOS_FOUND':
+        return Object.assign({},state,{tramosAsociados: action.tramos});
+    break;
+
+    case 'TRAMOS_ASOCIADOS_NOT_FOUND':
+        return Object.assign({},state, {tramosAsociados: []});
+    break;
+
+    case 'TRAMOS_ASOCIADOS_ERROR':
+        return Object.assign({},state,{tramosAsociados: []});
+    break;
+
+    default:
+        return state;
+  }
+}
+
+//Reducer que maneja los estados para el widget de luminarias:
+export function luminariasWidgetManager(state={
+  luminariasComuna: [],
+  luminariaLocation: []
+  },action){
+
+  switch (action.type) {
+    case 'LUMINARIAS_FOUND':
+    let data = action.luminarias.map(d=>{
+      return {
+        oid: d.attributes.OBJECTID,
+        idluminaria: d.attributes.ID_LUMINARIA,
+        tipo_conexion: d.attributes.TIPO_CONEXION,
+        propiedad: d.attributes.PROPIEDAD,
+        tipo_conexion: d.attributes.TIPO_CONEXION,
+        rotulo: d.attributes.ROTULO,
+        tipo: d.attributes.TIPO,
+        rotulo: d.attributes.ROTULO
+      }
+    })
+      return Object.assign({}, state, {luminariasComuna: data})
+    break;
+
+    case 'LUMINARIAS_NOT_FOUND':
+      return Object.assign({},state,{luminariasComuna: []});
+    break;
+
+    case 'LUMINARIA_LOCATION_L':
+        return {
+          ...state,
+          luminariaLocation: action.luminaria
+        }
+    break;
+
+    case 'LUMINARIA_LOCATION_NOT_FOUND_L':
+        return {
+          ...state,
+          luminariaLocation: []
+        }
+    break;
+
+    default:
+      return state;
   }
 }

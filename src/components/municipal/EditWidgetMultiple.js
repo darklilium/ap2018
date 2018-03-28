@@ -84,10 +84,10 @@ class EditWidgetMultiple extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    activeIndex: state.luminaria_asociada_info.tabActiveIndex,
-    luminariasInPoint: state.clickedResulset.lumsFoundInPoint,
-    currentIndex: state.clickedResulset.currentIndex,
-    idnodo: state.clickedResulset.showCurrent.idnodo,
+    activeIndex: state.editWidgetManager.tabActiveIndex,
+    luminariasInPoint: state.editWidgetManager.lumsFoundInPoint,
+    currentIndex: state.editWidgetManager.currentIndex,
+    idnodo: state.editWidgetManager.showCurrent.idnodo,
     token: state.credentials.token
   }
 }
