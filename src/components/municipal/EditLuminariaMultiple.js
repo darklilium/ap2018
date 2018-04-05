@@ -3,12 +3,10 @@ import {Modal, Sidebar, Segment, Button, Menu, Image, Icon, Header, Container, D
 import muniStyle from '../../css/component1/layermap_.scss';
 import muniStyle2 from '../../css/component1/busqueda_.scss';
 import muniStyle3 from '../../css/component1/edit_.scss'
-import muniStyle4 from '../../css/component1/react-select.scss'
 import { connect } from 'react-redux';
 import {showModal, onChangeEdition,  onClickEditWidget} from '../redux/actions';
 import deepEquals from 'deep-equal';
-//import Select from 'react-select';
-import myyy from 'react-select/dist/react-select.css';
+
 
 class EditLuminariaMultiple extends React.Component {
 

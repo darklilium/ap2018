@@ -1,5 +1,19 @@
+//RED
+/*
+$transparent_color: #e21616e8;
+$normal_color:  #e52b2b;
+$button_exportar:  #ef1f1f
+$btn_chev: #e25050;
+*/
+//GRAYSCALE
+$transparent_color: rgba(62, 65, 69, 0.95);
+$normal_color:  rgba(62, 65, 69, 0.95);
+$button_exportar: rgba(49,51,54,1);
+$selected_row: rgba(49,51,54,1);
+$btn_chev:  rgba(62, 65, 69, 0.95);
+
 .tab_menu{
-  background: #e52b2b;
+  background: $normal_color;
   color: white;
 }
 
@@ -18,7 +32,7 @@
 }
 
 .tab1_, .tab2_, .tab3_ {
-  background: #e52b2b !important;
+  background: $normal_color !important;
 }
 
 .ui.tabular.menu .item{
@@ -26,7 +40,7 @@
 }
 
 .ui.tabular.menu .active.item{
-  background: #ef1f1f !important;
+  background: $button_exportar !important;
 }
 
 .wrapper_titles_edit{
@@ -54,7 +68,7 @@
 
 .btn_chevron{
   color: white !important;
-  background: #e25050 !important;
+  background: $button_exportar !important;
 }
 
 .divider_edit{

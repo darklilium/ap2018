@@ -5,7 +5,7 @@ import { Image, Header, Button, Icon, Responsive, Container} from 'semantic-ui-r
 import {connect} from 'react-redux';
 import store from '../../index';
 import $ from 'jquery';
-import {selectedMenu, showSegment, toggleVisibility} from '../redux/actions';
+import {logout, selectedMenu, showSegment, toggleVisibility} from '../redux/actions';
 
 const Logo = () =>{
   return (
@@ -50,7 +50,13 @@ class HeaderMenu extends React.Component {
     constructor(props){
       super(props);
       this.toggleVisible = this.toggleVisible.bind(this);
+      this.onClickLogOff = this.onClickLogOff.bind(this);
 
+    }
+    onClickLogOff() {
+      //this.props.properties.history.push("/");
+      this.props.logout(true);
+      window.location = env.INDEX;
     }
 
     toggleVisible() {
@@ -80,13 +86,19 @@ class HeaderMenu extends React.Component {
               <Responsive className="muni_header_wrapper" minWidth={320} maxWidth={767}>
                 <Logo />
                 <HeaderTitles muniName={this.props.comuna[0].text} background={this.props.comuna[0].value}/>
-                <div className="muni_header_button"><Button className="btn_header_menu" onClick={this.toggleVisible}><Icon name='content' /></Button></div>
+                <div className="muni_header_button">
+                  <Button className="btn_header_menu" onClick={this.toggleVisible}><Icon name='content' /></Button>
+                  <Button className="btn_header_menu" onClick={this.onClickLogOff}><Icon name='power' /></Button>
+                </div>
               </Responsive>
 
               <Responsive className="muni_header_wrapper" minWidth={768} maxWidth={2560}>
                 <LogoXL />
                 <HeaderTitles muniName={this.props.comuna[0].text} background={this.props.comuna[0].value}/>
-                <div className="muni_header_button"><Button className="btn_header_menu" onClick={this.toggleVisible}><Icon name='content' /></Button></div>
+                <div className="muni_header_button">
+                  <Button className="btn_header_menu" onClick={this.toggleVisible}><Icon name='content' /></Button>
+                  <Button className="btn_header_menu" onClick={this.onClickLogOff}><Icon name='power' /></Button>
+                </div>
               </Responsive>
 
             </div>
@@ -104,7 +116,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
   return {
     toggleVisibility: (visible) => dispatch(toggleVisibility(visible)),
-    selectedMenu: (selected) => dispatch(selectedMenu(selected))
+    selectedMenu: (selected) => dispatch(selectedMenu(selected)),
+    logout: (log) => dispatch(logout(log))
 
   }
 }

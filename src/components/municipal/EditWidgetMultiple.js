@@ -56,7 +56,6 @@ class EditWidgetMultiple extends React.Component {
         const panes = [
           { menuItem: 'Editar', render: () => <Tab.Pane className="tab1_" attached={false}><EditLuminariaMultiple /></Tab.Pane> },
           { menuItem: 'Fotos', render: () => <Tab.Pane className="tab2_" attached={false}><PictureSlider /></Tab.Pane> }
-          //, { menuItem: 'Lum. Asoc.', render: () => <Tab.Pane className="tab3_" attached={false}><LuminariasAsociadasWidget /></Tab.Pane> },
         ]
         return (
           <Rail className="rail_layermap_wrapper" attached internal position='left'>

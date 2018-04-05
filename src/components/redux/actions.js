@@ -17,6 +17,14 @@ export function changeWidth(width){
   }
 }
 
+
+export function logout(logout){
+  return{
+    type: 'LOG_OUT',
+    logout
+  }
+}
+
 export function getCredentials(credentials) {
   return dispatch => {
     return getTokenForDefaultUser(credentials)

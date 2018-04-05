@@ -1,5 +1,25 @@
-$transparent_color: #e21616e8;
+//RED
+
+/*$transparent_color: #e21616e8;
 $normal_color:  #e21616;
+$buttons_widget: #c5121b;
+*/
+
+//GRAYSCALE
+$transparent_color: rgba(62, 65, 69, 0.95);
+$normal_color:  #232526;
+$buttons_widget: #232526;
+
+/*#161718
+#232526
+#313336
+#3E4145
+#4B4F54
+#5E5E5E
+#6C6C6C
+#7A7A7A
+#888888
+*/
 
 .wrapper_busqueda{
   background: $transparent_color;
@@ -15,7 +35,7 @@ $normal_color:  #e21616;
 }
 .btn_busqueda{
   width: 100%;
-  background-color: #c5121b !important;
+  background-color: $buttons_widget !important;
   color: white !important;
 }
 
@@ -38,5 +58,5 @@ font-size: 12px;
 }
 
 .esriPopup.modernGrey .titlePane {
-  background-color: #e21616;
+  background-color: $normal_color;
 }

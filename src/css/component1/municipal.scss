@@ -1,7 +1,34 @@
-$primary_color: #DA291C;
+
 $secondary_color: #FFFFFF;
 $banner_color: #ac0009;
 $dash_background_color: #000; //40opacity 46% fill;
+
+//RED
+/*
+$header: #ff0000cf;
+$buttonHeader: #e0000c;
+$widgets_bar_color:  #e25050;
+$primary_color: #DA291C;
+$header_background: red;
+
+*/
+//GRAYSCALE
+$header: rgba(62, 65, 69, 0.86);
+/*#161718
+#232526
+#313336
+#3E4145
+#4B4F54
+#5E5E5E
+#6C6C6C
+#7A7A7A
+#888888
+*/
+
+$header_background: #313336;
+$primary_color: #313336;
+$widgets_bar_color:  #737B86;
+$buttonHeader: #313336;
 
 .esriSimpleSliderTL {
   top: 20px !important;
@@ -21,7 +48,7 @@ $dash_background_color: #000; //40opacity 46% fill;
   width: 100%;
   display: flex;
   flex-direction: row;
-  background-color: red;
+  background-color: $header_background;
 }
 
 .muni_header_titles{
@@ -46,7 +73,7 @@ $dash_background_color: #000; //40opacity 46% fill;
 
 .header_title{
   margin: 0 !important;
-  background: #ff0000cf;
+  background: $header;
 }
 
 .logo_img{
@@ -78,7 +105,7 @@ $dash_background_color: #000; //40opacity 46% fill;
 }
 
 .pushable_menu_{
-  background: #e25050 !important;
+  background: $widgets_bar_color !important;
   align-content: center;
   align-items: center;
   display: flex !important;
@@ -87,7 +114,7 @@ $dash_background_color: #000; //40opacity 46% fill;
 
 .btn_header_menu{
   width: 100%;
-  background-color: #e0000c !important;
+  background-color: $buttonHeader !important;
   color: #ffffff !important;
   -webkit-tap-highlight-color: #cccccca3;
 }

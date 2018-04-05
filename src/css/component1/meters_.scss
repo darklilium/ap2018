@@ -1,6 +1,14 @@
+//RED
+/*
 $transparent_color: #e21616e8;
 $normal_color:  #e21616;
-
+$button_exportar: rgb(152,0,0)
+*/
+//GRAYSCALE
+$transparent_color: rgba(62, 65, 69, 0.95);
+$normal_color:  #232526;
+$button_exportar: rgba(49,51,54,1);
+$selected_row: rgba(49,51,54,1);
 
 .rail_meters_wrapper{
   width: 50%;
@@ -41,7 +49,7 @@ $normal_color:  #e21616;
 
 .meter_export_btn{
   width: 100%;
-  background: #ab1111 !important;
+  background: $button_exportar !important;
   margin-bottom: 1em !important;
 }
 
@@ -54,7 +62,7 @@ $normal_color:  #e21616;
 }
 
 .selectedRow{
-  background-color: #980000;
+  background-color: $selected_row;
 }
 @media (min-width: 320px) and (max-width: 425px) {
 

@@ -1,7 +1,19 @@
+//RED
+/*
 $primary_color: #DA291C;
 $secondary_color: #FFFFFF;
 $banner_color: #ac0009;
 $dash_background_color: #000; //40opacity 46% fill;
+$button_dash:  #e0000c;
+$background_color: #ff00007d;
+*/
+//GRAYSCALE
+$primary_color: #313336;
+$secondary_color: #FFFFFF;
+$banner_color: #ac0009;
+$dash_background_color: #000; //40opacity 46% fill;
+$button_dash:  #313336;
+$background_color: rgba(66,67,70,0.59);
 
 .wrapper_dashboard{
   background: $primary_color;
@@ -24,7 +36,7 @@ $dash_background_color: #000; //40opacity 46% fill;
 }
 
 .btn_dashboard, .btn_dashboard_logoff{
-  background-color: #e0000c !important;
+  background-color: $button_dash !important;
   color: #ffffff !important;
   -webkit-tap-highlight-color: #cccccca3;
 }
@@ -61,7 +73,7 @@ $dash_background_color: #000; //40opacity 46% fill;
   }
 
   .dashboard_component_wrapper{
-    background-color: #ff00007d;
+    background-color: $background_color;
     padding: 2em;
     width: 100%;
     justify-content: center;
@@ -103,7 +115,7 @@ $dash_background_color: #000; //40opacity 46% fill;
   }
 
   .dashboard_component_wrapper{
-    background-color: #ff00007d;
+    background-color: $background_color;
     padding: 2em;
     width: 100%;
     justify-content: center;
@@ -164,7 +176,7 @@ $dash_background_color: #000; //40opacity 46% fill;
   }
 
   .dashboard_component_wrapper{
-    background-color: #ff00007d;
+    background-color: $background_color;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -224,7 +236,7 @@ $dash_background_color: #000; //40opacity 46% fill;
   }
 
   .dashboard_component_wrapper{
-    background-color: #ff00007d;
+    background-color: $background_color;
     width: 100%;
     justify-content: center;
     align-items: center;

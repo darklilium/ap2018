@@ -33,13 +33,13 @@ class Dashboard extends React.Component {
           const dash =
             <div className="inner_wrapper_dashboard">
               <Responsive as={Container} minWidth={320} maxWidth={767} onUpdate={this.handleOnUpdate}>
-                <DashboardHeader title='' />
+                <DashboardHeader title='' properties={this.props} />
                 <DashboardBody properties={this.props}/>
              </Responsive>
 
            {/* sobre 768 ancho hasta 2560*/}
              <Responsive as={Container} minWidth={768} maxWidth={2560} onUpdate={this.handleOnUpdate}>
-               <DashboardHeader title='AP CHILQUINTA' />
+               <DashboardHeader title='AP CHILQUINTA' properties={this.props} />
                <DashboardBody properties={this.props}/>
 
              </Responsive>

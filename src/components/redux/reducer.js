@@ -13,7 +13,7 @@ luminariasWidgetManager,
 menu_handler} from './muni/muni_reducer';
 
 
-const reducer = combineReducers({
+const appReducer = combineReducers({
 comunas, selected_comuna,
 credentials, muniOptions, bottomMessageHandler, toggle_segment,
   map_selector, layer_selector, combos_luminarias,
@@ -26,4 +26,15 @@ credentials, muniOptions, bottomMessageHandler, toggle_segment,
 
 });
 
-export default reducer;
+const rootReducer = (state, action) =>{
+  console.log(action,"gola");
+  if(action.type ==="LOG_OUT"){
+    state = undefined
+
+    console.log("hola?", state);
+  }
+
+  return appReducer(state,action)
+}
+
+export default rootReducer;
