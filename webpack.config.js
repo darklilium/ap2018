@@ -26,13 +26,7 @@ module.exports = {
     inline: true,
     port: 443,
     host: "127.0.0.1",
-    hot: true,
-    historyApiFallback: true/*,
-    /*
-    proxy: {
-      '/tokens/generateToken': 'http://gisred.chilquinta/arcgis/tokens/generateToken'
-    }
-    */
+    hot: true
   },
   module: {
     rules: [
