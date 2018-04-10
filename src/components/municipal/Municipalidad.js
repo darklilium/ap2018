@@ -146,6 +146,10 @@ class Municipalidad extends React.Component {
   componentDidMount(){
 
     $('#app_wrapper').removeClass("wrapper").addClass("wrapper_municipal");
+    $('#gsContainer').removeClass("gsContainer");
+    $('#gsContainer2').removeClass("gsContainer2");
+    $('#gsContainer3').removeClass("gsContainer3");
+
     TweenMax.to(".wrapper_municipal",5,{
       opacity: "1",
       transition: "opacity .5s ease",

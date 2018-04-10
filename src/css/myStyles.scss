@@ -20,8 +20,56 @@ $secondary_color: #FFFFFF;
 
 //all of the pages
 .wrapper , .wrapper_dashboard, .wrapper_municipal{
-  opacity: 0;
-  visibility: hidden;
+  opacity: 1;
+  visibility: visible;
+}
+
+.gsContainer{
+  //background: gray;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  display: flex;
+  position: absolute;
+
+}
+
+.gsContainer2{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 15;
+
+}
+
+.gsContainer3{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 14;
+}
+
+.ground{
+  background-image: url("./images/login_images/buildings.png");
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position-y: bottom;
+  background-size: contain;
+}
+
+#light, #light2{
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+}
+
+#light{
+  background-image: url("./images/login_images/lightoff.png");
+}
+
+#light2{
+  background-image: url("./images/login_images/lighton.png");
 }
 
 @media (min-width: 320px) and (max-width: 768px){
