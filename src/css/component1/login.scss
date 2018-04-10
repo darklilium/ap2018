@@ -13,11 +13,12 @@ $background_inner: rgba(235,69,57,0.58);
 
 $primary_color: rgba(62, 65, 69, 0.95);
 $secondary_color: #FFFFFF;
-$primary_color_background: rgba(35,37,38,0.61);
+$primary_color_background: rgba(35,37,38,0);
+//$primary_color_background: rgba(35,37,38,0.61);
 $button_: #161718;
 $border_: #6b6d6d;
-$background_inner: rgba(169,169,169,0.18);
-
+//$background_inner: rgba(169,169,169,0.18);
+$background_inner: rgba(169,169,169,0);
 
 .inner_wrapper{
   border: $border_;
@@ -26,7 +27,9 @@ $background_inner: rgba(169,169,169,0.18);
   padding: 2em;
   background: $background_inner;
 }
-
+.inner_wrapper, .login-wrapper{
+  z-index: 16;
+}
 
 //320px
 @media (max-width: 320px){
@@ -39,6 +42,7 @@ $background_inner: rgba(169,169,169,0.18);
     align-content: center;
     align-items: center;
     background-color: $primary_color_background;
+
   }
 
   .ui.input{

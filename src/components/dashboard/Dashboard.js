@@ -16,6 +16,10 @@ class Dashboard extends React.Component {
     componentDidMount(){
 
       $('#app_wrapper').removeClass("wrapper").addClass("wrapper_dashboard");
+      $('#gsContainer').removeClass("gsContainer");
+      $('#gsContainer2').removeClass("gsContainer2");
+      $('#gsContainer3').removeClass("gsContainer3");
+      
       TweenMax.to(".wrapper_dashboard",5,{
         opacity: "1",
         transition: "opacity .5s ease",

@@ -22,12 +22,15 @@ class Login extends React.Component {
 
   componentDidMount(){
     $('#app_wrapper').removeClass("wrapper_dashboard").addClass("wrapper");
-
-    TweenMax.to(".wrapper",5,{
+    $('#gsContainer').addClass("gsContainer");
+    $('#gsContainer2').addClass("gsContainer2");
+    $('#gsContainer3').addClass("gsContainer3");
+  /*  TweenMax.to(".wrapper",5,{
       opacity: "1",
       transition: "opacity .5s ease",
       visibility: "visible"
     });
+  */
   }
 
   onClickLogin(){
