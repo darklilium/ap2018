@@ -88,7 +88,9 @@ $buttonHeader: #313336;
 
 .map_wrapper{
   color: black;
-  height: -webkit-fill-available;
+  //height: -webkit-fill-available;
+  height: 100%;
+  min-height: 800px;
 }
 
 .pushable_menu_wrapper{
@@ -172,6 +174,14 @@ $buttonHeader: #313336;
   .wrapper_municipal{
     height: max-content;
     min-height: 130%;
+  }
+
+}
+
+@media (min-width: 1360px) {
+  .map_wrapper{
+    height: 100%;
+    min-height: 100vh;
   }
 
 }

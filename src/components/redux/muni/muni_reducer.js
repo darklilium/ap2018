@@ -248,19 +248,21 @@ export function combos_luminarias(state= {
   }
 }
 
-export function onclick_editwidget(state={resultQueryAction: []}, action){
+export function onclick_editwidget(state={
+  resultQueryAction: []
+}, action){
 
   switch (action.type) {
     case 'ON_UPDATE':
-      return Object.assign({},state, resultQueryAction: action.done)
+      return {...state, resultQueryAction: action.done};
     break;
 
     case 'ON_DELETE':
-        return Object.assign({},state, resultQueryAction: action.done)
+        return {...state, resultQueryAction: action.done};
     break;
 
     case 'ON_CREATE':
-        return Object.assign({},state, resultQueryAction: action.done)
+        return {...state, resultQueryAction: action.done};
     break;
 
     default:

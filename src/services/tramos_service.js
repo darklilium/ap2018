@@ -8,7 +8,7 @@ import mapa from './map_service';
 import extent from 'esri/geometry/Extent';
 import graphicsUtils from 'esri/graphicsUtils';
 
-export var gLayerTramos = new GraphicsLayer();
+var gLayerTramos = new GraphicsLayer();
 
 export function getTramosMedidor(token,comuna,idmedidor){
 
@@ -47,3 +47,5 @@ return promise;
 
 
 }
+
+export {gLayerTramos};

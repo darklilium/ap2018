@@ -162,3 +162,10 @@ export function getFotografias(token, idnodo){
   return promise;
 
 }
+
+
+export {
+  gLayerMedidor,
+  gLayerLuminarias,
+  gLayerLumAsoc
+};

@@ -37,7 +37,7 @@ class PictureSlider extends React.Component {
               showIndex={true}
               showPlayButton={false}
               showThumbnails={false}
-              defaultImage={env.CSSDIRECTORY+'images/nofoto.png'}
+              defaultImage={env.CSSDIRECTORY+'/images/nofoto.png'}
               showFullscreenButton={true}/>
             <Divider className="divider_edit" inverted />
             <Button className="btn_busqueda" >Ver en visor de fotos </Button>

@@ -15,17 +15,19 @@ const composeEnhancers =
 
 export default function configureStore(initialState) {
 
-  if(env.MODE='DEV') {
+  if(env.MODE=='DEV') {
     return createStore(reducer, initialState, composeEnhancers(
       applyMiddleware(thunk)
     ));
   }else{
+    console.log("compose?");
       return createStore(reducer, initialState, applyMiddleware(thunk));
   }
 
 
 
 }
+
 
 /*
 export default function configureStore (initialState) {

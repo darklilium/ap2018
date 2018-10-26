@@ -8,7 +8,7 @@ import mapa from './map_service';
 import extent from 'esri/geometry/Extent';
 import graphicsUtils from 'esri/graphicsUtils';
 
-export var gLayerMedidor = new GraphicsLayer();
+var gLayerMedidor2 = new GraphicsLayer();
 
 export function getDataMedidores(token, comuna){
   var promise = new Promise((resolve, reject)=>{
@@ -43,7 +43,7 @@ export function getSelectedMeterLocation(token, idequipo){
     var map = mapa.getMap();
     var qTaskMedidores = new QueryTask(layers.read_equipos(token));
     var qMedidores = new Query();
-    gLayerMedidor.clear();//no borra graficos
+    gLayerMedidor2.clear();//no borra graficos
     qMedidores.returnGeometry = true;
     qMedidores.outFields=["*"];
     qMedidores.where = "id_medidor ='" + idequipo + "'";
@@ -54,8 +54,8 @@ export function getSelectedMeterLocation(token, idequipo){
         return resolve([])
       }
       var myLineSymbol = makeSymbol.makeLine();
-      gLayerMedidor.add(new esri.Graphic(featureSet.features[0].geometry,myLineSymbol));
-      map.addLayer(gLayerMedidor);
+      gLayerMedidor2.add(new esri.Graphic(featureSet.features[0].geometry,myLineSymbol));
+      map.addLayer(gLayerMedidor2);
       return resolve(featureSet.features);
     }, (error)=>{
       console.log(error,"Error doing query for getSelectedMeterLocation");
@@ -64,3 +64,5 @@ export function getSelectedMeterLocation(token, idequipo){
   })
   return promise;
 }
+
+export {gLayerMedidor2};

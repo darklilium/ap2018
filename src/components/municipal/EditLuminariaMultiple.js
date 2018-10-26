@@ -55,6 +55,8 @@ class EditLuminariaMultiple extends React.Component {
         this.props.showModal("Edición de Luminaria", "Operación " + accion + " realizada", true )
       })
       .catch(error=>{
+        console.log(error,"error al añadir");
+        
         this.props.showModal("Edición de Luminaria", "Operación " + accion + " no ha sido realizada. Favor contacte al admnistrador de la plataforma", true )
       })
 

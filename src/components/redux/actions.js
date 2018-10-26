@@ -533,7 +533,7 @@ export function onClickEditWidget(name, values, geometry, token){
         .catch(error=>{
           dispatch({
             type: 'ERROR_UPDATE',
-            done
+            error
           })
             return error;
         })

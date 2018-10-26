@@ -15,15 +15,19 @@ class EditWidgetMultiple extends React.Component {
         activeIndex: 0
       }
       this.handleTabChange = this.handleTabChange.bind(this)
+      this.onClickPrevious = this.onClickPrevious.bind(this);
+      this.onClickNext = this.onClickNext.bind(this);
     }
 
     onClickNext(){
+      console.log("next clicked");
       const{ currentIndex, luminariasInPoint } = this.props;
       if(currentIndex + 1 == luminariasInPoint.length){
         console.log("no avanzar más");
       }else{
         //cambia el indice del elemento a mostrar.
         this.props.changeIndex(currentIndex+1);
+        console.log("más", currentIndex+1);
         //muestra el elemento de la lista encontrado en el indice que se le indica.
         this.props.showElement(currentIndex+1);
       }
@@ -37,6 +41,7 @@ class EditWidgetMultiple extends React.Component {
         //cambia el indice del elemento a mostrar.
         this.props.changeIndex(currentIndex-1);
         //muestra el elemento de la lista encontrado en el indice que se le indica.
+        console.log("más", currentIndex-1);
         this.props.showElement(currentIndex-1);
       }
     }
@@ -64,9 +69,11 @@ class EditWidgetMultiple extends React.Component {
               <div className="wrapper_titles_edit">
                 <div className="wrapper_titles_edit_h3"><h3>Editar Luminaria: </h3></div>
                 <div className="wrapper_buttons_edit">
-                  <Button className="btn_chevron" icon><Icon name='left chevron' onClick={this.onClickPrevious.bind(this)} /></Button>
+                  {/*<Button className="btn_chevron" ><Icon name='left chevron' onClick={this.onClickPrevious} /></Button>*/}
+                  <Button className="btn_chevron"  onClick={this.onClickPrevious}><Icon name='left chevron'/></Button>
                   <h5>{currentIndex+1}/{luminariasInPoint.length}</h5>
-                  <Button className="btn_chevron" icon><Icon name='right chevron'  onClick={this.onClickNext.bind(this)} /></Button>
+                  {/* <Button className="btn_chevron" ><Icon name='right chevron'  onClick={this.onClickNext} /></Button>*/}
+                  <Button className="btn_chevron"  onClick={this.onClickNext}><Icon name='right chevron'/></Button>
                 </div>
               </div>
 

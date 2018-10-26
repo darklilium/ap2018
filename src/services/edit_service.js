@@ -9,8 +9,8 @@ import layers from './layers_service';
     console.log(token,"values");
     var promise = new Promise((resolve,reject)=>{
 
-      resolve(true);
-      /*
+      //resolve(true);
+      
       const data = {
         f: 'json',
         adds: JSON.stringify([{ attributes: values, geometry: {"x":geometry.x , "y": geometry.y}}]),
@@ -19,36 +19,36 @@ import layers from './layers_service';
 
       $.ajax({
         method: 'POST',
-        url: layers.read_ap_modificaciones_applyedits(),
+        url: layers.read_modificaciones(),
         dataType:'html',
         data: data
       })
       .done(d =>{
 
         let json = JSON.parse(d);
-        console.log(json);
+        console.log(d, "efectivo?");
         if( (_.has(json,'error')) ){
-          return callback(false);
+          reject(false);
         }else{
           if( (_.has(json,'error')) ){
-            return callback(false);
+            reject(false);
           }else{
             let arrObject = [];
             if(json["addResults"][0].objectId>0){
-              return callback(true);
+              resolve(true);
 
             }else{
-              return callback(false);
+              reject(false);
             }
           }
         }
       })
       .fail(f=>{
         console.log(f,"no pase")
-        callback(false)
+        reject(false)
       });
 
-      */
+      
     });
 
     return promise;

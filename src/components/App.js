@@ -52,20 +52,20 @@ class App extends Component {
 
 
     var element = document.getElementById("gsContainer");
-    var color2 = {h: 191, s:62, l: 80}
-
+    var color2 = {h: 191, s:62, l: 70}
+    
     var timeline = new TimelineMax({repeat: -1})
-    timeline.to(color2, 15, {l:40, onUpdate:applyColor, ease:Linear.easeNone})
+    timeline.to(color2, 5, {l:40, onUpdate:applyColor, ease:Linear.easeNone})
     timeline.to(".gsContainer3", 1, {zIndex: 15,  ease: Power0.easeNone});
-    timeline.to(color2, 15, {l:15, onUpdate:applyColor, ease:Linear.easeNone})
-    timeline.to(color2, 15, {l:40, onUpdate:applyColor, ease:Linear.easeNone})
+    timeline.to(color2, 5, {l:15, onUpdate:applyColor, ease:Linear.easeNone})
+    timeline.to(color2, 5, {l:40, onUpdate:applyColor, ease:Linear.easeNone})
     timeline.to(".gsContainer3", 1, {zIndex: 14,  ease: Power0.easeNone})
-    timeline.to(color2, 15, {l:80, onUpdate:applyColor, ease:Linear.easeNone})
+    timeline.to(color2, 5, {l:70, onUpdate:applyColor, ease:Linear.easeNone})
 
     function applyColor(e) {
       element.style.backgroundColor = "hsl(" + color2.h + "," + color2.s + "%," + color2.l + "%)";
     }
-  
+
   }
 
   render() {
