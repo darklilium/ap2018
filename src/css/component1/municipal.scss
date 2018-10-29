@@ -178,10 +178,42 @@ $buttonHeader: #313336;
 
 }
 
-@media (min-width: 1360px) {
+@media (min-width: 1360px) and (max-width: 1919px){
   .map_wrapper{
     height: 100%;
-    min-height: 100vh;
+    display: grid;
+  }
+
+  .muni-wrapper{
+    display: grid;
+    height: -webkit-fill-available;
+  }
+
+  .pusher{
+   
+    display: grid;
+  }
+
+  .pushable_menu_wrapper{
+    height: -webkit-fill-available;
+  }
+
+}
+
+@media (min-width: 1920px) {
+  .map_wrapper{
+    height: 100%;
+    display: grid;
+  }
+
+  .muni-wrapper{
+    display: grid;
+    height: -webkit-fill-available;
+  }
+
+  .pusher{
+    height: 100vh;
+    display: grid;
   }
 
 }

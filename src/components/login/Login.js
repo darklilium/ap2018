@@ -15,6 +15,9 @@ import styles from '../../css/myStyles.scss';
 
 import BottomMessage from '../others/BottomMessage';
 
+import {timeline} from '../App';
+
+
 class Login extends React.Component {
 
   handleOnUpdate = (e, { width }) => {};
@@ -45,6 +48,10 @@ class Login extends React.Component {
     this.props
        .getCredentials(credentials)
        .then(() => {
+        //Pausa timeline del inicio.                
+        timeline.stop();
+        timeline.paused(true);
+
          //si las credenciales son para usuario municipal, obtener info del usuario municipal en rest.
          if (credentials.municipal) {
            this.props.getMuniOptions(credentials.user,this.props.credentials.token)

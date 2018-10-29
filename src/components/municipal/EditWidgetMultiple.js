@@ -30,6 +30,12 @@ class EditWidgetMultiple extends React.Component {
         console.log("más", currentIndex+1);
         //muestra el elemento de la lista encontrado en el indice que se le indica.
         this.props.showElement(currentIndex+1);
+
+         //si el index del tab es 1, muestra la foto que corresponde a la luminaria. 
+        if (this.state.activeIndex==1) {
+          const {token, idnodo} = this.props;
+          this.props.findPictures(token,idnodo);
+        }
       }
     }
 
@@ -43,6 +49,13 @@ class EditWidgetMultiple extends React.Component {
         //muestra el elemento de la lista encontrado en el indice que se le indica.
         console.log("más", currentIndex-1);
         this.props.showElement(currentIndex-1);
+
+          //si el index del tab es 0, muestra la foto que corresponde a la luminaria. 
+          if (this.state.activeIndex==1) {
+            const {token, idnodo} = this.props;
+            this.props.findPictures(token,idnodo);
+          }
+
       }
     }
 

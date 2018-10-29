@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import env from '../services/config';
 import $ from 'jquery';
 
+var timeline;
+
 class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired
@@ -54,7 +56,7 @@ class App extends Component {
     var element = document.getElementById("gsContainer");
     var color2 = {h: 191, s:62, l: 70}
     
-    var timeline = new TimelineMax({repeat: -1})
+    timeline = new TimelineMax({repeat: -1})
     timeline.to(color2, 5, {l:40, onUpdate:applyColor, ease:Linear.easeNone})
     timeline.to(".gsContainer3", 1, {zIndex: 15,  ease: Power0.easeNone});
     timeline.to(color2, 5, {l:15, onUpdate:applyColor, ease:Linear.easeNone})
@@ -91,3 +93,4 @@ class App extends Component {
 }
 
 export default App;
+export {timeline};

@@ -11,9 +11,8 @@ const env = {
 }
 
 
-/*
 //PROD INTERNA SERVER MODE
-const env = {
+/*const env = {
   CSSDIRECTORY: 'css',
   BUILDFOR: 'INTERNA',
   ROUTEPATH: 'AP/',
