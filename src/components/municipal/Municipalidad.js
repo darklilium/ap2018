@@ -159,7 +159,7 @@ class Municipalidad extends React.Component {
     $('#gsContainer').removeClass("gsContainer");
     $('#gsContainer2').removeClass("gsContainer2");
     $('#gsContainer3').removeClass("gsContainer3");
-
+    
     TweenMax.to(".wrapper_municipal", 5, {
       opacity: "1",
       transition: "opacity .5s ease",
@@ -171,7 +171,7 @@ class Municipalidad extends React.Component {
         new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
           new Color([255, 0, 0]), 2), new Color([255, 255, 0, 0.25]))
     }, domConstruct.create("div"));
-    dojo.addClass(popup.domNode, "modernGrey");
+    //dojo.addClass(popup.domNode, "modernGrey");
     var mapp = mapa.createMap("map", "topo", this.props.comuna[0].extent, 13, popup);
 
     var layerDefinitions = [];
@@ -237,7 +237,8 @@ class Municipalidad extends React.Component {
 
             return res;
           });
-
+          console.log("tengo esto",arrayResults);
+          
           this.props.onclickresults(arrayResults);
 
         }

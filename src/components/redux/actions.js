@@ -699,6 +699,14 @@ export function findPictures(token, idnodo){
   }
 }
 
+// (O) Busca las modificaciones de una luminaria
+export function searchMod(idLuminaria){
+  return {
+    type: 'SEARCH_MODIFICACIONES',
+    idLuminaria
+  }
+}
+
 //------------------------------------------------------------------------------
 //OTHERS COMPONENTS actions
 

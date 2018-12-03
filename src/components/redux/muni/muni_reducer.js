@@ -324,7 +324,20 @@ export function editWidgetManager(state={
   lumsAsociadasCircuito: [],
   currentIndex: 0,
   fotografias: [],
-  tabActiveIndex: 0
+  tabActiveIndex: 0,
+  modsInPoint: [],
+  showCurrentMod: {
+    objectid: '',
+    tipoconexion: '',
+    tipo: '',
+    potencia: '' ,
+    propiedad: '',
+    rotulo: '',
+    observacion: '',
+    idluminaria: '',
+    idnodo: '',
+    geometry: ''
+  }
  },action){
 
   switch (action.type) {
@@ -333,8 +346,18 @@ export function editWidgetManager(state={
         return r.layerName=="Luminarias"
       });
 
-      let lu = lums.map(l=>{return l.features});
+      let lu = lums.map(l=>{return l.features});      
+      let mo = [];
 
+      let mods = action.results.filter(r=>{
+        return r.layerName=="Modificaciones"
+      });
+
+      if(mods.length){
+        mo = mods.map(l=>{return l.features});  
+      }
+         
+     
       return Object.assign({}, state, {
         lumsFoundInPoint: lu,
         showCurrent: {
@@ -348,7 +371,8 @@ export function editWidgetManager(state={
           idnodo: lu[state.currentIndex].attributes.ID_NODO,
           propiedad:  lu[state.currentIndex].attributes.PROPIEDAD,
           geometry: lu[state.currentIndex].geometry
-        }
+        },
+        modsInPoint: (mo.length)? mo : []
       });
     break;
 
@@ -365,21 +389,22 @@ export function editWidgetManager(state={
     break;
 
     case 'CHANGE_ELEMENT_INDEX':
-
-      return Object.assign({}, state, {
-        showCurrent: {
-          objectid: state.lumsFoundInPoint[action.index].attributes.OBJECTID,
-          tipoconexion: state.lumsFoundInPoint[action.index].attributes.TIPO_CONEXION,
-          tipo: state.lumsFoundInPoint[action.index].attributes.TIPO,
-          potencia: state.lumsFoundInPoint[action.index].attributes.POTENCIA,
-          rotulo: state.lumsFoundInPoint[action.index].attributes.ROTULO,
-          observacion: state.lumsFoundInPoint[action.index].attributes.OBSERVACION,
-          idluminaria: state.lumsFoundInPoint[action.index].attributes.ID_LUMINARIA,
-          idnodo: state.lumsFoundInPoint[action.index].attributes.ID_NODO,
-          propiedad:  state.lumsFoundInPoint[action.index].attributes.PROPIEDAD,
-          geometry: state.lumsFoundInPoint[action.index].geometry
-        }
-      })
+    
+        return Object.assign({}, state, {
+          showCurrent: {
+            objectid: state.lumsFoundInPoint[action.index].attributes.OBJECTID,
+            tipoconexion: state.lumsFoundInPoint[action.index].attributes.TIPO_CONEXION,
+            tipo: state.lumsFoundInPoint[action.index].attributes.TIPO,
+            potencia: state.lumsFoundInPoint[action.index].attributes.POTENCIA,
+            rotulo: state.lumsFoundInPoint[action.index].attributes.ROTULO,
+            observacion: state.lumsFoundInPoint[action.index].attributes.OBSERVACION,
+            idluminaria: state.lumsFoundInPoint[action.index].attributes.ID_LUMINARIA,
+            idnodo: state.lumsFoundInPoint[action.index].attributes.ID_NODO,
+            propiedad:  state.lumsFoundInPoint[action.index].attributes.PROPIEDAD,
+            geometry: state.lumsFoundInPoint[action.index].geometry
+          }
+        });
+      
     break;
 
     case 'CHANGED_CURRENT_INDEX':
@@ -468,6 +493,30 @@ export function editWidgetManager(state={
       return Object.assign({},state,{tabActiveIndex: action.index})
     break;
 
+    case "SEARCH_MODIFICACIONES":
+        let lumToShow = state.modsInPoint.filter(function(lum){
+         
+          return lum.attributes.id_luminaria == action.idLuminaria
+        });
+        let mody = {};
+        if(lumToShow.length){
+          mody =  {
+            objectid: lumToShow[0].attributes.OBJECTID,
+            tipoconexion: lumToShow[0].attributes.tipo_cnx,
+            tipo: lumToShow[0].attributes.tipo,
+            potencia: lumToShow[0].attributes.potencia,
+            propiedad: lumToShow[0].attributes.propiedad,
+            rotulo: lumToShow[0].attributes.rotulo,
+            observacion: lumToShow[0].attributes.obs,
+            idluminaria: lumToShow[0].attributes.id_luminaria,
+            idnodo: lumToShow[0].attributes.id_nodo,
+            geometry: lumToShow[0].geometry
+          }
+        }
+        
+        return {...state, showCurrentMod: mody}
+    break;
+    
     default:
       return state;
     break;

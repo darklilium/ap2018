@@ -4,7 +4,7 @@ import muniStyle from '../../css/component1/layermap_.scss';
 import muniStyle2 from '../../css/component1/busqueda_.scss';
 import muniStyle3 from '../../css/component1/edit_.scss'
 import { connect } from 'react-redux';
-import {showModal, onChangeEdition,  onClickEditWidget} from '../redux/actions';
+import {showModal, onChangeEdition,  onClickEditWidget, searchMod} from '../redux/actions';
 import deepEquals from 'deep-equal';
 
 
@@ -67,43 +67,53 @@ class EditLuminariaMultiple extends React.Component {
       this.props.onChangeCombo(name,value);
     }
 
-
     render(){
       const {luminaria,countLuminarias,opcionesPotencia, opcionesTipoConexion, opcionesTipo, opcionesPropiedad,
-         currentIndex} = this.props;
+         currentIndex, modificacion} = this.props;
+       console.log(modificacion)
+    
+    let style ={
+      color: '#ff3310',
 
+    };
+
+    let styleDiv = {
+      'display': 'flex',
+      'flexDirection': 'row',
+      'justifyContent': 'space-between'
+    }
 
     if(countLuminarias>0){
       return (
       <Form className="layermap_form">
        <Form.Field>
-         <h4>ID Luminaria: {luminaria.idluminaria}</h4>
+         <h4>ID Luminaria:{luminaria.idluminaria}</h4>
        </Form.Field>
        <Form.Field>
-         <h4>ID Nodo: {luminaria.idnodo}</h4>
+         <h4>ID Nodo: {luminaria.idnodo} {modificacion.objectid} </h4>
        </Form.Field>
        <Form.Field>
-         <h4>Tipo Conexión: </h4>
+         <div style={styleDiv}><h4>Tipo Conexión: </h4> <h4 style={style}>{modificacion.tipoconexion}</h4></div>
            <Dropdown id="ddlTipoConexion" name="ddlTipoConexion" onChange={this.onChangeEdit} value={luminaria.tipoconexion} className="dropdown_busqueda" placeholder='Seleccione Conexión' selection options={opcionesTipoConexion}/>
        </Form.Field>
        <Form.Field>
-         <h4>Tipo: </h4>
+         <div style={styleDiv}><h4>Tipo: </h4> <h4 style={style}>{modificacion.tipo}</h4></div>
           <Dropdown id="ddlTipo" name="ddlTipo" onChange={this.onChangeEdit} placeholder='Seleccione Tipo'  value={luminaria.tipo} selection options={opcionesTipo}/>
        </Form.Field>
        <Form.Field>
-         <h4>Potencia:</h4>
+       <div style={styleDiv}><h4>Potencia: </h4><h4 style={style}>{modificacion.potencia}</h4></div>
           <Dropdown id="ddlPotencia" name="ddlPotencia" onChange={this.onChangeEdit} placeholder='Seleccione Potencia' value={luminaria.potencia} selection options={opcionesPotencia}/>
        </Form.Field>
        <Form.Field>
-         <h4>Propiedad: </h4>
+       <div style={styleDiv}><h4>Propiedad: </h4><h4 style={style}>{modificacion.propiedad}</h4></div>
           <Dropdown id="ddlPropiedad" name="ddlPropiedad" onChange={this.onChangeEdit} placeholder='Seleccione Propiedad' value={luminaria.propiedad} selection options={opcionesPropiedad}/>
        </Form.Field>
        <Form.Field>
-         <h4>Rótulo</h4>
+       <div style={styleDiv}><h4>Rótulo: </h4><h4 style={style}>{modificacion.rotulo}</h4></div>
          <Input id="txtRotulo" onChange={this.onChangeEdit} name="txtRotulo" type="text" placeholder='Rótulo' value={luminaria.rotulo}/>
        </Form.Field>
        <Form.Field>
-         <h4>Observación: </h4>
+       <div style={styleDiv}><h4>Observación: </h4><h4 style={style}>{modificacion.observacion}</h4></div>
          <Input id="txtObservacion" onChange={this.onChangeEdit} name="txtObservacion" type="text"  placeholder='Observación' value={luminaria.observacion} />
        </Form.Field>
        <Form.Field>
@@ -136,7 +146,8 @@ const mapStateToProps = state => {
     opcionesPropiedad: state.combos_luminarias.propiedad,
     valoresEditados: state.change_combos_edition,
     comuna: state.selected_comuna[0].queryvalue,
-    currentIndex: state.editWidgetManager.currentIndex
+    currentIndex: state.editWidgetManager.currentIndex,
+    modificacion: state.editWidgetManager.showCurrentMod
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -144,7 +155,8 @@ const mapDispatchToProps = dispatch => {
     onChangeCombo: (name,value) => dispatch(onChangeEdition(name, value)),
 
     onClickManager: (name, values, geometry, token) => dispatch(onClickEditWidget(name, values, geometry, token)),
-    showModal: (header, content, open) => dispatch(showModal(header, content, open))
+    showModal: (header, content, open) => dispatch(showModal(header, content, open)),
+    searchMod: (idLuminaria) => dispatch(searchMod(idLuminaria))
   }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(EditLuminariaMultiple)

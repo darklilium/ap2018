@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import EditLuminariaMultiple from './EditLuminariaMultiple';
 import PictureSlider from './PictureSlider';
 import LuminariasAsociadasWidget from './LuminariasAsociadasWidget';
-import {findPictures, showElement, changeIndex, changeActiveIndex} from '../redux/actions';
+import {findPictures, showElement, changeIndex, changeActiveIndex, searchMod} from '../redux/actions';
 import BottomMessage from '../others/BottomMessage';
 
 class EditWidgetMultiple extends React.Component {
@@ -19,18 +19,21 @@ class EditWidgetMultiple extends React.Component {
       this.onClickNext = this.onClickNext.bind(this);
     }
 
+    
+
     onClickNext(){
       console.log("next clicked");
-      const{ currentIndex, luminariasInPoint } = this.props;
+      const{ currentIndex, luminariasInPoint, currentLuminaria, searchMod } = this.props;
       if(currentIndex + 1 == luminariasInPoint.length){
         console.log("no avanzar más");
       }else{
         //cambia el indice del elemento a mostrar.
+       
         this.props.changeIndex(currentIndex+1);
         console.log("más", currentIndex+1);
         //muestra el elemento de la lista encontrado en el indice que se le indica.
         this.props.showElement(currentIndex+1);
-
+       
          //si el index del tab es 1, muestra la foto que corresponde a la luminaria. 
         if (this.state.activeIndex==1) {
           const {token, idnodo} = this.props;
@@ -40,15 +43,18 @@ class EditWidgetMultiple extends React.Component {
     }
 
     onClickPrevious(){
-      const{ currentIndex, luminariasInPoint } = this.props;
+      const{ currentIndex, currentLuminaria, searchMod } = this.props;
       if(currentIndex == 0){
         console.log("no avanzar más");
       }else{
+       
         //cambia el indice del elemento a mostrar.
         this.props.changeIndex(currentIndex-1);
         //muestra el elemento de la lista encontrado en el indice que se le indica.
         console.log("más", currentIndex-1);
         this.props.showElement(currentIndex-1);
+      
+      
 
           //si el index del tab es 0, muestra la foto que corresponde a la luminaria. 
           if (this.state.activeIndex==1) {
@@ -59,9 +65,14 @@ class EditWidgetMultiple extends React.Component {
       }
     }
 
+    componentDidUpdate(){
+      const{ currentLuminaria, searchMod } = this.props;
+      searchMod(currentLuminaria.idluminaria);
+    } 
+
     handleTabChange (e, { activeIndex }) {
       this.setState({ activeIndex })
-      console.log(activeIndex);
+    
       const {token, idnodo} = this.props;
 
       if (activeIndex==1) {
@@ -69,6 +80,13 @@ class EditWidgetMultiple extends React.Component {
       }
 
     }
+
+    componentDidMount(){
+      const {currentLuminaria, searchMod} = this.props;
+      searchMod(currentLuminaria.idluminaria)
+
+    }
+    
     render() {
         const {handleTabChange, activeIndex, luminariasInPoint, currentIndex} = this.props;
         const panes = [
@@ -107,7 +125,8 @@ const mapStateToProps = state => {
     luminariasInPoint: state.editWidgetManager.lumsFoundInPoint,
     currentIndex: state.editWidgetManager.currentIndex,
     idnodo: state.editWidgetManager.showCurrent.idnodo,
-    token: state.credentials.token
+    token: state.credentials.token,
+    currentLuminaria: state.editWidgetManager.showCurrent
   }
 }
 const mapDispatchToProps = dispatch => {
@@ -115,7 +134,8 @@ const mapDispatchToProps = dispatch => {
     handleTabChange: (e, { activeIndex }) => dispatch(changeActiveIndex(activeIndex)),
     changeIndex: (index) => dispatch(changeIndex(index)),
     showElement: (index) => dispatch(showElement(index)),
-    findPictures: (token,idnodo) => dispatch(findPictures(token,idnodo))
+    findPictures: (token,idnodo) => dispatch(findPictures(token,idnodo)),
+    searchMod: (idLuminaria) => dispatch(searchMod(idLuminaria))
   }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(EditWidgetMultiple)
